@@ -1,7 +1,6 @@
 #CRONO.SKI
---------------
 
-**CRONO.SKI** is an electronic timing system for skiers, but it can be used for other athletes as well. It's main purpose is to assist the training.
+**CRONO.SKI** is an electronic timing system for skiers which can be used by other athletes as well. It's main purpose is to assist the training.
 
 ##Basic idea
 
@@ -11,7 +10,7 @@ The system will provide the capability to identify the athletes, mark the beginn
 
 
 ##Components
-- **CronoStart** is a mobile electronic device which is able to identify the athlete, measure the time and send the results to a centralized database.
+- [**CronoStart**](CronoStart/) is a mobile electronic device which is able to identify the athlete, measure the time and send the results to a centralized database.
 - **CronoHub**
 - **CronoWeb**
 
