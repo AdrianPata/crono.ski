@@ -15,4 +15,4 @@ The system will provide the capability to identify the athletes, mark the beginn
 - **CronoWeb**
 
 
-[1]:https://drive.google.com/file/d/0BzduySery8jXd25qMzViWXRleDQ/view?usp=sharing
+[1]:https://www.dropbox.com/s/geszz4rchdaklyw/Ski%20track%20overview.png?dl=0
