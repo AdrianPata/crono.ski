@@ -9,5 +9,8 @@
 #include "main.h"
 
 void main(void) {
-    return;
+    startupConfiguration();
+    while(1){
+        testUART();
+    }
 }

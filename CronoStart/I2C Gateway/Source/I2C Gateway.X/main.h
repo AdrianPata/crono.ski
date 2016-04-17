@@ -9,6 +9,12 @@
 #define	MAIN_H
 
 #include <xc.h>
+#include <pic12f1840.h>
+#include "config.h"
+#include "uart.h"
+#include "tools.h"
+#include "i2c.h"
+
 
 #endif	/* MAIN_H */
 
