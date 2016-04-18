@@ -23,14 +23,14 @@
 
 // CONFIG2
 #pragma config WRT = OFF        // Flash Memory Self-Write Protection (Write protection off)
-#pragma config PLLEN = ON       // PLL Enable (4x PLL enabled)
+#pragma config PLLEN = OFF       // PLL Enable (4x PLL enabled)
 #pragma config STVREN = ON      // Stack Overflow/Underflow Reset Enable (Stack Overflow or Underflow will cause a Reset)
 #pragma config BORV = LO        // Brown-out Reset Voltage Selection (Brown-out Reset Voltage (Vbor), low trip point selected.)
 #pragma config LVP = ON         // Low-Voltage Programming Enable (Low-voltage programming enabled)
 
 
 //FOSC Frequency
-#define _XTAL_FREQ 32000000
+#define _XTAL_FREQ 8000000
 
 void startupConfiguration();
 

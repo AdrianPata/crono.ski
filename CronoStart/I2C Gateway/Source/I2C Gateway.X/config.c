@@ -24,7 +24,7 @@ void startupConfiguration(){
         //BAUDCON: BAUD RATE CONTROL REGISTER
         BRG16=0; //8-bit Baud Rate Generator is used
         //EUSART Baud Rate Generator
-        SPBRG=51; //SYNC = 0, BRGH = 0, BRG16 = 0, FOSC = 32.000 MHz, Baud Rate = 9600
+        SPBRG=12; //SYNC = 0, BRGH = 0, BRG16 = 0, FOSC = 8.000 MHz, Baud Rate = 9600
         //TXSTA: TRANSMIT STATUS AND CONTROL REGISTER
         TXEN=1; //Transmit enabled
     //I2C

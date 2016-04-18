@@ -6,8 +6,15 @@
  */
 
 
-#include <xc.h>
+#include "main.h"
 
 void main(void) {
-    return;
+    
+    startupConfig();
+    
+    while(1){
+        
+        LATA0=~PORTAbits.RA0;
+        delay_10ms(100);
+    }
 }
