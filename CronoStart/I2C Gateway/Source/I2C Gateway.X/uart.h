@@ -23,10 +23,13 @@ char uartErrors=0; //Each bit set signals that an error occurred.
                     //bit 7: Receive buffer overrun (uartRxLast caught up with uartRxRead)
                     //bit 6: Receive Framing Error
                     //bit 5: FIFO Receive Overrun Error
+                    //bit 4: Send buffer overrun (uartTxLast caught up with uartTxRead)
 
 void uart_int();
-char uartGetBufferSize();
-char uartGetNextBufferByte();
+char uartGetRxBufferSize();
+char uartGetNextRxBufferByte();
+char uartAddByteToTxBuffer(char c);
+void uartTxByteFromBuffer();
 
 #endif	/* UART_H */
 

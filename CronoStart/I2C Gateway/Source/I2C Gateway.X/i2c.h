@@ -19,6 +19,7 @@ char i2cCommand=0x00; //Current I2C command
                     //0: Undefined
                     //1: Get buffer size
                     //2: Get buffer data
+                    //3: Transmit data to UART
 
 void i2c_int();
 

@@ -7,10 +7,10 @@ void i2cSendData(){
     if(i2cStatus==2){ //If a command was received
         switch(i2cCommand){
             case 1:
-                d=uartGetBufferSize();
+                d=uartGetRxBufferSize();
                 break;
             case 2:
-                d=uartGetNextBufferByte();
+                d=uartGetNextRxBufferByte();
                 break;
         }
     }
@@ -34,6 +34,10 @@ void i2c_int(){
         if(D_nA==1 && R_nW==0 && i2cStatus==1){ //Data received, status=1 means the received byte is a command
             i2cCommand=c;
             i2cStatus=2;
+        } else if (D_nA==1 && R_nW==0 && i2cStatus==2){ //Data received. Status=2 means that the slave has a command and knows what to do with the data.
+            if(i2cCommand==3){
+                uartAddByteToTxBuffer(c);
+            }
         }
         
         //TRANSMIT

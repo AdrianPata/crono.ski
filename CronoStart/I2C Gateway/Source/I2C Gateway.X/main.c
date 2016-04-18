@@ -11,6 +11,6 @@
 void main(void) {
     startupConfiguration();
     while(1){
-        testUART();
+        uartTxByteFromBuffer();
     }
 }

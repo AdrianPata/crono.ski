@@ -8,23 +8,9 @@ void uartDoIRQ(){
     TRISA0=1; //Line as input
 }
 
-//Increment the value of uartRxLast and overflow to 0 if uartRxLast>uartRxBufferSize
-//Verify if uartRxLast doesn't catch up with uartRxRead. If it does, set uartErrors bit 7 and return 1
-char uartIncrementRxLast(){
-    char newVal=0;
-    newVal=uartRxLast+1;
-    if(newVal==uartRxBufferSize) newVal=0;    
-    if(newVal==uartRxRead){
-        sbi(uartErrors,7);
-        return 1;
-    }
-    uartRxLast=newVal;
-    return 0;
-}
-
-//Returns the next available byte in buffer
+//Returns the next available byte in RX buffer
 //If there are no more bytes, returns 0
-char uartGetNextBufferByte(){
+char uartGetNextRxBufferByte(){
     if(uartRxRead==uartRxLast) return 0; //buffer is empty
     uartRxRead++;
     if(uartRxRead==uartRxBufferSize) uartRxRead=0;
@@ -39,25 +25,68 @@ char uartGetNextBufferByte(){
     return uartRxBuffer[uartRxRead];
 }
 
-//Bytes unread in buffer
-char uartGetBufferSize(){
+//Add byte to RX buffer
+//If it returns 1 it means error (buffer full)
+char uartAddByteToRxBuffer(char c){
+    char newVal=0;
+    newVal=uartRxLast+1;
+    if(newVal==uartRxBufferSize) newVal=0;    
+    if(newVal==uartRxRead){
+        sbi(uartErrors,7);
+        return 1;
+    }
+    uartRxLast=newVal;
+    uartRxBuffer[uartRxLast]=c;
+    return 0;
+}
+
+//Bytes unread in RX buffer
+char uartGetRxBufferSize(){
     if (uartRxRead<uartRxLast) return uartRxLast-uartRxRead;
     if (uartRxRead<uartRxLast) return uartRxLast+uartRxBufferSize-uartRxRead;
     return 0;
 }
 
+//Add byte to TX buffer
+//If it returns 1 it means error (buffer full)
+char uartAddByteToTxBuffer(char c){
+    char newVal=0;
+    newVal=uartTxLast+1;
+    if(newVal==uartTxBufferSize) newVal=0;    
+    if(newVal==uartTxRead){
+        sbi(uartErrors,4);
+        return 1;
+    }
+    uartTxLast=newVal;
+    uartTxBuffer[uartTxLast]=c;
+    return 0;
+}
+
+//Returns the next available byte in TX buffer
+//If there are no more bytes, returns 0
+char uartGetNextTxBufferByte(){
+    if(uartTxRead==uartTxLast) return 0; //buffer is empty
+    uartTxRead++;
+    if(uartTxRead==uartTxBufferSize) uartTxRead=0;
+    return uartTxBuffer[uartTxRead];
+}
+
+void uartTxByteFromBuffer(){
+    if(uartTxRead==uartTxLast) return; //buffer is empty
+    if(TXIF){//EUSART transmitter is enabled and no character is being held for transmission in the TXREG
+        TXREG=uartGetNextTxBufferByte();
+    }
+}
+
+
+
 //Handles UART interrupts
 void uart_int(){
+    char c;
     if(RCIF){//There are bytes in the receive FIFO buffer
-        if(uartIncrementRxLast()==0) {//If the buffer is not full, read one byte from receive FIFO
-            if(FERR){//Receive Framing Error - A framing error indicates that a Stop bit was not seen at the expected time.
-                sbi(uartErrors,6);
-            }
-            uartRxBuffer[uartRxLast]=RCREG;
-            uartDoIRQ();
-        } else {//If the buffer is full, disable the interrupt (it will be enabled when space becomes available in buffer)
-            RCIE=0;
-        }        
+        c=RCREG; //Read byte from UART receiver
+        uartAddByteToRxBuffer(c);
+        uartDoIRQ();
     }
 }
 
