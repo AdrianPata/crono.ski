@@ -12,9 +12,12 @@ void main(void) {
     
     startupConfig();
     
+    printf("Salut");
     while(1){
         
-        LATA0=~PORTAbits.RA0;
-        delay_10ms(100);
+        uart_doWork(); //Process UART
+        
+        //LATA0=~PORTAbits.RA0;
+        //delay_10ms(100);
     }
 }

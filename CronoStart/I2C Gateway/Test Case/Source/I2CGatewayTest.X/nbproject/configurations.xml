@@ -7,6 +7,7 @@
       <itemPath>config.h</itemPath>
       <itemPath>main.h</itemPath>
       <itemPath>tools.h</itemPath>
+      <itemPath>uart.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -18,6 +19,8 @@
       <itemPath>main.c</itemPath>
       <itemPath>tools.c</itemPath>
       <itemPath>config.c</itemPath>
+      <itemPath>interrupt.c</itemPath>
+      <itemPath>uart.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -125,7 +128,7 @@
         <property key="program-the-device-with-default-config-words" value="true"/>
       </HI-TECH-LINK>
       <VSMViewerPlatformTool>
-        <property key="design.file" value=""/>
+        <property key="design.file" value="../../Design/I2CGatewayTest.pdsprj"/>
         <property key="target.ip.address" value="localhost"/>
         <property key="target.ip.port" value="8001"/>
       </VSMViewerPlatformTool>

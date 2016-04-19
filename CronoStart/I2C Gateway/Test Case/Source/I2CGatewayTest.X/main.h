@@ -9,8 +9,10 @@
 #define	MAIN_H
 
 #include <xc.h>
-#include "config.h"
 #include <pic18f46k22.h>
+#include <stdio.h>
+#include "config.h"
+#include "uart.h"
 #include "tools.h"
 
 #endif	/* MAIN_H */

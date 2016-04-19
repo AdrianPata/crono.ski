@@ -5,8 +5,11 @@
         <group>
             <file>file:/C:/surse/crono.ski/CronoStart/I2C%20Gateway/Test%20Case/Source/I2CGatewayTest.X/main.h</file>
             <file>file:/C:/surse/crono.ski/CronoStart/I2C%20Gateway/Test%20Case/Source/I2CGatewayTest.X/config.h</file>
+            <file>file:/C:/surse/crono.ski/CronoStart/I2C%20Gateway/Test%20Case/Source/I2CGatewayTest.X/interrupt.c</file>
             <file>file:/C:/surse/crono.ski/CronoStart/I2C%20Gateway/Test%20Case/Source/I2CGatewayTest.X/tools.c</file>
             <file>file:/C:/surse/crono.ski/CronoStart/I2C%20Gateway/Test%20Case/Source/I2CGatewayTest.X/config.c</file>
+            <file>file:/C:/surse/crono.ski/CronoStart/I2C%20Gateway/Test%20Case/Source/I2CGatewayTest.X/uart.h</file>
+            <file>file:/C:/surse/crono.ski/CronoStart/I2C%20Gateway/Test%20Case/Source/I2CGatewayTest.X/uart.c</file>
             <file>file:/C:/surse/crono.ski/CronoStart/I2C%20Gateway/Test%20Case/Source/I2CGatewayTest.X/tools.h</file>
             <file>file:/C:/surse/crono.ski/CronoStart/I2C%20Gateway/Test%20Case/Source/I2CGatewayTest.X/main.c</file>
         </group>
