@@ -6,11 +6,13 @@ void i2cSendData(){
     
     if(i2cStatus==2){ //If a command was received
         switch(i2cCommand){
-            case 1:
+            case 1: //Get Rx buffer size
                 d=uartGetRxBufferSize();
                 break;
-            case 2:
+            case 2: //Get data from Rx buffer
                 d=uartGetNextRxBufferByte();
+                break;
+            case 3: //Get Tx buffer free space
                 break;
         }
     }
@@ -26,7 +28,7 @@ void i2c_int(){
         
         if(BF) c=SSP1BUF; //Read buffer if there is something there
         
-        //RECEIVE
+        //*** RECEIVE ************************************
         if(D_nA==0 && R_nW==0){ //Address received. Data will be sent by master. Status=1 means waiting for command.
             i2cStatus=1;
         }
@@ -35,12 +37,12 @@ void i2c_int(){
             i2cCommand=c;
             i2cStatus=2;
         } else if (D_nA==1 && R_nW==0 && i2cStatus==2){ //Data received. Status=2 means that the slave has a command and knows what to do with the data.
-            if(i2cCommand==3){
+            if(i2cCommand==4){ //Master wants to put a byte in Tx buffer to be sent to UART
                 uartAddByteToTxBuffer(c);
             }
         }
         
-        //TRANSMIT
+        //*** TRANSMIT ************************************
         if(D_nA==0 && R_nW==1){ //Address received. Master waits data. 
             i2cSendData();
         }

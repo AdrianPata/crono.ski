@@ -17,9 +17,10 @@ char i2cStatus=0; //Current I2C status
 
 char i2cCommand=0x00; //Current I2C command
                     //0: Undefined
-                    //1: Get buffer size
-                    //2: Get buffer data
-                    //3: Transmit data to UART
+                    //1: Get Rx buffer size
+                    //2: Get Rx buffer data
+                    //3: Get Tx buffer free
+                    //4: Data to transmit to UART
 
 void i2c_int();
 

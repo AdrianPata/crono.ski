@@ -43,8 +43,15 @@ char uartAddByteToRxBuffer(char c){
 //Bytes unread in RX buffer
 char uartGetRxBufferSize(){
     if (uartRxRead<uartRxLast) return uartRxLast-uartRxRead;
-    if (uartRxRead<uartRxLast) return uartRxLast+uartRxBufferSize-uartRxRead;
+    if (uartRxRead>uartRxLast) return uartRxLast+uartRxBufferSize-uartRxRead;
     return 0;
+}
+
+//Free bytes in TX buffer
+char uartGetTxBufferFree(){
+    if (uartTxRead<uartTxLast) return uartTxBufferSize-(uartTxLast-uartTxRead);
+    if (uartTxRead>uartTxLast) return uartTxBufferSize-(uartTxLast+uartTxBufferSize-uartTxRead);
+    return uartTxBufferSize;
 }
 
 //Add byte to TX buffer
