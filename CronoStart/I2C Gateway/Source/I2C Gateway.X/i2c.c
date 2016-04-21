@@ -13,6 +13,11 @@ void i2cSendData(){
                 d=uartGetNextRxBufferByte();
                 break;
             case 3: //Get Tx buffer free space
+                d=uartGetTxBufferFree();
+                break;
+            case 5:
+                d=uartErrors;
+                uartErrors=0; //After read the errors are cleared
                 break;
         }
     }

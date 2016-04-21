@@ -15,8 +15,7 @@ char uartGetNextRxBufferByte(){
     uartRxRead++;
     if(uartRxRead==uartRxBufferSize) uartRxRead=0;
     
-    RCIE=1; //If the buffer was full, the interrupt was disabled. Since we have a free space, we can re-enable the interrupt
-    if(OERR){ //FIFO Overrun
+    if(OERR){ //FIFO Overrun - this should never happen since every byte is received on UART even that the buffer is full
         sbi(uartErrors,5);
         CREN=0; //Clear OERR by disabling the receiver
         CREN=1; //Enable the receiver
@@ -25,19 +24,17 @@ char uartGetNextRxBufferByte(){
     return uartRxBuffer[uartRxRead];
 }
 
-//Add byte to RX buffer
-//If it returns 1 it means error (buffer full)
-char uartAddByteToRxBuffer(char c){
+//Add byte to RX buffer (if the buffer is not full)
+void uartAddByteToRxBuffer(char c){
     char newVal=0;
     newVal=uartRxLast+1;
     if(newVal==uartRxBufferSize) newVal=0;    
-    if(newVal==uartRxRead){
-        sbi(uartErrors,7);
-        return 1;
+    if(newVal==uartRxRead){ //This condition means the buffer is full and the adding is aborted
+        sbi(uartErrors,7); //Set error bit to highlight this situation
+        return;
     }
     uartRxLast=newVal;
     uartRxBuffer[uartRxLast]=c;
-    return 0;
 }
 
 //Bytes unread in RX buffer
@@ -55,18 +52,16 @@ char uartGetTxBufferFree(){
 }
 
 //Add byte to TX buffer
-//If it returns 1 it means error (buffer full)
-char uartAddByteToTxBuffer(char c){
+void uartAddByteToTxBuffer(char c){
     char newVal=0;
     newVal=uartTxLast+1;
     if(newVal==uartTxBufferSize) newVal=0;    
-    if(newVal==uartTxRead){
+    if(newVal==uartTxRead){ //This means the buffer is full. This should never happen since master must ask about the free space before pushing data.
         sbi(uartErrors,4);
-        return 1;
+        return;
     }
     uartTxLast=newVal;
     uartTxBuffer[uartTxLast]=c;
-    return 0;
 }
 
 //Returns the next available byte in TX buffer
@@ -78,6 +73,7 @@ char uartGetNextTxBufferByte(){
     return uartTxBuffer[uartTxRead];
 }
 
+//Transmit one byte from Tx buffer to UART
 void uartTxByteFromBuffer(){
     if(uartTxRead==uartTxLast) return; //buffer is empty
     if(TXIF){//EUSART transmitter is enabled and no character is being held for transmission in the TXREG
@@ -90,7 +86,7 @@ void uartTxByteFromBuffer(){
 //Handles UART interrupts
 void uart_int(){
     char c;
-    if(RCIF){//There are bytes in the receive FIFO buffer
+    while(RCIF){//There are bytes in the receive FIFO buffer
         c=RCREG; //Read byte from UART receiver
         uartAddByteToRxBuffer(c);
         uartDoIRQ();
