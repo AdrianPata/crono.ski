@@ -11,9 +11,12 @@
 #include <xc.h>
 #include <pic18f46k22.h>
 #include <stdio.h>
+#include <string.h>
 #include "config.h"
 #include "uart.h"
 #include "tools.h"
+#include "i2c.h"
+#include "irq.h"
 
 #endif	/* MAIN_H */
 

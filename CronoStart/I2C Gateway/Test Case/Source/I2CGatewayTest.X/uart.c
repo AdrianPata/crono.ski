@@ -39,9 +39,18 @@ char uartGetNextTxBufferByte(){
 
 //Transmit byte from Tx buffer
 void uartTransmitByteFromTxBuffer(){
+    char c;
     if(uartTxRead==uartTxLast) return; //buffer is empty
     if(TX1IF){//EUSART transmitter is enabled and no character is being held for transmission in the TXREG
-        TX1REG=uartGetNextTxBufferByte();
+        c=uartGetNextTxBufferByte();
+        TX1REG=c;
+    }
+}
+
+//Process received byte on UART as command
+void uart_ProcessCommand(char c){
+    if(c=='a'){
+        i2c_AddDataToBuffer();
     }
 }
 
@@ -54,6 +63,6 @@ void uart_int(){
     char c;
     if(RC1IF){
         c=RCREG1;
-        uartAddByteToTxBuffer(c);
+        i2c_AddByteToTxBuffer(c);
     }
 }

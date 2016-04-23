@@ -4,7 +4,4 @@ Acts as a proxy between I2C bus and a UART device.
 
 ### To Do
 
-* Test the chip in proteus with 18F46K22 as master
-* Enable PLL (disabled due to low performance in Proteus simulation / it can be enabled on production)
-	* Don't forget to change the UART settings for baud to match the FOSC
-* How often will IRQ be triggered? At every received byte on UART or only once and then wait for master?
+* Create some variables which will contain the maximum space ocupied in buffer? This could be used to see if the buffer is enough.

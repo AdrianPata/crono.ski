@@ -12,6 +12,5 @@ void main(void) {
     startupConfiguration();
     while(1){
         uartTxByteFromBuffer();
-        for(char i=0;i<10;i++){__delay_ms(100);}
     }
 }

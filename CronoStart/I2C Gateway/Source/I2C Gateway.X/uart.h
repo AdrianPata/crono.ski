@@ -9,12 +9,12 @@
 #define	UART_H
 
 //Global variables
-const char uartRxBufferSize=4; //UART receive buffer size
+const char uartRxBufferSize=100; //UART receive buffer size
 char uartRxBuffer[uartRxBufferSize]; //UART receive buffer
 char uartRxLast=0; //The position in the buffer where the last received byte was inserted
 char uartRxRead=0; //The last position in the buffer that was read. If uartRxRead=uartRxLast it means that there is no more data to read from buffer.
 
-const char uartTxBufferSize=4; //UART send buffer size
+const char uartTxBufferSize=100; //UART send buffer size
 char uartTxBuffer[uartTxBufferSize]; //UART send buffer
 char uartTxLast=0; //The position in the buffer where the last received byte was inserted
 char uartTxRead=0; //The last position in the buffer that was read. If uartTxRead=uartTxLast it means that there is no more data to read from buffer.

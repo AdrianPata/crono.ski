@@ -1,7 +1,7 @@
 #include "main.h"
 
 void interrupt high_priority int_high(){
-    //uart_int();
+    irq_int();
 }
 
 void interrupt low_priority int_low(){

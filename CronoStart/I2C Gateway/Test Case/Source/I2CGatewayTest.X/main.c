@@ -12,12 +12,10 @@ void main(void) {
     
     startupConfig();
     
-    printf("Salut");
+    printf("S");
     while(1){
         
         uart_doWork(); //Process UART
-        
-        //LATA0=~PORTAbits.RA0;
-        //delay_10ms(100);
+        i2c_doWork(); //Process I2C
     }
 }

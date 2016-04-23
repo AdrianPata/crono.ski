@@ -9,7 +9,9 @@ void startupConfig(){
     IPEN=1; // Priority interrupts
     
     uart_config();
+    i2c_config();
+    irq_config();
     
-    GIEL=1;
-    GIEH=1;
+    GIEL=1;//Enable low priority interrupts
+    GIEH=1;//Enable high priority interrupts
 }
