@@ -41,9 +41,28 @@ void i2c_int(){
         if(D_nA==1 && R_nW==0 && i2cStatus==1){ //Data received, status=1 means the received byte is a command
             i2cCommand=c;
             i2cStatus=2;
+            i2cRecvByteNo=0;
         } else if (D_nA==1 && R_nW==0 && i2cStatus==2){ //Data received. Status=2 means that the slave has a command and knows what to do with the data.
+            i2cRecvByteNo++; //Increment the number of the byte
+            
             if(i2cCommand==4){ //Master wants to put a byte in Tx buffer to be sent to UART
                 uartAddByteToTxBuffer(c);
+            }
+            
+            if(i2cCommand==6){ //Master wants to set UART baud parameters (4 bytes in total)
+                if(i2cRecvByteNo==1) { //BRGH
+                    BRGH=c;
+                    writeEEPROM(0x01,c); 
+                } else if(i2cRecvByteNo==2) { //BRG16
+                    BRG16=c;
+                    writeEEPROM(0x02,c); 
+                }else if(i2cRecvByteNo==3){ //SPBRGH
+                    SPBRGH=c;
+                    writeEEPROM(0x03,c); 
+                }else if(i2cRecvByteNo==4){ //SPBRG
+                    SPBRG=c;
+                    writeEEPROM(0x04,c); 
+                }
             }
         }
         

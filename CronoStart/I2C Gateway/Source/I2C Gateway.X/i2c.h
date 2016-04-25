@@ -8,8 +8,6 @@
 #ifndef I2C_H
 #define	I2C_H
 
-const char i2cAddress=0b10000010; //Slave address
-
 char i2cStatus=0; //Current I2C status
                     //0: Idle
                     //1: Address received. Data will be sent by master. Status=1 means that the next received byte is a command.
@@ -22,6 +20,9 @@ char i2cCommand=0x00; //Current I2C command (from master)
                     //3: Get Tx buffer free
                     //4: Push data to Tx buffer (Tx buffer is sent to UART)
                     //5: Get UART error byte
+                    //6: Set UART baud parameters (and save them in EEPROM)
+
+char i2cRecvByteNo=0; //Received byte number. When receiving bytes, this will increment for each byte.
 
 void i2c_int();
 

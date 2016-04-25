@@ -17,5 +17,8 @@
 #define bit_is_set(b,n)   (b & (1<<n))      /* Test if bit number n in byte b is set   */
 #define bit_is_clear(b,n) (!(b & (1<<n)))   /* Test if bit number n in byte b is clear */
 
+char readEEPROM(char address);
+void writeEEPROM(char address, char datas);
+
 #endif	/* TOOLS_H */
 

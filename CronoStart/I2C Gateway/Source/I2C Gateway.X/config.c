@@ -17,21 +17,23 @@ void startupConfiguration(){
         //RCSTA: RECEIVE STATUS AND CONTROL REGISTER
         CREN=1; //Enables receiver
         //TXSTA: TRANSMIT STATUS AND CONTROL REGISTER
+        TXEN=1; //Transmit enabled
+        //TXSTA: TRANSMIT STATUS AND CONTROL REGISTER
         SYNC=0; //Synchronous mode
-        BRGH=0; //Low speed (High Baud Rate Select bit)
+        //EUSART Baud Rate Generator 
+            //FOSC = 8.000 MHz
+            //Read values from EEPROM
+            BRGH=readEEPROM(0x01);
+            BRG16=readEEPROM(0x02);
+            SPBRGH=readEEPROM(0x03);
+            SPBRG=readEEPROM(0x04); 
         //RCSTA: RECEIVE STATUS AND CONTROL REGISTER
         SPEN=1; //Serial port enabled (configures RX/DT and TX/CK pins as serial port pins)
-        //BAUDCON: BAUD RATE CONTROL REGISTER
-        BRG16=0; //8-bit Baud Rate Generator is used
-        //EUSART Baud Rate Generator
-        SPBRG=12; //SYNC = 0, BRGH = 0, BRG16 = 0, FOSC = 8.000 MHz, Baud Rate = 9600
-        //TXSTA: TRANSMIT STATUS AND CONTROL REGISTER
-        TXEN=1; //Transmit enabled
     //I2C
         //TRISA: PORTA TRI-STATE REGISTER
         TRISA1=1; TRISA2=1; //When enabled, the SDA and SCL pins must be configured as inputs.
         //SSP1ADD
-        SSP1ADD=i2cAddress; //Slave address
+        SSP1ADD=readEEPROM(0x00); //Slave address in EEPROM at 0x00
         //SSP1CON1: SSP1 CONTROL REGISTER 1
         SSPM3=0;SSPM2=1;SSPM1=1;SSPM0=0; //I2C Slave mode, 7-bit address
         SSPEN=1;//Enables the serial port and configures the SDA and SCL pins as the source of the serial port pins
