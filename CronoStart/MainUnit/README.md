@@ -8,3 +8,8 @@ Chip: PIC18F46K22
 
 * Infared barrier connected to Interrupt 0
 * I2C Bus interrupt connected to Interrupt 1
+
+### ToDo
+
+* Enable IRQ
+* Enable I2C Bus
