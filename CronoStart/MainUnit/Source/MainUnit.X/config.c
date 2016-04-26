@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "main.h"
 
 void startupConfig(){
     IRCF2=1;IRCF1=1;IRCF0=1; //HFINTOSC ? (16 MHz)
@@ -8,7 +8,7 @@ void startupConfig(){
     
     IPEN=1; // Priority interrupts
     
-    //uart_config();
+    uart_config();
     //i2c_config();
     //irq_config();
     

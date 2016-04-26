@@ -5,18 +5,20 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <itemPath>config/config.h</itemPath>
+        <itemPath>config.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="irq" projectFiles="true">
-        <itemPath>irq/config.h</itemPath>
-        <itemPath>irq/globals.h</itemPath>
-        <itemPath>irq/interrupt.h</itemPath>
+        <itemPath>irq_config.h</itemPath>
+        <itemPath>irq_globals.h</itemPath>
+        <itemPath>irq_interrupt.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="tools" projectFiles="true">
-        <itemPath>tools/bitOperations.h</itemPath>
-        <itemPath>tools/buffer.h</itemPath>
+        <itemPath>tools_bitOperations.h</itemPath>
+        <itemPath>tools_buffer.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="uart" projectFiles="true">
+        <itemPath>uart_config.h</itemPath>
+        <itemPath>uart_tools.h</itemPath>
       </logicalFolder>
       <itemPath>main.h</itemPath>
     </logicalFolder>
@@ -28,16 +30,19 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <itemPath>config/config.c</itemPath>
+        <itemPath>config.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="irq" projectFiles="true">
-        <itemPath>irq/config.c</itemPath>
-        <itemPath>irq/interrupt.c</itemPath>
+        <itemPath>irq_config.c</itemPath>
+        <itemPath>irq_interrupt.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="tools" projectFiles="true">
-        <itemPath>tools/buffer.c</itemPath>
+        <itemPath>tools_buffer.c</itemPath>
+        <itemPath>tools_others.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="uart" projectFiles="true">
+        <itemPath>uart_config.c</itemPath>
+        <itemPath>uart_tools.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>interrupts.c</itemPath>
@@ -48,6 +53,9 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">
@@ -148,7 +156,7 @@
         <property key="program-the-device-with-default-config-words" value="true"/>
       </HI-TECH-LINK>
       <VSMViewerPlatformTool>
-        <property key="design.file" value=""/>
+        <property key="design.file" value="../../Design/MainUnit.pdsprj"/>
         <property key="target.ip.address" value="localhost"/>
         <property key="target.ip.port" value="8001"/>
       </VSMViewerPlatformTool>

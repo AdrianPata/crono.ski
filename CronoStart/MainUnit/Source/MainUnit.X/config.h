@@ -5,8 +5,8 @@
  * Created on April 26, 2016, 1:47 PM
  */
 
-#ifndef CONFIG_H
-#define	CONFIG_H
+#ifndef CONFIG_CONFIG_H
+#define	CONFIG_CONFIG_H
 
 // CONFIG1H
 #pragma config FOSC = INTIO67   // Internal oscillator block
@@ -72,5 +72,5 @@
 
 void startupConfig();
 
-#endif	/* CONFIG_H */
+#endif	/* CONFIG_CONFIG_H */
 

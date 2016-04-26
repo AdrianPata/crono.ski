@@ -5,11 +5,11 @@
  * Created on April 26, 2016, 3:52 PM
  */
 
-#ifndef CONFIG_H
-#define	CONFIG_H
+#ifndef IRQ_CONFIG_H
+#define	IRQ_CONFIG_H
 
 void irq_config();
 
 
-#endif	/* CONFIG_H */
+#endif	/* IRQ_CONFIG_H */
 

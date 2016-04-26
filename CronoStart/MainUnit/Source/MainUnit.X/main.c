@@ -8,10 +8,16 @@
 
 #include "main.h"
 
+
+
 void main(void) {
     startupConfig();
     
+    //bufferAdd(&uart_TxBuf,'A');
+    //c=bufferGet(&uart_TxBuf);
+    printf("Adi");
+    
     while(1){
-        
+        uart_doWork();
     }
 }

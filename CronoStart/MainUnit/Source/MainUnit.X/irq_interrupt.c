@@ -1,8 +1,8 @@
-#include "../main.h"
+#include "main.h"
 
 void irq_int(){
     if(INT0IF){
         INT0IF=0;
-        irq_received=1;
+        //irq_received=1;
     }
 }

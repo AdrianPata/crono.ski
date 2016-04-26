@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "main.h"
 
 void irq_config(){
     ANSELB=0x0;

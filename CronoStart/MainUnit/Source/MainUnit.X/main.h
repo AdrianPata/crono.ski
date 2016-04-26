@@ -9,14 +9,21 @@
 #define	MAIN_H
 
 #include <xc.h>
-#include "config/config.h"
+#include <pic18f46k22.h>
+#include <stdio.h>
+#include <string.h>
 
-#include "irq/config.h"
-#include "irq/globals.h"
-#include "irq/interrupt.h"
+#include "config.h"
 
-#include "tools/bitOperations.h"
-#include "tools/buffer.h"
+#include "irq_config.h"
+#include "irq_globals.h"
+#include "irq_interrupt.h"
+
+#include "uart_config.h"
+#include "uart_tools.h"
+
+#include "tools_bitOperations.h"
+#include "tools_buffer.h"
 
 #endif	/* MAIN_H */
 
