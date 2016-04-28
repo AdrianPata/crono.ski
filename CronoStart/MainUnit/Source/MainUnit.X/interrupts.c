@@ -5,5 +5,5 @@ void interrupt high_priority int_high(){
 }
 
 void interrupt low_priority int_low(){
-    //uart_int();
+    uart_int(); //Interrupt on byte receive on UART 1
 }

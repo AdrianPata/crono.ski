@@ -1,6 +1,7 @@
 #include "main.h"
 
 struct Buffer uart_TxBuf;
+struct Buffer uart_RxBuf;
 
 void uart_config(){
     ANSC6=0;ANSC7=0; // Tx/Rx pins set as digital
@@ -19,4 +20,8 @@ void uart_config(){
 
 void uart_init(){
     bufferInit(&uart_TxBuf,uart_TxBufferMemory,uart_TxBufferMemorySize); //Initialize TX buffer
+    bufferInit(&uart_RxBuf,uart_RxBufferMemory,uart_RxBufferMemorySize); //Initialize RX buffer
+    
+    printf("CronoStart Console\r");
+    printf(">"); //Output the command cursor
 }

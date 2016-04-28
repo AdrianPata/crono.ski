@@ -70,6 +70,10 @@
 
 #define _XTAL_FREQ 16000000
 
+//BUFFER SPACE
+const char uart_TxBufferMemorySize=50; //Buffer for UART transmission
+const char uart_RxBufferMemorySize=50; //Buffer for UART reception
+
 void startupConfig();
 
 #endif	/* CONFIG_CONFIG_H */

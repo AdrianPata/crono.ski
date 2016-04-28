@@ -9,13 +9,14 @@ void bufferInit(struct Buffer* b, char* c,char s){
 }
 
 //Add byte to buffer
-void bufferAdd(struct Buffer* b,char c){
+char bufferAdd(struct Buffer* b,char c){
     char newval;
     newval=b->cLast+1;
     if(newval==b->size) newval=0;
-    if(newval==b->cRead) return;
+    if(newval==b->cRead) return 1; //Buffer is full. The byte is not added to buffer.
     b->cont[b->cLast]=c;
     b->cLast=newval;
+    return 0;
 }
 
 //Get byte from buffer
@@ -31,12 +32,17 @@ char bufferGet(struct Buffer* b){
 
 //Get the number of bytes in buffer (available to get)
 char bufferGetSize(struct Buffer* b){
-    if(b->cRead > b->cLast) return b->cLast - b->cRead;
-    if(b->cRead < b->cLast) return b->size + b->cLast - b->cRead;
+    if(b->cLast > b->cRead) return b->cLast - b->cRead;
+    if(b->cLast < b->cRead) return b->size + b->cLast - b->cRead;
     return 0;
 }
 
 //Get free space in buffer
 char bufferGetFree(struct Buffer* b){
-    return b->size-bufferGetSize(b);
+    return b->size-bufferGetSize(b)-1; //Even that the physical space available is N, the usable space at one time is N-1.
+}
+
+//Empty the buffer
+void bufferEmpty(struct Buffer* b){
+    b->cRead=b->cLast;
 }

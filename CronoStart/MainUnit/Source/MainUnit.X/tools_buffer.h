@@ -16,10 +16,11 @@ struct Buffer{
 };
 
 void bufferInit(struct Buffer* b, char* c,char s);
-void bufferAdd(struct Buffer* b,char c);
+char bufferAdd(struct Buffer* b,char c);
 char bufferGet(struct Buffer* b);
 char bufferGetSize(struct Buffer* b);
 char bufferGetFree(struct Buffer* b);
+void bufferEmpty(struct Buffer* b);
 
 #endif	/* TOOLS_BUFFER_H */
 

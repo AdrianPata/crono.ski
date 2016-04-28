@@ -12,6 +12,8 @@ void uart_SendData(){
         if(TX1IF){//EUSART transmitter is enabled and no character is being held for transmission in the TXREG
             c=bufferGet(&uart_TxBuf); //Get byte from buffer
             TX1REG=c; //Transmit byte
+        } else {
+            break;
         }
     }
 }

@@ -21,6 +21,7 @@
 
 #include "uart_config.h"
 #include "uart_tools.h"
+#include "uart_interrupt.h"
 
 #include "tools_bitOperations.h"
 #include "tools_buffer.h"

@@ -19,6 +19,7 @@
       <logicalFolder name="f4" displayName="uart" projectFiles="true">
         <itemPath>uart_config.h</itemPath>
         <itemPath>uart_tools.h</itemPath>
+        <itemPath>uart_interrupt.h</itemPath>
       </logicalFolder>
       <itemPath>main.h</itemPath>
     </logicalFolder>
@@ -43,6 +44,7 @@
       <logicalFolder name="f4" displayName="uart" projectFiles="true">
         <itemPath>uart_config.c</itemPath>
         <itemPath>uart_tools.c</itemPath>
+        <itemPath>uart_interrupt.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>interrupts.c</itemPath>
