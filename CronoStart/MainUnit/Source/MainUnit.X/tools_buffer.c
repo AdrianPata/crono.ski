@@ -46,3 +46,66 @@ char bufferGetFree(struct Buffer* b){
 void bufferEmpty(struct Buffer* b){
     b->cRead=b->cLast;
 }
+
+//Search for byte in buffer. Returns the offset in array if found, or 0xFF if not found.
+char bufferSearchByte(struct Buffer* b,char c){
+    char * p,* s;
+    char off,len;
+    if(b->cRead == b->cLast) return 0xFF; //Buffer is empty
+    
+    if(b->cRead < b->cLast){
+        len=b->cLast-b->cRead;
+        s=b->cont+b->cRead; 
+        p=memchr(s,c,len);
+        if(p!=NULL){
+            off=p-(char *)b->cont; //Offset in array
+            return off;
+        }
+    }
+    
+    if(b->cRead > b->cLast){
+        len=b->size-b->cRead; //Search from cRead o end of buffer
+        s=b->cont+b->cRead; 
+        p=memchr(s,c,len);
+        if(p!=NULL){
+            off=p-(char *)b->cont; //Offset in array
+            return off;
+        }
+        len=b->cLast; //Search from start of buffer to cLast
+        s=b->cont; 
+        p=memchr(s,c,len);
+        if(p!=NULL){
+            off=p-(char *)b->cont; //Offset in array
+            return off;
+        }
+    }
+    return 0xFF;
+}
+
+//Try to find a string command in the buffer. The search starts form cRead. On first mismatch the function returns Not Found
+char bufferFindCommand(struct Buffer* b,char* c){
+    char p,l;
+    l=strlen(c);
+    if(bufferGetSize(b)<l) return 0; //If the buffer size is smaller than the search command, return Not Found
+    p=b->cRead;
+    for(char i=0;i<l;i++){
+        if(c[i]!=b->cont[p]) return 0; //Compare c and buffer. If one byte is different, return Not Found
+        p++;
+        if(p==b->size) p=0;
+    }
+    return 1;
+}
+
+//Reset the cRead cursor to p+1
+void bufferResetCRead(struct Buffer* b,char p){
+    p=p+1;
+    if(p==b->size) p=0;
+    b->cRead=p;
+}
+
+//Discard the oldest byte in buffer to free one. This is useful if the buffer is full.
+void bufferDicardOneByte(struct Buffer* b){
+    if(b->cRead==b->cLast) return; //Buffer is empty
+    b->cRead++;
+    if(b->cRead==b->size) b->cRead=0;
+}

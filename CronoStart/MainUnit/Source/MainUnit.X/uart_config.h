@@ -12,7 +12,7 @@
 //Handle UART errors
 #define UART_ERR_OERR 7 // bit 7: Receive Overrun Error
 #define UART_ERR_TX_FULL 6 // bit 6: Tx buffer is full
-#define UART_ERR_RX_FULL 5 // bit 5: Rx buffer is full | Now this shouldn't happen since the buffer is emptied if a byte is received and the buffer is full.
+#define UART_ERR_RX_FULL 5 // bit 5: Rx buffer is full 
 char uartErrors=0;  
                     
                     

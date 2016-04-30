@@ -20,6 +20,7 @@
         <itemPath>uart_config.h</itemPath>
         <itemPath>uart_tools.h</itemPath>
         <itemPath>uart_interrupt.h</itemPath>
+        <itemPath>uart_console.h</itemPath>
       </logicalFolder>
       <itemPath>main.h</itemPath>
     </logicalFolder>
@@ -45,6 +46,7 @@
         <itemPath>uart_config.c</itemPath>
         <itemPath>uart_tools.c</itemPath>
         <itemPath>uart_interrupt.c</itemPath>
+        <itemPath>uart_console.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>interrupts.c</itemPath>

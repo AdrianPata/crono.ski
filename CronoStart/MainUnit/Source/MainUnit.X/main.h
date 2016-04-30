@@ -12,6 +12,7 @@
 #include <pic18f46k22.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "config.h"
 
@@ -22,6 +23,7 @@
 #include "uart_config.h"
 #include "uart_tools.h"
 #include "uart_interrupt.h"
+#include "uart_console.h"
 
 #include "tools_bitOperations.h"
 #include "tools_buffer.h"

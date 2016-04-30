@@ -2,6 +2,7 @@
 
 void uart_doWork(){
     uart_SendData();
+    uart_console_processBuffer(&uart_RxBuf); //Process console commands in RX buffer
 }
 
 //Transmit byte from TX buffer
