@@ -25,6 +25,12 @@
 #include "uart_interrupt.h"
 #include "uart_console.h"
 
+#include "bluetooth_config.h"
+#include "bluetooth_tools.h"
+
+#include "i2c_config.h"
+#include "i2c_tools.h"
+
 #include "tools_bitOperations.h"
 #include "tools_buffer.h"
 

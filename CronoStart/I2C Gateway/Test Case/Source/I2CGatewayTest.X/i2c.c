@@ -40,7 +40,7 @@ char i2c_slave_GetAvailableBytes(char adr){
     return r;
 }
 
-//Get available bytes from slave
+//Get free space on slave
 char i2c_slave_GetFreeSpace(){
     char r,adr;
     adr=0b10000010;
@@ -151,7 +151,7 @@ void i2c_SendBuffer(){
     }
     
     while(i2c_GetTxBufferSize()>0){
-        SSP1BUF=i2c_GetByteTxBuffer();i2c_wfc(); //Send command 0x04 - push data        
+        SSP1BUF=i2c_GetByteTxBuffer();i2c_wfc(); //Send one byte        
     }
     
     PEN1=1;i2c_wfc(); //Stop bit

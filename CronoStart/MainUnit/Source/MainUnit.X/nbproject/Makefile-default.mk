@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=config.c irq_config.c irq_interrupt.c tools_buffer.c tools_others.c uart_config.c uart_tools.c uart_interrupt.c main.c interrupts.c uart_console.c
+SOURCEFILES_QUOTED_IF_SPACED=config.c irq_config.c irq_interrupt.c tools_buffer.c tools_others.c uart_config.c uart_tools.c uart_interrupt.c main.c interrupts.c uart_console.c i2c_config.c i2c_tools.c bluetooth_config.c bluetooth_tools.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.p1 ${OBJECTDIR}/irq_config.p1 ${OBJECTDIR}/irq_interrupt.p1 ${OBJECTDIR}/tools_buffer.p1 ${OBJECTDIR}/tools_others.p1 ${OBJECTDIR}/uart_config.p1 ${OBJECTDIR}/uart_tools.p1 ${OBJECTDIR}/uart_interrupt.p1 ${OBJECTDIR}/main.p1 ${OBJECTDIR}/interrupts.p1 ${OBJECTDIR}/uart_console.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/config.p1.d ${OBJECTDIR}/irq_config.p1.d ${OBJECTDIR}/irq_interrupt.p1.d ${OBJECTDIR}/tools_buffer.p1.d ${OBJECTDIR}/tools_others.p1.d ${OBJECTDIR}/uart_config.p1.d ${OBJECTDIR}/uart_tools.p1.d ${OBJECTDIR}/uart_interrupt.p1.d ${OBJECTDIR}/main.p1.d ${OBJECTDIR}/interrupts.p1.d ${OBJECTDIR}/uart_console.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.p1 ${OBJECTDIR}/irq_config.p1 ${OBJECTDIR}/irq_interrupt.p1 ${OBJECTDIR}/tools_buffer.p1 ${OBJECTDIR}/tools_others.p1 ${OBJECTDIR}/uart_config.p1 ${OBJECTDIR}/uart_tools.p1 ${OBJECTDIR}/uart_interrupt.p1 ${OBJECTDIR}/main.p1 ${OBJECTDIR}/interrupts.p1 ${OBJECTDIR}/uart_console.p1 ${OBJECTDIR}/i2c_config.p1 ${OBJECTDIR}/i2c_tools.p1 ${OBJECTDIR}/bluetooth_config.p1 ${OBJECTDIR}/bluetooth_tools.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/config.p1.d ${OBJECTDIR}/irq_config.p1.d ${OBJECTDIR}/irq_interrupt.p1.d ${OBJECTDIR}/tools_buffer.p1.d ${OBJECTDIR}/tools_others.p1.d ${OBJECTDIR}/uart_config.p1.d ${OBJECTDIR}/uart_tools.p1.d ${OBJECTDIR}/uart_interrupt.p1.d ${OBJECTDIR}/main.p1.d ${OBJECTDIR}/interrupts.p1.d ${OBJECTDIR}/uart_console.p1.d ${OBJECTDIR}/i2c_config.p1.d ${OBJECTDIR}/i2c_tools.p1.d ${OBJECTDIR}/bluetooth_config.p1.d ${OBJECTDIR}/bluetooth_tools.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/config.p1 ${OBJECTDIR}/irq_config.p1 ${OBJECTDIR}/irq_interrupt.p1 ${OBJECTDIR}/tools_buffer.p1 ${OBJECTDIR}/tools_others.p1 ${OBJECTDIR}/uart_config.p1 ${OBJECTDIR}/uart_tools.p1 ${OBJECTDIR}/uart_interrupt.p1 ${OBJECTDIR}/main.p1 ${OBJECTDIR}/interrupts.p1 ${OBJECTDIR}/uart_console.p1
+OBJECTFILES=${OBJECTDIR}/config.p1 ${OBJECTDIR}/irq_config.p1 ${OBJECTDIR}/irq_interrupt.p1 ${OBJECTDIR}/tools_buffer.p1 ${OBJECTDIR}/tools_others.p1 ${OBJECTDIR}/uart_config.p1 ${OBJECTDIR}/uart_tools.p1 ${OBJECTDIR}/uart_interrupt.p1 ${OBJECTDIR}/main.p1 ${OBJECTDIR}/interrupts.p1 ${OBJECTDIR}/uart_console.p1 ${OBJECTDIR}/i2c_config.p1 ${OBJECTDIR}/i2c_tools.p1 ${OBJECTDIR}/bluetooth_config.p1 ${OBJECTDIR}/bluetooth_tools.p1
 
 # Source Files
-SOURCEFILES=config.c irq_config.c irq_interrupt.c tools_buffer.c tools_others.c uart_config.c uart_tools.c uart_interrupt.c main.c interrupts.c uart_console.c
+SOURCEFILES=config.c irq_config.c irq_interrupt.c tools_buffer.c tools_others.c uart_config.c uart_tools.c uart_interrupt.c main.c interrupts.c uart_console.c i2c_config.c i2c_tools.c bluetooth_config.c bluetooth_tools.c
 
 
 CFLAGS=
@@ -169,6 +169,38 @@ ${OBJECTDIR}/uart_console.p1: uart_console.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/uart_console.d ${OBJECTDIR}/uart_console.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/uart_console.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
+${OBJECTDIR}/i2c_config.p1: i2c_config.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/i2c_config.p1.d 
+	@${RM} ${OBJECTDIR}/i2c_config.p1 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=pro -P -N255 --warn=-2 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c_config.p1  i2c_config.c 
+	@-${MV} ${OBJECTDIR}/i2c_config.d ${OBJECTDIR}/i2c_config.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/i2c_config.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/i2c_tools.p1: i2c_tools.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/i2c_tools.p1.d 
+	@${RM} ${OBJECTDIR}/i2c_tools.p1 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=pro -P -N255 --warn=-2 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c_tools.p1  i2c_tools.c 
+	@-${MV} ${OBJECTDIR}/i2c_tools.d ${OBJECTDIR}/i2c_tools.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/i2c_tools.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/bluetooth_config.p1: bluetooth_config.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/bluetooth_config.p1.d 
+	@${RM} ${OBJECTDIR}/bluetooth_config.p1 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=pro -P -N255 --warn=-2 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/bluetooth_config.p1  bluetooth_config.c 
+	@-${MV} ${OBJECTDIR}/bluetooth_config.d ${OBJECTDIR}/bluetooth_config.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/bluetooth_config.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/bluetooth_tools.p1: bluetooth_tools.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/bluetooth_tools.p1.d 
+	@${RM} ${OBJECTDIR}/bluetooth_tools.p1 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=none  --double=24 --float=24 --emi=wordwrite --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=pro -P -N255 --warn=-2 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/bluetooth_tools.p1  bluetooth_tools.c 
+	@-${MV} ${OBJECTDIR}/bluetooth_tools.d ${OBJECTDIR}/bluetooth_tools.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/bluetooth_tools.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
 else
 ${OBJECTDIR}/config.p1: config.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -257,6 +289,38 @@ ${OBJECTDIR}/uart_console.p1: uart_console.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=pro -P -N255 --warn=-2 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/uart_console.p1  uart_console.c 
 	@-${MV} ${OBJECTDIR}/uart_console.d ${OBJECTDIR}/uart_console.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/uart_console.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/i2c_config.p1: i2c_config.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/i2c_config.p1.d 
+	@${RM} ${OBJECTDIR}/i2c_config.p1 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=pro -P -N255 --warn=-2 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c_config.p1  i2c_config.c 
+	@-${MV} ${OBJECTDIR}/i2c_config.d ${OBJECTDIR}/i2c_config.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/i2c_config.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/i2c_tools.p1: i2c_tools.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/i2c_tools.p1.d 
+	@${RM} ${OBJECTDIR}/i2c_tools.p1 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=pro -P -N255 --warn=-2 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/i2c_tools.p1  i2c_tools.c 
+	@-${MV} ${OBJECTDIR}/i2c_tools.d ${OBJECTDIR}/i2c_tools.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/i2c_tools.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/bluetooth_config.p1: bluetooth_config.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/bluetooth_config.p1.d 
+	@${RM} ${OBJECTDIR}/bluetooth_config.p1 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=pro -P -N255 --warn=-2 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/bluetooth_config.p1  bluetooth_config.c 
+	@-${MV} ${OBJECTDIR}/bluetooth_config.d ${OBJECTDIR}/bluetooth_config.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/bluetooth_config.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/bluetooth_tools.p1: bluetooth_tools.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/bluetooth_tools.p1.d 
+	@${RM} ${OBJECTDIR}/bluetooth_tools.p1 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --emi=wordwrite --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=pro -P -N255 --warn=-2 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-download,+config,+clib,-plib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/bluetooth_tools.p1  bluetooth_tools.c 
+	@-${MV} ${OBJECTDIR}/bluetooth_tools.d ${OBJECTDIR}/bluetooth_tools.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/bluetooth_tools.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 endif
 

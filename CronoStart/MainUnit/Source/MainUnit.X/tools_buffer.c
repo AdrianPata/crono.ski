@@ -96,7 +96,8 @@ char bufferFindCommand(struct Buffer* b,char* c){
     return 1;
 }
 
-//Reset the cRead cursor to p+1
+//Reset the cRead cursor to p+1.
+//Used to discard a command in the buffer. P is the position of 0x0D character (command terminator). P+1 is the position right after the command.
 void bufferResetCRead(struct Buffer* b,char p){
     p=p+1;
     if(p==b->size) p=0;
@@ -108,4 +109,13 @@ void bufferDicardOneByte(struct Buffer* b){
     if(b->cRead==b->cLast) return; //Buffer is empty
     b->cRead++;
     if(b->cRead==b->size) b->cRead=0;
+}
+
+//Advance read cursor N positions (if there is space)
+void bufferAdvanceCRead(struct Buffer* b,char n){
+    for(char i=0;i<n;i++){
+        if(b->cRead==b->cLast) return; //Buffer is empty
+        b->cRead++;
+        if(b->cRead==b->size) b->cRead=0;
+    }
 }

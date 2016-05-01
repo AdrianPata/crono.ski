@@ -17,5 +17,7 @@ void main(void) {
     
     while(1){
         uart_doWork();
+        i2c_doWork();
+        bluetooth_doWork();
     }
 }

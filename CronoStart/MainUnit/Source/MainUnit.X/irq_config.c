@@ -1,8 +1,9 @@
 #include "main.h"
 
 void irq_config(){
-    ANSELB=0x0;
-    //RBIP=1; //High priority
-    //RBIE=1; //Enable interrupt on change
-    INT0IE=1;
+    //Configure I2C IRQ on INT1 of PortB (RB1)
+    ANSB1=0; //Digital input
+    INTEDG1=0; //Interrupt on falling edge
+    INT1IP=1; //High priority
+    INT1IE=1; //Enable interrupt
 }

@@ -11,5 +11,4 @@ Chip: PIC18F46K22
 
 ### ToDo
 
-* Enable IRQ
-* Enable I2C Bus
+* Link the MainUnit, the I2C Gateway and the BTM-182 on a breadboard.

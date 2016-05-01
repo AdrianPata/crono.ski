@@ -1,7 +1,7 @@
 #include "main.h"
 
 void uart_doWork(){
-    uart_SendData();
+    uart_SendData(); //Send the data in TX buffer
     uart_console_processBuffer(&uart_RxBuf); //Process console commands in RX buffer
 }
 
