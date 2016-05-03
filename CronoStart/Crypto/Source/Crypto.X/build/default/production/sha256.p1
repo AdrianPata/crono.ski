@@ -1,0 +1,604 @@
+Version 3.2 HI-TECH Software Intermediate Code
+"21 sha256.h
+[s S5 `uc -> 64 `i `ul 1 `ul 1 `ul -> 8 `i ]
+[n S5 . data datalen bitlen state ]
+"16 C:\Program Files\Microchip\xc8\v1.37\include\string.h
+[v _memset `(*v ~T0 @X0 0 ef3`*v`i`ui ]
+[; ;__size_t.h: 4: typedef unsigned size_t;
+[; ;stdlib.h: 7: typedef unsigned short wchar_t;
+[; ;stdlib.h: 15: typedef struct {
+[; ;stdlib.h: 16: int rem;
+[; ;stdlib.h: 17: int quot;
+[; ;stdlib.h: 18: } div_t;
+[; ;stdlib.h: 19: typedef struct {
+[; ;stdlib.h: 20: unsigned rem;
+[; ;stdlib.h: 21: unsigned quot;
+[; ;stdlib.h: 22: } udiv_t;
+[; ;stdlib.h: 23: typedef struct {
+[; ;stdlib.h: 24: long quot;
+[; ;stdlib.h: 25: long rem;
+[; ;stdlib.h: 26: } ldiv_t;
+[; ;stdlib.h: 27: typedef struct {
+[; ;stdlib.h: 28: unsigned long quot;
+[; ;stdlib.h: 29: unsigned long rem;
+[; ;stdlib.h: 30: } uldiv_t;
+[; ;stdlib.h: 53: extern double atof(const char *);
+[; ;stdlib.h: 54: extern double strtod(const char *, const char **);
+[; ;stdlib.h: 55: extern int atoi(const char *);
+[; ;stdlib.h: 56: extern unsigned xtoi(const char *);
+[; ;stdlib.h: 57: extern long atol(const char *);
+[; ;stdlib.h: 58: extern long strtol(const char *, char **, int);
+[; ;stdlib.h: 60: extern int rand(void);
+[; ;stdlib.h: 61: extern void srand(unsigned int);
+[; ;stdlib.h: 62: extern void * calloc(size_t, size_t);
+[; ;stdlib.h: 63: extern div_t div(int numer, int denom);
+[; ;stdlib.h: 64: extern udiv_t udiv(unsigned numer, unsigned denom);
+[; ;stdlib.h: 65: extern ldiv_t ldiv(long numer, long denom);
+[; ;stdlib.h: 66: extern uldiv_t uldiv(unsigned long numer,unsigned long denom);
+[; ;stdlib.h: 67: extern unsigned long _lrotl(unsigned long value, unsigned int shift);
+[; ;stdlib.h: 68: extern unsigned long _lrotr(unsigned long value, unsigned int shift);
+[; ;stdlib.h: 69: extern unsigned int _rotl(unsigned int value, unsigned int shift);
+[; ;stdlib.h: 70: extern unsigned int _rotr(unsigned int value, unsigned int shift);
+[; ;stdlib.h: 75: extern void * malloc(size_t);
+[; ;stdlib.h: 76: extern void free(void *);
+[; ;stdlib.h: 77: extern void * realloc(void *, size_t);
+[; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
+[; ;stdlib.h: 86: extern int atexit(void (*)(void));
+[; ;stdlib.h: 87: extern char * getenv(const char *);
+[; ;stdlib.h: 88: extern char ** environ;
+[; ;stdlib.h: 89: extern int system(char *);
+[; ;stdlib.h: 90: extern void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
+[; ;stdlib.h: 91: extern void * bsearch(const void *, void *, size_t, size_t, int(*)(const void *, const void *));
+[; ;stdlib.h: 92: extern int abs(int);
+[; ;stdlib.h: 93: extern long labs(long);
+[; ;stdlib.h: 95: extern char * itoa(char * buf, int val, int base);
+[; ;stdlib.h: 96: extern char * utoa(char * buf, unsigned val, int base);
+[; ;stdlib.h: 101: extern char * ltoa(char * buf, long val, int base);
+[; ;stdlib.h: 102: extern char * ultoa(char * buf, unsigned long val, int base);
+[; ;stdlib.h: 104: extern char * ftoa(float f, int * status);
+[; ;string.h: 14: extern void * memcpy(void *, const void *, size_t);
+[; ;string.h: 15: extern void * memmove(void *, const void *, size_t);
+[; ;string.h: 16: extern void * memset(void *, int, size_t);
+[; ;string.h: 34: extern char * strcat(char *, const char *);
+[; ;string.h: 35: extern char * strcpy(char *, const char *);
+[; ;string.h: 36: extern char * strncat(char *, const char *, size_t);
+[; ;string.h: 37: extern char * strncpy(char *, const char *, size_t);
+[; ;string.h: 38: extern char * strdup(const char *);
+[; ;string.h: 39: extern char * strtok(char *, const char *);
+[; ;string.h: 42: extern int memcmp(const void *, const void *, size_t);
+[; ;string.h: 43: extern int strcmp(const char *, const char *);
+[; ;string.h: 44: extern int stricmp(const char *, const char *);
+[; ;string.h: 45: extern int strncmp(const char *, const char *, size_t);
+[; ;string.h: 46: extern int strnicmp(const char *, const char *, size_t);
+[; ;string.h: 47: extern void * memchr(const void *, int, size_t);
+[; ;string.h: 48: extern size_t strcspn(const char *, const char *);
+[; ;string.h: 49: extern char * strpbrk(const char *, const char *);
+[; ;string.h: 50: extern size_t strspn(const char *, const char *);
+[; ;string.h: 51: extern char * strstr(const char *, const char *);
+[; ;string.h: 52: extern char * stristr(const char *, const char *);
+[; ;string.h: 53: extern char * strerror(int);
+[; ;string.h: 54: extern size_t strlen(const char *);
+[; ;string.h: 55: extern char * strchr(const char *, int);
+[; ;string.h: 56: extern char * strichr(const char *, int);
+[; ;string.h: 57: extern char * strrchr(const char *, int);
+[; ;string.h: 58: extern char * strrichr(const char *, int);
+[; ;stddef.h: 6: typedef int ptrdiff_t;
+[; ;sha256.h: 18: typedef unsigned char BYTE;
+[; ;sha256.h: 19: typedef unsigned long WORD;
+[; ;sha256.h: 21: typedef struct {
+[; ;sha256.h: 22: BYTE data[64];
+[; ;sha256.h: 23: WORD datalen;
+[; ;sha256.h: 24: unsigned long long bitlen;
+[; ;sha256.h: 25: WORD state[8];
+[; ;sha256.h: 26: } SHA256_CTX;
+[; ;sha256.h: 29: void sha256_init(SHA256_CTX *ctx);
+[; ;sha256.h: 30: void sha256_update(SHA256_CTX *ctx, const BYTE data[], size_t len);
+[; ;sha256.h: 31: void sha256_final(SHA256_CTX *ctx, BYTE hash[]);
+"32 sha256.c
+[v _k `Cul ~T0 @X0 -> 64 `i s ]
+[i _k
+:U ..
+"33
+-> -> 1116352408 `l `ul
+-> -> 1899447441 `l `ul
+-> -1245643825 `ul
+-> -373957723 `ul
+-> -> 961987163 `l `ul
+-> -> 1508970993 `l `ul
+-> -1841331548 `ul
+-> -1424204075 `ul
+"34
+-> -670586216 `ul
+-> -> 310598401 `l `ul
+-> -> 607225278 `l `ul
+-> -> 1426881987 `l `ul
+-> -> 1925078388 `l `ul
+-> -2132889090 `ul
+-> -1680079193 `ul
+-> -1046744716 `ul
+"35
+-> -459576895 `ul
+-> -272742522 `ul
+-> -> 264347078 `l `ul
+-> -> 604807628 `l `ul
+-> -> 770255983 `l `ul
+-> -> 1249150122 `l `ul
+-> -> 1555081692 `l `ul
+-> -> 1996064986 `l `ul
+"36
+-> -1740746414 `ul
+-> -1473132947 `ul
+-> -1341970488 `ul
+-> -1084653625 `ul
+-> -958395405 `ul
+-> -710438585 `ul
+-> -> 113926993 `l `ul
+-> -> 338241895 `l `ul
+"37
+-> -> 666307205 `l `ul
+-> -> 773529912 `l `ul
+-> -> 1294757372 `l `ul
+-> -> 1396182291 `l `ul
+-> -> 1695183700 `l `ul
+-> -> 1986661051 `l `ul
+-> -2117940946 `ul
+-> -1838011259 `ul
+"38
+-> -1564481375 `ul
+-> -1474664885 `ul
+-> -1035236496 `ul
+-> -949202525 `ul
+-> -778901479 `ul
+-> -694614492 `ul
+-> -200395387 `ul
+-> -> 275423344 `l `ul
+"39
+-> -> 430227734 `l `ul
+-> -> 506948616 `l `ul
+-> -> 659060556 `l `ul
+-> -> 883997877 `l `ul
+-> -> 958139571 `l `ul
+-> -> 1322822218 `l `ul
+-> -> 1537002063 `l `ul
+-> -> 1747873779 `l `ul
+"40
+-> -> 1955562222 `l `ul
+-> -> 2024104815 `l `ul
+-> -2067236844 `ul
+-> -1933114872 `ul
+-> -1866530822 `ul
+-> -1538233109 `ul
+-> -1090935817 `ul
+"41
+-> -965641998 `ul
+..
+]
+[; ;sha256.c: 32: static const WORD k[64] = {
+[; ;sha256.c: 33: 0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+[; ;sha256.c: 34: 0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+[; ;sha256.c: 35: 0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+[; ;sha256.c: 36: 0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+[; ;sha256.c: 37: 0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+[; ;sha256.c: 38: 0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+[; ;sha256.c: 39: 0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+[; ;sha256.c: 40: 0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+[; ;sha256.c: 41: };
+"44
+[v _sha256_transform `(v ~T0 @X0 1 ef2`*S5`*Cuc ]
+"45
+{
+[; ;sha256.c: 44: void sha256_transform(SHA256_CTX *ctx, const BYTE data[])
+[; ;sha256.c: 45: {
+[e :U _sha256_transform ]
+"44
+[v _ctx `*S5 ~T0 @X0 1 r1 ]
+[v _data `*Cuc ~T0 @X0 1 r2 ]
+"45
+[f ]
+"46
+[v _a `ul ~T0 @X0 1 a ]
+[v _b `ul ~T0 @X0 1 a ]
+[v _c `ul ~T0 @X0 1 a ]
+[v _d `ul ~T0 @X0 1 a ]
+[v _e `ul ~T0 @X0 1 a ]
+[v _f `ul ~T0 @X0 1 a ]
+[v _g `ul ~T0 @X0 1 a ]
+[v _h `ul ~T0 @X0 1 a ]
+[v _i `ul ~T0 @X0 1 a ]
+[v _j `ul ~T0 @X0 1 a ]
+[v _t1 `ul ~T0 @X0 1 a ]
+[v _t2 `ul ~T0 @X0 1 a ]
+[v _m `ul ~T0 @X0 -> 64 `i a ]
+[v _l `ul ~T0 @X0 1 a ]
+[; ;sha256.c: 46: WORD a, b, c, d, e, f, g, h, i, j, t1, t2, m[64],l;
+[; ;sha256.c: 48: for (i = 0, j = 0; i < 16; ++i, j += 4){
+"48
+{
+[e ; = _i -> -> -> 0 `i `l `ul = _j -> -> -> 0 `i `l `ul ]
+[e $ < _i -> -> -> 16 `i `l `ul 7  ]
+[e $U 8  ]
+[e :U 7 ]
+{
+[; ;sha256.c: 49: l=data[j];
+"49
+[e = _l -> *U + _data * -> _j `ux -> -> # *U _data `ui `ux `ul ]
+[; ;sha256.c: 50: m[i]=l<<24;
+"50
+[e = *U + &U _m * -> _i `ux -> -> # *U &U _m `ui `ux << _l -> 24 `i ]
+[; ;sha256.c: 51: l=data[j+1];
+"51
+[e = _l -> *U + _data * -> + _j -> -> -> 1 `i `l `ul `ux -> -> # *U _data `ui `ux `ul ]
+[; ;sha256.c: 52: m[i]=m[i]|(l<<16);
+"52
+[e = *U + &U _m * -> _i `ux -> -> # *U &U _m `ui `ux | *U + &U _m * -> _i `ux -> -> # *U &U _m `ui `ux << _l -> 16 `i ]
+[; ;sha256.c: 53: l=data[j+2];
+"53
+[e = _l -> *U + _data * -> + _j -> -> -> 2 `i `l `ul `ux -> -> # *U _data `ui `ux `ul ]
+[; ;sha256.c: 54: m[i]=m[i]|(l<<8);
+"54
+[e = *U + &U _m * -> _i `ux -> -> # *U &U _m `ui `ux | *U + &U _m * -> _i `ux -> -> # *U &U _m `ui `ux << _l -> 8 `i ]
+[; ;sha256.c: 55: l=data[j+3];
+"55
+[e = _l -> *U + _data * -> + _j -> -> -> 3 `i `l `ul `ux -> -> # *U _data `ui `ux `ul ]
+[; ;sha256.c: 56: m[i]=m[i]|l;
+"56
+[e = *U + &U _m * -> _i `ux -> -> # *U &U _m `ui `ux | *U + &U _m * -> _i `ux -> -> # *U &U _m `ui `ux _l ]
+"58
+}
+"48
+[e ; =+ _i -> -> -> 1 `i `l `ul =+ _j -> -> -> 4 `i `l `ul ]
+[e $ < _i -> -> -> 16 `i `l `ul 7  ]
+[e :U 8 ]
+"58
+}
+[; ;sha256.c: 58: }
+[; ;sha256.c: 59: for ( ; i < 64; ++i)
+"59
+{
+[e $ < _i -> -> -> 64 `i `l `ul 10  ]
+[e $U 11  ]
+"60
+[e :U 10 ]
+[; ;sha256.c: 60: m[i] = ((((m[i - 2]) >> (17)) | ((m[i - 2]) << (32-(17)))) ^ (((m[i - 2]) >> (19)) | ((m[i - 2]) << (32-(19)))) ^ ((m[i - 2]) >> 10)) + m[i - 7] + ((((m[i - 15]) >> (7)) | ((m[i - 15]) << (32-(7)))) ^ (((m[i - 15]) >> (18)) | ((m[i - 15]) << (32-(18)
+[e = *U + &U _m * -> _i `ux -> -> # *U &U _m `ui `ux + + + ^ ^ | >> *U + &U _m * -> - _i -> -> -> 2 `i `l `ul `ux -> -> # *U &U _m `ui `ux -> 17 `i << *U + &U _m * -> - _i -> -> -> 2 `i `l `ul `ux -> -> # *U &U _m `ui `ux - -> 32 `i -> 17 `i | >> *U + &U _m * -> - _i -> -> -> 2 `i `l `ul `ux -> -> # *U &U _m `ui `ux -> 19 `i << *U + &U _m * -> - _i -> -> -> 2 `i `l `ul `ux -> -> # *U &U _m `ui `ux - -> 32 `i -> 19 `i >> *U + &U _m * -> - _i -> -> -> 2 `i `l `ul `ux -> -> # *U &U _m `ui `ux -> 10 `i *U + &U _m * -> - _i -> -> -> 7 `i `l `ul `ux -> -> # *U &U _m `ui `ux ^ ^ | >> *U + &U _m * -> - _i -> -> -> 15 `i `l `ul `ux -> -> # *U &U _m `ui `ux -> 7 `i << *U + &U _m * -> - _i -> -> -> 15 `i `l `ul `ux -> -> # *U &U _m `ui `ux - -> 32 `i -> 7 `i | >> *U + &U _m * -> - _i -> -> -> 15 `i `l `ul `ux -> -> # *U &U _m `ui `ux -> 18 `i << *U + &U _m * -> - _i -> -> -> 15 `i `l `ul `ux -> -> # *U &U _m `ui `ux - -> 32 `i -> 18 `i >> *U + &U _m * -> - _i -> -> -> 15 `i `l `ul `ux -> -> # *U &U _m `ui `ux -> 3 `i *U + &U _m * -> - _i -> -> -> 16 `i `l `ul `ux -> -> # *U &U _m `ui `ux ]
+"59
+[e =+ _i -> -> -> 1 `i `l `ul ]
+[e $ < _i -> -> -> 64 `i `l `ul 10  ]
+[e :U 11 ]
+"60
+}
+[; ;sha256.c: 62: a = ctx->state[0];
+"62
+[e = _a *U + &U . *U _ctx 3 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux ]
+[; ;sha256.c: 63: b = ctx->state[1];
+"63
+[e = _b *U + &U . *U _ctx 3 * -> -> -> 1 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux ]
+[; ;sha256.c: 64: c = ctx->state[2];
+"64
+[e = _c *U + &U . *U _ctx 3 * -> -> -> 2 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux ]
+[; ;sha256.c: 65: d = ctx->state[3];
+"65
+[e = _d *U + &U . *U _ctx 3 * -> -> -> 3 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux ]
+[; ;sha256.c: 66: e = ctx->state[4];
+"66
+[e = _e *U + &U . *U _ctx 3 * -> -> -> 4 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux ]
+[; ;sha256.c: 67: f = ctx->state[5];
+"67
+[e = _f *U + &U . *U _ctx 3 * -> -> -> 5 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux ]
+[; ;sha256.c: 68: g = ctx->state[6];
+"68
+[e = _g *U + &U . *U _ctx 3 * -> -> -> 6 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux ]
+[; ;sha256.c: 69: h = ctx->state[7];
+"69
+[e = _h *U + &U . *U _ctx 3 * -> -> -> 7 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux ]
+[; ;sha256.c: 71: for (i = 0; i < 64; ++i) {
+"71
+{
+[e = _i -> -> -> 0 `i `l `ul ]
+[e $ < _i -> -> -> 64 `i `l `ul 13  ]
+[e $U 14  ]
+[e :U 13 ]
+{
+[; ;sha256.c: 72: t1 = h + ((((e) >> (6)) | ((e) << (32-(6)))) ^ (((e) >> (11)) | ((e) << (32-(11)))) ^ (((e) >> (25)) | ((e) << (32-(25))))) + (((e) & (f)) ^ (~(e) & (g))) + k[i] + m[i];
+"72
+[e = _t1 + + + + _h ^ ^ | >> _e -> 6 `i << _e - -> 32 `i -> 6 `i | >> _e -> 11 `i << _e - -> 32 `i -> 11 `i | >> _e -> 25 `i << _e - -> 32 `i -> 25 `i ^ & _e _f & ~ _e _g *U + &U _k * -> _i `ux -> -> # *U &U _k `ui `ux *U + &U _m * -> _i `ux -> -> # *U &U _m `ui `ux ]
+[; ;sha256.c: 73: t2 = ((((a) >> (2)) | ((a) << (32-(2)))) ^ (((a) >> (13)) | ((a) << (32-(13)))) ^ (((a) >> (22)) | ((a) << (32-(22))))) + (((a) & (b)) ^ ((a) & (c)) ^ ((b) & (c)));
+"73
+[e = _t2 + ^ ^ | >> _a -> 2 `i << _a - -> 32 `i -> 2 `i | >> _a -> 13 `i << _a - -> 32 `i -> 13 `i | >> _a -> 22 `i << _a - -> 32 `i -> 22 `i ^ ^ & _a _b & _a _c & _b _c ]
+[; ;sha256.c: 74: h = g;
+"74
+[e = _h _g ]
+[; ;sha256.c: 75: g = f;
+"75
+[e = _g _f ]
+[; ;sha256.c: 76: f = e;
+"76
+[e = _f _e ]
+[; ;sha256.c: 77: e = d + t1;
+"77
+[e = _e + _d _t1 ]
+[; ;sha256.c: 78: d = c;
+"78
+[e = _d _c ]
+[; ;sha256.c: 79: c = b;
+"79
+[e = _c _b ]
+[; ;sha256.c: 80: b = a;
+"80
+[e = _b _a ]
+[; ;sha256.c: 81: a = t1 + t2;
+"81
+[e = _a + _t1 _t2 ]
+"82
+}
+"71
+[e =+ _i -> -> -> 1 `i `l `ul ]
+[e $ < _i -> -> -> 64 `i `l `ul 13  ]
+[e :U 14 ]
+"82
+}
+[; ;sha256.c: 82: }
+[; ;sha256.c: 84: ctx->state[0] += a;
+"84
+[e =+ *U + &U . *U _ctx 3 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux _a ]
+[; ;sha256.c: 85: ctx->state[1] += b;
+"85
+[e =+ *U + &U . *U _ctx 3 * -> -> -> 1 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux _b ]
+[; ;sha256.c: 86: ctx->state[2] += c;
+"86
+[e =+ *U + &U . *U _ctx 3 * -> -> -> 2 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux _c ]
+[; ;sha256.c: 87: ctx->state[3] += d;
+"87
+[e =+ *U + &U . *U _ctx 3 * -> -> -> 3 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux _d ]
+[; ;sha256.c: 88: ctx->state[4] += e;
+"88
+[e =+ *U + &U . *U _ctx 3 * -> -> -> 4 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux _e ]
+[; ;sha256.c: 89: ctx->state[5] += f;
+"89
+[e =+ *U + &U . *U _ctx 3 * -> -> -> 5 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux _f ]
+[; ;sha256.c: 90: ctx->state[6] += g;
+"90
+[e =+ *U + &U . *U _ctx 3 * -> -> -> 6 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux _g ]
+[; ;sha256.c: 91: ctx->state[7] += h;
+"91
+[e =+ *U + &U . *U _ctx 3 * -> -> -> 7 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux _h ]
+[; ;sha256.c: 92: }
+"92
+[e :UE 6 ]
+}
+"94
+[v _sha256_init `(v ~T0 @X0 1 ef1`*S5 ]
+"95
+{
+[; ;sha256.c: 94: void sha256_init(SHA256_CTX *ctx)
+[; ;sha256.c: 95: {
+[e :U _sha256_init ]
+"94
+[v _ctx `*S5 ~T0 @X0 1 r1 ]
+"95
+[f ]
+[; ;sha256.c: 96: ctx->datalen = 0;
+"96
+[e = . *U _ctx 1 -> -> -> 0 `i `l `ul ]
+[; ;sha256.c: 97: ctx->bitlen = 0;
+"97
+[e = . *U _ctx 2 -> -> -> 0 `i `l `ul ]
+[; ;sha256.c: 98: ctx->state[0] = 0x6a09e667;
+"98
+[e = *U + &U . *U _ctx 3 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux -> -> 1779033703 `l `ul ]
+[; ;sha256.c: 99: ctx->state[1] = 0xbb67ae85;
+"99
+[e = *U + &U . *U _ctx 3 * -> -> -> 1 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux -> -1150833019 `ul ]
+[; ;sha256.c: 100: ctx->state[2] = 0x3c6ef372;
+"100
+[e = *U + &U . *U _ctx 3 * -> -> -> 2 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux -> -> 1013904242 `l `ul ]
+[; ;sha256.c: 101: ctx->state[3] = 0xa54ff53a;
+"101
+[e = *U + &U . *U _ctx 3 * -> -> -> 3 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux -> -1521486534 `ul ]
+[; ;sha256.c: 102: ctx->state[4] = 0x510e527f;
+"102
+[e = *U + &U . *U _ctx 3 * -> -> -> 4 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux -> -> 1359893119 `l `ul ]
+[; ;sha256.c: 103: ctx->state[5] = 0x9b05688c;
+"103
+[e = *U + &U . *U _ctx 3 * -> -> -> 5 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux -> -1694144372 `ul ]
+[; ;sha256.c: 104: ctx->state[6] = 0x1f83d9ab;
+"104
+[e = *U + &U . *U _ctx 3 * -> -> -> 6 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux -> -> 528734635 `l `ul ]
+[; ;sha256.c: 105: ctx->state[7] = 0x5be0cd19;
+"105
+[e = *U + &U . *U _ctx 3 * -> -> -> 7 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux -> -> 1541459225 `l `ul ]
+[; ;sha256.c: 106: }
+"106
+[e :UE 16 ]
+}
+"108
+[v _sha256_update `(v ~T0 @X0 1 ef3`*S5`*Cuc`ui ]
+"109
+{
+[; ;sha256.c: 108: void sha256_update(SHA256_CTX *ctx, const BYTE data[], size_t len)
+[; ;sha256.c: 109: {
+[e :U _sha256_update ]
+"108
+[v _ctx `*S5 ~T0 @X0 1 r1 ]
+[v _data `*Cuc ~T0 @X0 1 r2 ]
+[v _len `ui ~T0 @X0 1 r3 ]
+"109
+[f ]
+"110
+[v _i `ul ~T0 @X0 1 a ]
+[; ;sha256.c: 110: WORD i;
+[; ;sha256.c: 112: for (i = 0; i < len; ++i) {
+"112
+{
+[e = _i -> -> -> 0 `i `l `ul ]
+[e $U 21  ]
+[e :U 18 ]
+{
+[; ;sha256.c: 113: ctx->data[ctx->datalen] = data[i];
+"113
+[e = *U + &U . *U _ctx 0 * -> . *U _ctx 1 `ux -> -> # *U &U . *U _ctx 0 `ui `ux *U + _data * -> _i `ux -> -> # *U _data `ui `ux ]
+[; ;sha256.c: 114: ctx->datalen++;
+"114
+[e ++ . *U _ctx 1 -> -> -> 1 `i `l `ul ]
+[; ;sha256.c: 115: if (ctx->datalen == 64) {
+"115
+[e $ ! == . *U _ctx 1 -> -> -> 64 `i `l `ul 22  ]
+{
+[; ;sha256.c: 116: sha256_transform(ctx, ctx->data);
+"116
+[e ( _sha256_transform (2 , _ctx -> &U . *U _ctx 0 `*Cuc ]
+[; ;sha256.c: 117: ctx->bitlen += 512;
+"117
+[e =+ . *U _ctx 2 -> -> -> 512 `i `l `ul ]
+[; ;sha256.c: 118: ctx->datalen = 0;
+"118
+[e = . *U _ctx 1 -> -> -> 0 `i `l `ul ]
+"119
+}
+[e :U 22 ]
+"120
+}
+"112
+[e =+ _i -> -> -> 1 `i `l `ul ]
+[e :U 21 ]
+[e $ < _i -> _len `ul 18  ]
+[e :U 19 ]
+"120
+}
+[; ;sha256.c: 119: }
+[; ;sha256.c: 120: }
+[; ;sha256.c: 121: }
+"121
+[e :UE 17 ]
+}
+"123
+[v _sha256_final `(v ~T0 @X0 1 ef2`*S5`*uc ]
+"124
+{
+[; ;sha256.c: 123: void sha256_final(SHA256_CTX *ctx, BYTE hash[])
+[; ;sha256.c: 124: {
+[e :U _sha256_final ]
+"123
+[v _ctx `*S5 ~T0 @X0 1 r1 ]
+[v _hash `*uc ~T0 @X0 1 r2 ]
+"124
+[f ]
+"125
+[v _i `ul ~T0 @X0 1 a ]
+[; ;sha256.c: 125: WORD i;
+[; ;sha256.c: 127: i = ctx->datalen;
+"127
+[e = _i . *U _ctx 1 ]
+[; ;sha256.c: 130: if (ctx->datalen < 56) {
+"130
+[e $ ! < . *U _ctx 1 -> -> -> 56 `i `l `ul 24  ]
+{
+[; ;sha256.c: 131: ctx->data[i++] = 0x80;
+"131
+[e = *U + &U . *U _ctx 0 * -> ++ _i -> -> -> 1 `i `l `ul `ux -> -> # *U &U . *U _ctx 0 `ui `ux -> -> 128 `i `uc ]
+[; ;sha256.c: 132: while (i < 56)
+"132
+[e $U 25  ]
+[e :U 26 ]
+[; ;sha256.c: 133: ctx->data[i++] = 0x00;
+"133
+[e = *U + &U . *U _ctx 0 * -> ++ _i -> -> -> 1 `i `l `ul `ux -> -> # *U &U . *U _ctx 0 `ui `ux -> -> 0 `i `uc ]
+[e :U 25 ]
+"132
+[e $ < _i -> -> -> 56 `i `l `ul 26  ]
+[e :U 27 ]
+"134
+}
+[; ;sha256.c: 134: }
+[e $U 28  ]
+"135
+[e :U 24 ]
+[; ;sha256.c: 135: else {
+{
+[; ;sha256.c: 136: ctx->data[i++] = 0x80;
+"136
+[e = *U + &U . *U _ctx 0 * -> ++ _i -> -> -> 1 `i `l `ul `ux -> -> # *U &U . *U _ctx 0 `ui `ux -> -> 128 `i `uc ]
+[; ;sha256.c: 137: while (i < 64)
+"137
+[e $U 29  ]
+[e :U 30 ]
+[; ;sha256.c: 138: ctx->data[i++] = 0x00;
+"138
+[e = *U + &U . *U _ctx 0 * -> ++ _i -> -> -> 1 `i `l `ul `ux -> -> # *U &U . *U _ctx 0 `ui `ux -> -> 0 `i `uc ]
+[e :U 29 ]
+"137
+[e $ < _i -> -> -> 64 `i `l `ul 30  ]
+[e :U 31 ]
+[; ;sha256.c: 139: sha256_transform(ctx, ctx->data);
+"139
+[e ( _sha256_transform (2 , _ctx -> &U . *U _ctx 0 `*Cuc ]
+[; ;sha256.c: 140: memset(ctx->data, 0, 56);
+"140
+[e ( _memset (3 , , -> &U . *U _ctx 0 `*v -> 0 `i -> -> 56 `i `ui ]
+"141
+}
+[e :U 28 ]
+[; ;sha256.c: 141: }
+[; ;sha256.c: 144: ctx->bitlen += ctx->datalen * 8;
+"144
+[e =+ . *U _ctx 2 * . *U _ctx 1 -> -> -> 8 `i `l `ul ]
+[; ;sha256.c: 145: ctx->data[63] = ctx->bitlen;
+"145
+[e = *U + &U . *U _ctx 0 * -> -> -> 63 `i `ui `ux -> -> # *U &U . *U _ctx 0 `ui `ux -> . *U _ctx 2 `uc ]
+[; ;sha256.c: 146: ctx->data[62] = ctx->bitlen >> 8;
+"146
+[e = *U + &U . *U _ctx 0 * -> -> -> 62 `i `ui `ux -> -> # *U &U . *U _ctx 0 `ui `ux -> >> . *U _ctx 2 -> 8 `i `uc ]
+[; ;sha256.c: 147: ctx->data[61] = ctx->bitlen >> 16;
+"147
+[e = *U + &U . *U _ctx 0 * -> -> -> 61 `i `ui `ux -> -> # *U &U . *U _ctx 0 `ui `ux -> >> . *U _ctx 2 -> 16 `i `uc ]
+[; ;sha256.c: 148: ctx->data[60] = ctx->bitlen >> 24;
+"148
+[e = *U + &U . *U _ctx 0 * -> -> -> 60 `i `ui `ux -> -> # *U &U . *U _ctx 0 `ui `ux -> >> . *U _ctx 2 -> 24 `i `uc ]
+[; ;sha256.c: 153: sha256_transform(ctx, ctx->data);
+"153
+[e ( _sha256_transform (2 , _ctx -> &U . *U _ctx 0 `*Cuc ]
+[; ;sha256.c: 157: for (i = 0; i < 4; ++i) {
+"157
+{
+[e = _i -> -> -> 0 `i `l `ul ]
+[e $ < _i -> -> -> 4 `i `l `ul 32  ]
+[e $U 33  ]
+[e :U 32 ]
+{
+[; ;sha256.c: 158: hash[i] = (ctx->state[0] >> (24 - i * 8)) & 0x000000ff;
+"158
+[e = *U + _hash * -> _i `ux -> -> # *U _hash `ui `ux -> & >> *U + &U . *U _ctx 3 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux - -> -> -> 24 `i `l `ul * _i -> -> -> 8 `i `l `ul -> -> -> 255 `i `l `ul `uc ]
+[; ;sha256.c: 159: hash[i + 4] = (ctx->state[1] >> (24 - i * 8)) & 0x000000ff;
+"159
+[e = *U + _hash * -> + _i -> -> -> 4 `i `l `ul `ux -> -> # *U _hash `ui `ux -> & >> *U + &U . *U _ctx 3 * -> -> -> 1 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux - -> -> -> 24 `i `l `ul * _i -> -> -> 8 `i `l `ul -> -> -> 255 `i `l `ul `uc ]
+[; ;sha256.c: 160: hash[i + 8] = (ctx->state[2] >> (24 - i * 8)) & 0x000000ff;
+"160
+[e = *U + _hash * -> + _i -> -> -> 8 `i `l `ul `ux -> -> # *U _hash `ui `ux -> & >> *U + &U . *U _ctx 3 * -> -> -> 2 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux - -> -> -> 24 `i `l `ul * _i -> -> -> 8 `i `l `ul -> -> -> 255 `i `l `ul `uc ]
+[; ;sha256.c: 161: hash[i + 12] = (ctx->state[3] >> (24 - i * 8)) & 0x000000ff;
+"161
+[e = *U + _hash * -> + _i -> -> -> 12 `i `l `ul `ux -> -> # *U _hash `ui `ux -> & >> *U + &U . *U _ctx 3 * -> -> -> 3 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux - -> -> -> 24 `i `l `ul * _i -> -> -> 8 `i `l `ul -> -> -> 255 `i `l `ul `uc ]
+[; ;sha256.c: 162: hash[i + 16] = (ctx->state[4] >> (24 - i * 8)) & 0x000000ff;
+"162
+[e = *U + _hash * -> + _i -> -> -> 16 `i `l `ul `ux -> -> # *U _hash `ui `ux -> & >> *U + &U . *U _ctx 3 * -> -> -> 4 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux - -> -> -> 24 `i `l `ul * _i -> -> -> 8 `i `l `ul -> -> -> 255 `i `l `ul `uc ]
+[; ;sha256.c: 163: hash[i + 20] = (ctx->state[5] >> (24 - i * 8)) & 0x000000ff;
+"163
+[e = *U + _hash * -> + _i -> -> -> 20 `i `l `ul `ux -> -> # *U _hash `ui `ux -> & >> *U + &U . *U _ctx 3 * -> -> -> 5 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux - -> -> -> 24 `i `l `ul * _i -> -> -> 8 `i `l `ul -> -> -> 255 `i `l `ul `uc ]
+[; ;sha256.c: 164: hash[i + 24] = (ctx->state[6] >> (24 - i * 8)) & 0x000000ff;
+"164
+[e = *U + _hash * -> + _i -> -> -> 24 `i `l `ul `ux -> -> # *U _hash `ui `ux -> & >> *U + &U . *U _ctx 3 * -> -> -> 6 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux - -> -> -> 24 `i `l `ul * _i -> -> -> 8 `i `l `ul -> -> -> 255 `i `l `ul `uc ]
+[; ;sha256.c: 165: hash[i + 28] = (ctx->state[7] >> (24 - i * 8)) & 0x000000ff;
+"165
+[e = *U + _hash * -> + _i -> -> -> 28 `i `l `ul `ux -> -> # *U _hash `ui `ux -> & >> *U + &U . *U _ctx 3 * -> -> -> 7 `i `ui `ux -> -> # *U &U . *U _ctx 3 `ui `ux - -> -> -> 24 `i `l `ul * _i -> -> -> 8 `i `l `ul -> -> -> 255 `i `l `ul `uc ]
+"166
+}
+"157
+[e =+ _i -> -> -> 1 `i `l `ul ]
+[e $ < _i -> -> -> 4 `i `l `ul 32  ]
+[e :U 33 ]
+"166
+}
+[; ;sha256.c: 166: }
+[; ;sha256.c: 167: }
+"167
+[e :UE 23 ]
+}

@@ -1,0 +1,129 @@
+[p PRO_MODE GLOBOPT AUTOSTATIC LFSROK SPACEOPT EMI_WORD ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F46K22 ]
+[d frameptr 4065 ]
+"62 C:\Program Files\Microchip\xc8\v1.37\sources\common\float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+"86 C:\Program Files\Microchip\xc8\v1.37\sources\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 3 0 ]
+"54 C:\Program Files\Microchip\xc8\v1.37\sources\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
+"62 C:\Program Files\Microchip\xc8\v1.37\sources\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 3 0 ]
+"20 C:\Program Files\Microchip\xc8\v1.37\sources\common\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 3 0 ]
+"8 C:\Program Files\Microchip\xc8\v1.37\sources\common\memset.c
+[v _memset memset `(*.39v  1 e 2 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.37\sources\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 3 0 ]
+"245
+[v ___flsub __flsub `(d  1 e 3 0 ]
+"11 C:\Program Files\Microchip\xc8\v1.37\sources\common\sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 3 0 ]
+"8 C:\Program Files\Microchip\xc8\v1.37\sources\common\sprcmul.c
+[v ___flmul __flmul `(d  1 e 3 0 ]
+"4 C:\Program Files\Microchip\xc8\v1.37\sources\common\strlen.c
+[v _strlen strlen `(ui  1 e 2 0 ]
+"15 C:\Program Files\Microchip\xc8\v1.37\sources\common\Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"13 C:\surse\crono.ski\CronoStart\Crypto\Source\Crypto.X\main.c
+[v _main main `(v  1 e 1 0 ]
+"44 C:\surse\crono.ski\CronoStart\Crypto\Source\Crypto.X\sha256.c
+[v _sha256_transform sha256_transform `(v  1 e 1 0 ]
+"94
+[v _sha256_init sha256_init `(v  1 e 1 0 ]
+"108
+[v _sha256_update sha256_update `(v  1 e 1 0 ]
+"123
+[v _sha256_final sha256_final `(v  1 e 1 0 ]
+"32
+[v _k k `C[64]ul  1 s 256 k ]
+"13 C:\surse\crono.ski\CronoStart\Crypto\Source\Crypto.X\main.c
+[v _main main `(v  1 e 1 0 ]
+{
+[s S21 . 104 `[64]uc 1 data 64 0 `ul 1 datalen 4 64 `ul 1 bitlen 4 68 `[8]ul 1 state 32 72 ]
+"17
+[v main@ctx ctx `S21  1 a 104 36 ]
+"16
+[v main@buf buf `[32]uc  1 a 32 0 ]
+"15
+[v main@text1 text1 `[4]uc  1 a 4 32 ]
+"13
+[v main@F7829 F7829 `[4]uc  1 s 4 F7829 ]
+"30
+} 0
+"4 C:\Program Files\Microchip\xc8\v1.37\sources\common\strlen.c
+[v _strlen strlen `(ui  1 e 2 0 ]
+{
+"6
+[v strlen@cp cp `*.39Cuc  1 a 2 2 ]
+"4
+[v strlen@s s `*.39Cuc  1 p 2 0 ]
+"13
+} 0
+"108 C:\surse\crono.ski\CronoStart\Crypto\Source\Crypto.X\sha256.c
+[v _sha256_update sha256_update `(v  1 e 1 0 ]
+{
+"110
+[v sha256_update@i i `ul  1 a 4 66 ]
+[s S21 . 104 `[64]uc 1 data 64 0 `ul 1 datalen 4 64 `ul 1 bitlen 4 68 `[8]ul 1 state 32 72 ]
+"108
+[v sha256_update@ctx ctx `*.39S21  1 p 2 56 ]
+[v sha256_update@data data `*.39Cuc  1 p 2 58 ]
+[v sha256_update@len len `ui  1 p 2 60 ]
+"121
+} 0
+"94
+[v _sha256_init sha256_init `(v  1 e 1 0 ]
+{
+[s S21 . 104 `[64]uc 1 data 64 0 `ul 1 datalen 4 64 `ul 1 bitlen 4 68 `[8]ul 1 state 32 72 ]
+[v sha256_init@ctx ctx `*.39S21  1 p 2 0 ]
+"106
+} 0
+"123
+[v _sha256_final sha256_final `(v  1 e 1 0 ]
+{
+"125
+[v sha256_final@i i `ul  1 a 4 66 ]
+[s S21 . 104 `[64]uc 1 data 64 0 `ul 1 datalen 4 64 `ul 1 bitlen 4 68 `[8]ul 1 state 32 72 ]
+"123
+[v sha256_final@ctx ctx `*.39S21  1 p 2 56 ]
+[v sha256_final@hash hash `*.39uc  1 p 2 58 ]
+"167
+} 0
+"44
+[v _sha256_transform sha256_transform `(v  1 e 1 0 ]
+{
+"46
+[v sha256_transform@m m `[64]ul  1 a 256 0 ]
+[v sha256_transform@i i `ul  1 a 4 52 ]
+[v sha256_transform@e e `ul  1 a 4 48 ]
+[v sha256_transform@a a `ul  1 a 4 44 ]
+[v sha256_transform@l l `ul  1 a 4 40 ]
+[v sha256_transform@j j `ul  1 a 4 36 ]
+[v sha256_transform@c c `ul  1 a 4 32 ]
+[v sha256_transform@b b `ul  1 a 4 28 ]
+[v sha256_transform@g g `ul  1 a 4 24 ]
+[v sha256_transform@f f `ul  1 a 4 20 ]
+[v sha256_transform@h h `ul  1 a 4 16 ]
+[v sha256_transform@d d `ul  1 a 4 12 ]
+[v sha256_transform@t1 t1 `ul  1 a 4 8 ]
+[v sha256_transform@t2 t2 `ul  1 a 4 4 ]
+[s S21 . 104 `[64]uc 1 data 64 0 `ul 1 datalen 4 64 `ul 1 bitlen 4 68 `[8]ul 1 state 32 72 ]
+"44
+[v sha256_transform@ctx ctx `*.39S21  1 p 2 0 ]
+[v sha256_transform@data data `*.39Cuc  1 p 2 2 ]
+"92
+} 0
+"8 C:\Program Files\Microchip\xc8\v1.37\sources\common\memset.c
+[v _memset memset `(*.39v  1 e 2 0 ]
+{
+"15
+[v memset@p p `*.39uc  1 a 2 6 ]
+"8
+[v memset@p1 p1 `*.39v  1 p 2 0 ]
+[v memset@c c `i  1 p 2 2 ]
+[v memset@n n `ui  1 p 2 4 ]
+"22
+} 0
