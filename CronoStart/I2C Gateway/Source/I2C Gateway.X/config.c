@@ -8,6 +8,8 @@ void startupConfiguration(){
     //Digital inputs
         //ANSELA
         ANSA0=0;ANSA1=0;ANSA2=0;ANSA4=0; //All digital
+        TRISA0=0; //Set pin as output
+        LATA0=0; //Pull line low (When RCA0 is configured as output, it will pull the line low)
     //EUSART
         //APFCON
         RXDTSEL=1; //RX pe pin RA5

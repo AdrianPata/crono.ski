@@ -10,6 +10,15 @@
 
 void main(void) {
     startupConfiguration();
+    
+    //uartAddByteToTxBuffer('I');
+    //uartAddByteToTxBuffer('2');
+    //uartAddByteToTxBuffer('C');
+    //uartAddByteToTxBuffer('G');    
+    //uartAddByteToTxBuffer('W');    
+    //uartAddByteToTxBuffer(0x0D);
+    //uartAddByteToTxBuffer(0x0A);
+    
     while(1){
         uartTxByteFromBuffer();
     }

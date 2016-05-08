@@ -11,6 +11,7 @@
 
 
 void main(void) {
+    int i=0;
     startupConfig();
     
     
@@ -19,5 +20,14 @@ void main(void) {
         uart_doWork();
         i2c_doWork();
         bluetooth_doWork();
+        
+                
+        i++;
+        if(i==1000){
+            i=0;
+            LATA0=~LATA0;
+        }
+        __delay_ms(1);
+         
     }
 }

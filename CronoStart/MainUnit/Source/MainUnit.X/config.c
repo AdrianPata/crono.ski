@@ -6,7 +6,7 @@ void startupConfig(){
     while(HFIOFS==0){} //0 = HFINTOSC frequency is not stable, wait until stable
     LATA0=0; //Shut down LED, frequency is stable
     
-    IPEN=1; // Priority interrupts
+    IPEN=1; // Use priority interrupts (low and high))
     
     uart_config();
     i2c_config();

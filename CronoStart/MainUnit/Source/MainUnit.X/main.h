@@ -33,6 +33,7 @@
 
 #include "tools_bitOperations.h"
 #include "tools_buffer.h"
+#include "tools_others.h"
 
 #endif	/* MAIN_H */
 

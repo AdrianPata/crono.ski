@@ -4,13 +4,13 @@
 void uartDoIRQ(){
     TRISA0=0; //Set pin as output
     LATA0=0; //Pull line low
-    LATA0=1; //Line is high
     TRISA0=1; //Line as input
 }
 
 //Returns the next available byte in RX buffer
 //If there are no more bytes, returns 0
 char uartGetNextRxBufferByte(){
+    
     if(uartRxRead==uartRxLast) return 0; //buffer is empty
     uartRxRead++;
     if(uartRxRead==uartRxBufferSize) uartRxRead=0;

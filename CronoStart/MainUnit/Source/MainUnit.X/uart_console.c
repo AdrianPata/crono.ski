@@ -14,9 +14,12 @@ void uart_console_processBuffer(struct Buffer* buf){
         
         strcpy(com,"bt:"); //send to bluetooth - the data after the ":". Also a terminator will be added.
         if(bufferFindCommand(buf,com)!=0) uart_console_SendToBluetooth(buf,off);
+
+        strcpy(com,"irq"); //Simulate IRQ
+        if(bufferFindCommand(buf,com)!=0) irq_i2c=1;
         
         bufferResetCRead(buf,off);
-        printf(">");
+        printf("\n>");
     }
 }
 
@@ -27,7 +30,7 @@ void uart_console_GetUARTErrors(){
     
     itoa(b,uartErrors,2);
     strcat(out,b);
-    printf("UART err: %s\r",out);
+    printf("UART err: %s\r\n",out);
 }
 
 //Send bytes to bluetooth. off is the offset in array of the end of the command
