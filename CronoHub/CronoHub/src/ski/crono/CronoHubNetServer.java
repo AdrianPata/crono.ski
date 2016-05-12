@@ -7,6 +7,7 @@ package ski.crono;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -20,54 +21,80 @@ import java.util.logging.Logger;
  */
 public class CronoHubNetServer extends Thread {
     
-    public boolean listening=true;
-    public boolean running=true; // While true the thread is running
-    private ServerSocket serverSocket;
-    private Socket server;
+    private boolean connected=true; // While true the thread is running
+    private final Socket server;
+    private final int id;
+    private CryptoTool crypto=new CryptoTool();
     
-    CommandProcess comP=new CommandProcess(); //Process received bytes
+    CommandProcess comP; //Analyze and process received bytes (commands)
     
-    public CronoHubNetServer(int port) throws IOException
+    public CronoHubNetServer(Socket s,int id) throws IOException
     {
-       serverSocket = new ServerSocket(port);
-       serverSocket.setSoTimeout(0);
+       server=s;
+       this.id=id;
+       comP=new CommandProcess(id);
+    }
+    
+    //Kill the connection and close the server
+    public void close(){
+        try {
+            connected=false;
+            server.close();
+        } catch (IOException ex) {
+            Log.out(id+" error on closing "+ex.getMessage());
+        }
+    }
+    
+    public void sendData(String com,byte[] b){
+        try {
+            OutputStream out=server.getOutputStream();
+            out.write("SEND".getBytes());
+            out.write(com.getBytes());
+            out.write(b);
+            out.write("\r\n".getBytes());
+        } catch (IOException ex) {
+            Log.out(id+" send data error: "+ex.getMessage());
+        }
+        
     }
     
     @Override
     public void run(){
         try{
-            Log.out("Waiting for client on port " + serverSocket.getLocalPort() + "...");
-            server = serverSocket.accept();
-            Log.out("Just connected to " + server.getRemoteSocketAddress());
+            Log.out(id+ " just connected to " + server.getRemoteSocketAddress());
             InputStream in=server.getInputStream();
             byte[] rBytes=new byte[1000];
             int t;
-            while(running){
-                if(in.available()>0){
-                    t=in.read(rBytes,0, 1000);
-                    if(t>0) Log.out("Received "+t+" bytes");
+            
+            initConnection();
+            
+            while(connected){
+                t=in.read(rBytes,0, 1000); //Read bytes from socket. Blocking.
+                if(t>0) {
+                    Log.out(id+ " received "+t+" bytes");
                     comP.addBytes(rBytes, t);
                 }
-                
-                Thread.sleep(1);
+                if(t==-1) break; //Connection closed
             }
         }catch(SocketTimeoutException s)
         {
-           Log.out("Socket timed out!"+s.getMessage());
+           Log.out(id+" socket timed out!"+s.getMessage());
         }catch(IOException e)
         {
-            Log.out("CronoHubNetServer error: "+e.getMessage());
-        }catch(InterruptedException ex) {
-            Log.out("CronoHubNetServer thread interrupted: "+ex.getMessage());
-        }
-        finally {
+            Log.out(id+" CronoHubNetServer error: "+e.getMessage());
+        } finally {
             try {
-                if(server!=null) server.close();
+                server.close();
             } catch (IOException ex) {
-                Log.out("CronoHubNetServer closing error: "+ex.getMessage());
+                Log.out(id+" CronoHubNetServer closing error: "+ex.getMessage());
             }
         }
+        Log.out(id+ " connection closed.");
     }
     
-    
+    //Share public key
+    private void initConnection(){
+        byte[] key=crypto.randomKey();
+        sendData("KEY", key);
+    }
 }
