@@ -1,0 +1,78 @@
+.bgSizeCover {
+    height: 100%;
+    background-image: url('ski-start-e.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+.toppanel {
+    position: absolute;
+    background: rgba(255,255,255,.5);
+    font-family: "Verdana";
+    font-size: 16px;
+    padding: 20px;
+    border: 1px solid #FFFFFF;
+    left: 40px;
+    top: 40px;
+    right: 40px;
+    text-align: center;
+    font-weight: bold;
+}            
+            
+.mainpanel {
+    position:absolute;
+    background: rgba(255,255,255,.5);
+    font-family: "Verdana";
+    font-size: 11px;
+    padding: 20px;
+    border: 1px solid #FFFFFF;
+    left: 40px;
+    top: 120px;
+    right: 40px;
+    bottom: 40px;
+    overflow-y: scroll;
+}
+
+.bottompanel {
+    position:absolute;
+    left: 40px;
+    right: 40px;
+    bottom: 5px;
+    font-family: "Verdana";
+    font-size: 9px;
+}
+
+.maintable {
+    width: 100%;
+    font-size: 12px;
+}
+
+.maintable .tblHeader td {
+    text-align: center;
+    background-color: #FFF;
+    font-weight: bold;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.maintable .tblRow td {
+    text-align: center;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.maintable .tblRowCol1 td{
+    background: rgba(255,255,255,.5);
+}
+
+.maintable .tblRowCol2 td {
+    background: rgba(144,195,212,.5);
+}
+
+.maintable .tblRowColSel td {
+    background: rgba(255,0,0,.5);
+}

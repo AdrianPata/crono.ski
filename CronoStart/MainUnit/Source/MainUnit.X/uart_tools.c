@@ -1,7 +1,8 @@
 #include "main.h"
 
 void uart_doWork(){
-    uart_SendData();
+    uart_SendData(); //Send the data in TX buffer
+    uart_console_processBuffer(&uart_RxBuf); //Process console commands in RX buffer
 }
 
 //Transmit byte from TX buffer
@@ -12,6 +13,8 @@ void uart_SendData(){
         if(TX1IF){//EUSART transmitter is enabled and no character is being held for transmission in the TXREG
             c=bufferGet(&uart_TxBuf); //Get byte from buffer
             TX1REG=c; //Transmit byte
+        } else {
+            break;
         }
     }
 }

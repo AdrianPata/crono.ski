@@ -29,8 +29,10 @@ void uart_int();
 char uartGetRxBufferSize();
 char uartGetNextRxBufferByte();
 void uartAddByteToTxBuffer(char c);
+void uartAddByteToRxBuffer(char c);
 void uartTxByteFromBuffer();
 char uartGetTxBufferFree();
+void uartDoIRQ();
 
 #endif	/* UART_H */
 

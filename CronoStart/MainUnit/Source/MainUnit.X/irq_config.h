@@ -8,6 +8,8 @@
 #ifndef IRQ_CONFIG_H
 #define	IRQ_CONFIG_H
 
+char irq_i2c=0; //IRQ received on I2C bus
+
 void irq_config();
 
 

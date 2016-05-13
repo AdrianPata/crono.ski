@@ -30,3 +30,7 @@
 
 # Debug files
 *.dSYM/
+/CronoHub/CronoHub/nbproject/private/
+/CronoHub/CronoHub/build/
+/CronoWeb/nbproject/private/
+/CronoHub/TestClient/nbproject/private/
