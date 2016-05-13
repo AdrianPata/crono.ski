@@ -25,6 +25,7 @@ public class CronoHubNetServer extends Thread {
     private final Socket server;
     private final int id;
     private CryptoTool crypto=new CryptoTool();
+
     
     CommandProcess comP; //Analyze and process received bytes (commands)
     
@@ -32,7 +33,7 @@ public class CronoHubNetServer extends Thread {
     {
        server=s;
        this.id=id;
-       comP=new CommandProcess(id);
+       comP=new CommandProcess(id,crypto);
     }
     
     //Kill the connection and close the server
@@ -94,7 +95,6 @@ public class CronoHubNetServer extends Thread {
     
     //Share public key
     private void initConnection(){
-        byte[] key=crypto.randomKey();
-        sendData("KEY", key);
+        sendData("KEY", crypto.randomKey());        
     }
 }

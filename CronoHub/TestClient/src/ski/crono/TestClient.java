@@ -19,13 +19,17 @@ public class TestClient {
     /**
      * @param args the command line arguments
      */
+    static OutputStream outToServer;
+    static CryptoTool ct=new CryptoTool();
+    static NetProcess net;
+    
     public static void main(String[] args) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String serverName = "127.0.0.1";
         int port = 4523;
         byte[] b;
         boolean run=true;
-        NetProcess net;
+        
         
         try{
             System.out.println("Connecting to " + serverName + " on port " + port);
@@ -33,7 +37,7 @@ public class TestClient {
             net=new NetProcess(client);
             net.start();
             System.out.println("Just connected to "  + client.getRemoteSocketAddress());
-            OutputStream outToServer = client.getOutputStream();
+            outToServer = client.getOutputStream();
             
             
             String c;
@@ -43,13 +47,21 @@ public class TestClient {
                 r=br.readLine();
                 if(r.equals("x")) run=false;
                 if(r.equals("c1")){
-                    c="salut\r\n";
-                    b=c.getBytes();
-                    outToServer.write(b);
+                    sendCommand("salut".getBytes());
                 }
             }
             
             client.close();
+        } catch (IOException ex) {
+            Logger.getLogger(TestClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    static void sendCommand(byte[] b){
+        try {
+            outToServer.write("SEND".getBytes());
+            outToServer.write(ct.base64encode(ct.AESencode(b, net.secret)));
+            outToServer.write(0x0D);outToServer.write(0x0A); //Command terminator
         } catch (IOException ex) {
             Logger.getLogger(TestClient.class.getName()).log(Level.SEVERE, null, ex);
         }

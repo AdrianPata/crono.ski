@@ -5,6 +5,8 @@
  */
 package ski.crono;
 
+import javax.xml.bind.DatatypeConverter;
+
 /**
  *
  * @author MPLAB
@@ -13,9 +15,11 @@ public class CommandProcess {
     byte[] buffer=new byte[1000];
     int bufferPos=0; //Buffer insert position. If it is 0, buffer is empty.
     int id;
+    private CryptoTool crypto;
     
-    public CommandProcess(int id){
+    public CommandProcess(int id,CryptoTool c){
         this.id=id;
+        this.crypto=c;
     }
     
     //Add received to buffer
@@ -48,8 +52,13 @@ public class CommandProcess {
             command.append((char)buffer[i]);
         }
         
-        System.out.println(id+" received command: "+command.toString());
+        Log.out(id+" received command: "+command.toString());
         discardCommand(commandEndPos);
+        
+        if(command.toString().startsWith("SEND")){
+            String cnt=command.toString().substring(4,command.toString().length());
+            Log.out("Mesaj: "+new String(crypto.AESdecode(crypto.base64decode(cnt.getBytes()))));
+        }
     }
     
     //Discard command from buffer

@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>sha256.h</itemPath>
       <itemPath>aes256.h</itemPath>
+      <itemPath>hmac.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -17,6 +18,7 @@
       <itemPath>main.c</itemPath>
       <itemPath>sha256.c</itemPath>
       <itemPath>aes256.c</itemPath>
+      <itemPath>hmac.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -148,13 +150,6 @@
         <property key="periphComp6.gte" value="gt"/>
         <property key="reset.scl" value="false"/>
         <property key="reset.type" value="MCLR"/>
-        <property key="tracecontrol.include.timestamp" value="summarydataenabled"/>
-        <property key="tracecontrol.select" value="0"/>
-        <property key="tracecontrol.stallontracebufferfull" value="false"/>
-        <property key="tracecontrol.timestamp" value="0"/>
-        <property key="tracecontrol.tracebufmax" value="546000"/>
-        <property key="tracecontrol.tracefile" value="defmplabxtrace.log"/>
-        <property key="tracecontrol.traceresetonrun" value="false"/>
         <property key="uart10io.output" value="window"/>
         <property key="uart10io.outputfile" value=""/>
         <property key="uart10io.uartioenabled" value="false"/>
@@ -360,6 +355,11 @@
                   value=""/>
         <property key="warningmessagebreakoptions.warningmessages" value="holdstate"/>
       </Simulator>
+      <VSMViewerPlatformTool>
+        <property key="design.file" value="../../Design/Crypto.pdsprj"/>
+        <property key="target.ip.address" value="localhost"/>
+        <property key="target.ip.port" value="8001"/>
+      </VSMViewerPlatformTool>
       <XC8-config-global>
         <property key="advanced-elf" value="true"/>
         <property key="output-file-format" value="-mcof,+elf"/>

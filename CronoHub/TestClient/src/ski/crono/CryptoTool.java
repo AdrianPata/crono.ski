@@ -5,41 +5,34 @@
  */
 package ski.crono;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Base64;
+import java.security.NoSuchProviderException;
+import java.security.Security;
+import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.Mac;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  *
  * @author MPLAB
  */
 public class CryptoTool {
-    byte[] secretKey=new byte[] {(byte)0xcb,(byte)0x07,(byte)0x1D,(byte)0x84,(byte)0x75,(byte)0xFA,(byte)0x8C,(byte)0x73,(byte)0xB7,(byte)0x30,(byte)0x81,(byte)0xAA,(byte)0x14,(byte)0xAF,(byte)0x78,(byte)0x83,(byte)0x07,(byte)0x68,(byte)0x2C,(byte)0x23,(byte)0x47,(byte)0xEB,(byte)0xB1,(byte)0x5D,(byte)0xAE,(byte)0xAE,(byte)0xE0,(byte)0x3D,(byte)0xF2,(byte)0x49,(byte)0x6B,(byte)0x1D};
-    byte[] sharedKey=null;
-    byte[] sessionKey=null;
-    
-    byte[] randomKey(){
-        if(sharedKey==null){
-            SecureRandom random = new SecureRandom();
-            byte bytes[] = new byte[32];
-            random.nextBytes(bytes);
-            sharedKey=bytes;
-            return bytes;
-        } else {
-            return sharedKey;
-        }
-    }
-    
     byte[] hmac(byte[] key,byte[] message){
         try {
             Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
@@ -53,6 +46,17 @@ public class CryptoTool {
         return null;
     }
     
+    public CryptoTool(){
+        Security.addProvider(new BouncyCastleProvider());
+        
+        if (Security.getProvider("BC") == null){
+            System.out.println("Bouncy Castle provider is NOT available");
+        }
+        else{
+            System.out.println("Bouncy Castle provider is available");
+        }
+    }
+    
     byte[] base64encode(byte[] b){
         return Base64.getEncoder().encode(b);
     }
@@ -61,21 +65,21 @@ public class CryptoTool {
         return Base64.getDecoder().decode(b);
     }
     
-    byte[] AESencode(byte[] b){
+    byte[] AESencode(byte[] b,byte[] k) throws InvalidAlgorithmParameterException{
         try {
-            SecretKey secret = new SecretKeySpec(secretKey, "AES");
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            SecretKey secret = new SecretKeySpec(k, "AES");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding","BC");
             cipher.init(Cipher.ENCRYPT_MODE, secret);
             return cipher.doFinal(b);
-        } catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
+        } catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException | NoSuchProviderException ex) {
             Logger.getLogger(CryptoTool.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
     
-    byte[] AESdecode(byte[] b){
+    byte[] AESdecode(byte[] b,byte[] k){
         try {
-            SecretKey secret = new SecretKeySpec(secretKey, "AES");
+            SecretKey secret = new SecretKeySpec(k, "AES");
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secret);
             return cipher.doFinal(b);
