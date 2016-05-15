@@ -146,10 +146,10 @@ void sha256_final(SHA256_CTX *ctx, BYTE hash[])
 	ctx->data[62] = ctx->bitlen >> 8;
 	ctx->data[61] = ctx->bitlen >> 16;
 	ctx->data[60] = ctx->bitlen >> 24;
-	//ctx->data[59] = ctx->bitlen >> 32;
-	//ctx->data[58] = ctx->bitlen >> 40;
-	//ctx->data[57] = ctx->bitlen >> 48;
-	//ctx->data[56] = ctx->bitlen >> 56;
+	ctx->data[59] = 0;
+	ctx->data[58] = 0;
+	ctx->data[57] = 0;
+	ctx->data[56] = 0;
 	sha256_transform(ctx, ctx->data);
 
 	// Since this implementation uses little endian byte ordering and SHA uses big endian,

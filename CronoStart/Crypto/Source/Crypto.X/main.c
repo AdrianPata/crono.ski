@@ -83,7 +83,7 @@
 void main(void) {
     IRCF2=1;IRCF1=1;IRCF0=1; //HFINTOSC ? (16 MHz)
     
-    
+    /*
     BYTE text1[] = "abc";
     BYTE buf1[SHA256_BLOCK_SIZE];
     BYTE mes[64];
@@ -99,6 +99,7 @@ void main(void) {
     sha256_init(&ctx1);
 	sha256_update(&ctx1, mes, 55);
 	sha256_final(&ctx1, buf1);
+    */
     
     
     BYTE msg[]="abc";
