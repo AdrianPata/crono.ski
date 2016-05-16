@@ -10,7 +10,7 @@
 
 //I2C Bus addresses
 #define I2C_ADR_BLUETOOTH 0b10000010
-#define I2C_ADR_TERM1 0b10000100
+#define I2C_ADR_GSM 0b10000100
 
 void i2c_config();
 
