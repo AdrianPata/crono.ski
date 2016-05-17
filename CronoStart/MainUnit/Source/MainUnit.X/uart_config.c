@@ -12,7 +12,7 @@ void uart_config(){
     SYNC1=0; //Asynchronous
     SPEN1=1; //Enable USART  
     
-    RC1IP=1; //Low priority interrupt - reception
+    RC1IP=1; //High priority interrupt - reception
     RC1IE=1; //Enable receive interrupt - reception
     
     uart_init();

@@ -35,5 +35,8 @@
 #include "tools_buffer.h"
 #include "tools_others.h"
 
+#include "timer_config.h"
+#include "timer_interrupt.h"
+
 #endif	/* MAIN_H */
 
