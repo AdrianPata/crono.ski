@@ -1,8 +1,11 @@
 #include "main.h"
 
 void startupConfig(){
-    IRCF2=1;IRCF1=1;IRCF0=1; //HFINTOSC ? (16 MHz)
-    ANSA0=0;TRISA0=0;LATA0=1; //Configure one pin for control
+    IRCF2=1;IRCF1=1;IRCF0=1; //HFINTOSC (16 MHz)
+    
+    ANSA0=0;TRISA0=0;LATA0=1; //Configure pin for control (there is a LED attached at this pin that is blinking all the time)
+    ANSA1=0;TRISA1=0;LATA1=0; //Configure pin for control 
+    
     while(HFIOFS==0){} //0 = HFINTOSC frequency is not stable, wait until stable
     LATA0=0; //Shut down LED, frequency is stable
     

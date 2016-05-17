@@ -3,6 +3,7 @@
 void uart_console_RxBufferStatus(struct Buffer* buf);
 void uart_console_GetUARTErrors();
 void uart_console_SendToBluetooth(struct Buffer* buff,char off);
+void uart_console_DisplaySystemTime();
 
 void uart_console_processBuffer(struct Buffer* buf){
     char off;  
@@ -18,6 +19,9 @@ void uart_console_processBuffer(struct Buffer* buf){
         strcpy(com,"irq"); //Simulate IRQ
         if(bufferFindCommand(buf,com)!=0) irq_i2c=1;
         
+        strcpy(com,"systime"); //Display time since startup
+        if(bufferFindCommand(buf,com)!=0) uart_console_DisplaySystemTime();
+
         bufferResetCRead(buf,off);
         printf("\n>");
     }
@@ -42,4 +46,9 @@ void uart_console_SendToBluetooth(struct Buffer* buff,char off){
         bufferAdd(&bluetooth_TxBuf,c); //Put byte into bluetooth TX buffer
     }
     bufferAdd(&bluetooth_TxBuf,0x0D); //Add a CR at the end of the command
+}
+
+//Print current time
+void uart_console_DisplaySystemTime(){
+    printf("System time: %lu\r\n",timer_alive);
 }
