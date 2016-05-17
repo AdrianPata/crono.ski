@@ -11,7 +11,6 @@
 
 
 void main(void) {
-    int i=0;
     startupConfig();
     
     
@@ -20,14 +19,14 @@ void main(void) {
         uart_doWork();
         i2c_doWork();
         bluetooth_doWork();
+        gsm_doWork();
+        timer_doWork();
         
-                
-        i++;
-        if(i==1000){
-            i=0;
+        //Blink LED on RA0        
+        if(timer_CounterExpired(TIMER_COUNTER_LED_BLINK)==0){
             LATA0=~LATA0;
+            timer_CounterSet(TIMER_COUNTER_LED_BLINK,1);
         }
-        __delay_ms(1);
          
     }
 }

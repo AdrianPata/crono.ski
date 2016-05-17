@@ -37,6 +37,9 @@
 
 #include "timer_config.h"
 #include "timer_interrupt.h"
+#include "timer_tool.h"
+
+#include "gsm_tool.h"
 
 #endif	/* MAIN_H */
 
