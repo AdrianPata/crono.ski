@@ -20,6 +20,10 @@
         <itemPath>irq_globals.h</itemPath>
         <itemPath>irq_interrupt.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f7" displayName="timer" projectFiles="true">
+        <itemPath>timer_config.h</itemPath>
+        <itemPath>timer_interrupt.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3" displayName="tools" projectFiles="true">
         <itemPath>tools_bitOperations.h</itemPath>
         <itemPath>tools_buffer.h</itemPath>
@@ -54,6 +58,10 @@
       <logicalFolder name="f2" displayName="irq" projectFiles="true">
         <itemPath>irq_config.c</itemPath>
         <itemPath>irq_interrupt.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7" displayName="timer" projectFiles="true">
+        <itemPath>timer_config.c</itemPath>
+        <itemPath>timer_interrupt.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="tools" projectFiles="true">
         <itemPath>tools_buffer.c</itemPath>
