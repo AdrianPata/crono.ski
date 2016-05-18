@@ -13,9 +13,11 @@
 //Timer counter identifier.
 //This is a parameter that will be passed to timer functions so a it knows on which variable to work.
 const char TIMER_COUNTER_LED_BLINK=0; // variable: timer_blinkingLED
+const char TIMER_GSM_WAIT=0; // variable: timer_gsmWait
 
 //Timer counter variables
 int timer_blinkingLED=0; //RA0 led will blink once a second.
+int timer_gsmWait=0; //GSMM need some wait times on specific functions.
 
 //Is incremented on every Timer1 overflow. Is used to measure the time since the system has started (it is only increased by overflow interrupt).
 unsigned long timer_alive=0; 

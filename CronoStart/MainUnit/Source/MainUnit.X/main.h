@@ -40,6 +40,8 @@
 #include "timer_tool.h"
 
 #include "gsm_tool.h"
+#include "gsm_config.h"
+#include "gsm_stateMachine.h"
 
 #endif	/* MAIN_H */
 

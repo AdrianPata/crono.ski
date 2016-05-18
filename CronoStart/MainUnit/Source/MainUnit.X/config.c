@@ -18,6 +18,7 @@ void startupConfig(){
     irq_config();
     bluetooth_config();
     timer_config();
+    gsm_config();
     
     GIEL=1;//Enable low priority interrupts
     GIEH=1;//Enable high priority interrupts
