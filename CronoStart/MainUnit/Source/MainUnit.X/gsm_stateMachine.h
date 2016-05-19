@@ -9,9 +9,11 @@
 #define	GSM_STATEMACHINE_H
 
 char gsm_currentStateMachine; //Current state machine id
-char gsm_currentStateMachineExecuted; //If the current state was executed, this is 1. If the state machine is modified and needs to be executed, this will be set to zero.
+char gsm_currentStateMachineInitialized; //Initialization should be done once. When it's done, the variable will be 1
+char gsm_currentStateMachineExecuted; //The gsm_state_exec code will be executed as long as this variable is 0.
 
 void gsm_executeState(char state);
+void gsm_state_ChangeState(char s);
 
 #endif	/* GSM_STATEMACHINE_H */
 

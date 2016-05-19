@@ -8,8 +8,10 @@ void gsm_init();
 void gsm_config(){
     gsm_init();
     
-    gsm_currentStateMachine=0; //Initial state machine
-    gsm_currentStateMachineExecuted=0; //Not executed
+    TRISC0=0;LATC0=0; //GSM PWK used for powering up the gsm module.
+    
+    //Set initial state machine
+    gsm_state_ChangeState(0); 
 }
 
 void gsm_init(){
