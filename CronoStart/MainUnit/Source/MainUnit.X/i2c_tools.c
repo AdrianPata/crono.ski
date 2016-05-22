@@ -21,6 +21,7 @@ void i2c_doWork(){
     
     //Send bluetooth TX buffer
     i2c_SendBuffer(&bluetooth_TxBuf,I2C_ADR_BLUETOOTH);
+    i2c_SendBuffer(&gsm_TxBuf,I2C_ADR_GSM);
 }
 
 //Interrogate all slaves for data
@@ -31,6 +32,12 @@ void i2c_scanForUARTData(){
     n=i2c_getAvailableBytes(I2C_ADR_BLUETOOTH);
     if(n>0){
         i2c_GetBytes(I2C_ADR_BLUETOOTH,n,&bluetooth_RxBuf);
+    }
+    
+    //Get bytes from GSM device if there are any
+    n=i2c_getAvailableBytes(I2C_ADR_GSM);
+    if(n>0){
+        i2c_GetBytes(I2C_ADR_GSM,n,&gsm_RxBuf);
     }
 }
 
@@ -43,6 +50,7 @@ char i2c_getAvailableBytes(char adr){
     if(ACKSTAT1==0){ //Slave responded to address
         SSP1BUF=0x01;i2c_wfc(); //Send command 0x01 (Get available number of bytes)
     } else {
+        PEN1=1;i2c_wfc(); //Stop bit
         return 0; //No slave with specified address
     }
     RSEN1=1;i2c_wfc(); //Repeated start
@@ -69,6 +77,7 @@ void i2c_GetBytes(char adr,char n,struct Buffer* buf){
     if(ACKSTAT1==0){ //Slave responded to address
         SSP1BUF=0x02;i2c_wfc(); //Send command 0x02 (Get bytes)
     } else {
+        PEN1=1;i2c_wfc(); //Stop bit
         return; //No slave with specified address
     }
     RSEN1=1;i2c_wfc(); //Repeated start
@@ -87,6 +96,7 @@ void i2c_GetBytes(char adr,char n,struct Buffer* buf){
             ACKEN1=1;i2c_wfc(); //Send ACK bit
         }
     } else {
+        PEN1=1;i2c_wfc(); //Stop bit
         return; //No slave with specified address
     }
     PEN1=1;i2c_wfc(); //Stop bit
@@ -101,6 +111,7 @@ char i2c_GetFreeSpace(char adr){
     if(ACKSTAT1==0){ //Slave responded to address
         SSP1BUF=0x03;i2c_wfc(); //Send command 0x03 (Get free space)
     } else {
+        PEN1=1;i2c_wfc(); //Stop bit
         return 0; //No slave with specified address
     }
     RSEN1=1;i2c_wfc(); //Repeated start
@@ -112,6 +123,7 @@ char i2c_GetFreeSpace(char adr){
         ACKDT1=1; //NACK - no more data needed
         ACKEN1=1;i2c_wfc(); //Send ACK bit
     } else {
+        PEN1=1;i2c_wfc(); //Stop bit
         return 0; //No slave with specified address
     }
     PEN1=1;i2c_wfc(); //Stop bit
@@ -126,6 +138,8 @@ void i2c_SendBuffer(struct Buffer* buff,char adr){
     if(ACKSTAT1==0){ //Slave ACK
         SSP1BUF=0x04;i2c_wfc(); //Send command 0x04 - push data        
     } else {
+        bufferEmpty(buff); //If the slave didn't respond, empty the buffer
+        PEN1=1;i2c_wfc(); //Stop bit
         return;
     }
     

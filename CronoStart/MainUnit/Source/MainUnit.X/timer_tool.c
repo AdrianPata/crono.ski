@@ -11,24 +11,21 @@ void timer_doWork(){
 void timer_IsOverflow(){
     timer_overflow=0;
     
-    if(timer_blinkingLED>0) timer_blinkingLED--;
+    for(char i=0;i<sizeof timer_counter;i++){
+        if(timer_counter[i]>0) timer_counter[i]--;
+    }
+    
 }
 
 //Set the counter to a number of seconds
-void timer_CounterSet(const char counter,int sec){
-    if(counter==TIMER_COUNTER_LED_BLINK){
-        timer_blinkingLED=sec*_TIMER_SEC;
-    }
+void timer_CounterSet(char counter,int sec){
+    timer_counter[counter]=sec*_TIMER_SEC;
 }
 
 char timer_CounterExpired(char counter){
-    if(counter==TIMER_COUNTER_LED_BLINK){
-        if(timer_blinkingLED>0){
-            return 1;
-        } else {
-            return 0;
-        }
+    if(timer_counter[counter]>0){
+        return 1;
+    } else {
+        return 0;
     }
-    
-    return 0;
 }

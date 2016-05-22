@@ -15,15 +15,24 @@
 # $ makeMP_CC="/opt/microchip/mplabc30/v3.30c/bin/pic30-gcc" ...  
 #
 SHELL=cmd.exe
+<<<<<<< HEAD
 PATH_TO_IDE_BIN=C:/Program Files (x86)/Microchip/MPLABX/v3.30/mplab_ide/mplab_ide/modules/../../bin/
 # Adding MPLAB X bin directory to path.
 PATH:=C:/Program Files (x86)/Microchip/MPLABX/v3.30/mplab_ide/mplab_ide/modules/../../bin/:$(PATH)
 # Path to java used to run MPLAB X when this makefile was created
 MP_JAVA_PATH="C:\Program Files (x86)\Microchip\MPLABX\v3.30\sys\java\jre1.8.0_65/bin/"
+=======
+PATH_TO_IDE_BIN=C:/Program Files/Microchip/MPLABX/v3.26/mplab_ide/mplab_ide/modules/../../bin/
+# Adding MPLAB X bin directory to path.
+PATH:=C:/Program Files/Microchip/MPLABX/v3.26/mplab_ide/mplab_ide/modules/../../bin/:$(PATH)
+# Path to java used to run MPLAB X when this makefile was created
+MP_JAVA_PATH="C:\Program Files\Microchip\MPLABX\v3.26\sys\java\jre1.8.0_65/bin/"
+>>>>>>> da548dd1338798be5b63524c4199a1d58fad7c6a
 OS_CURRENT="$(shell uname -s)"
-MP_CC="C:\Program Files (x86)\Microchip\xc8\v1.37\bin\xc8.exe"
+MP_CC="C:\Program Files\Microchip\xc8\v1.37\bin\xc8.exe"
 # MP_CPPC is not defined
 # MP_BC is not defined
+<<<<<<< HEAD
 MP_AS="C:\Program Files (x86)\Microchip\xc8\v1.37\bin\xc8.exe"
 MP_LD="C:\Program Files (x86)\Microchip\xc8\v1.37\bin\xc8.exe"
 # MP_AR is not defined
@@ -33,5 +42,16 @@ MP_CC_DIR="C:\Program Files (x86)\Microchip\xc8\v1.37\bin"
 # MP_BC_DIR is not defined
 MP_AS_DIR="C:\Program Files (x86)\Microchip\xc8\v1.37\bin"
 MP_LD_DIR="C:\Program Files (x86)\Microchip\xc8\v1.37\bin"
+=======
+MP_AS="C:\Program Files\Microchip\xc8\v1.37\bin\xc8.exe"
+# MP_LD is not defined
+# MP_AR is not defined
+DEP_GEN=${MP_JAVA_PATH}java -jar "C:/Program Files/Microchip/MPLABX/v3.26/mplab_ide/mplab_ide/modules/../../bin/extractobjectdependencies.jar"
+MP_CC_DIR="C:\Program Files\Microchip\xc8\v1.37\bin"
+# MP_CPPC_DIR is not defined
+# MP_BC_DIR is not defined
+MP_AS_DIR="C:\Program Files\Microchip\xc8\v1.37\bin"
+# MP_LD_DIR is not defined
+>>>>>>> da548dd1338798be5b63524c4199a1d58fad7c6a
 # MP_AR_DIR is not defined
 # MP_BC_DIR is not defined

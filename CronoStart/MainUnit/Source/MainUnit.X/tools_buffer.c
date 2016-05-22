@@ -19,7 +19,15 @@ char bufferAdd(struct Buffer* b,char c){
     return 0;
 }
 
-//Get byte from buffer
+//Add string to buffer
+void bufferAddStr(struct Buffer* b,const char* c){
+    char l=strlen(c);
+    for(char i=0;i<l;i++){
+        bufferAdd(b,c[i]);
+    }
+}
+
+//Return first byte from buffer and remove it
 char bufferGet(struct Buffer* b){
     char newval,r;
     if(b->cRead==b->cLast) return 0; //Buffer is empty
@@ -42,9 +50,29 @@ char bufferGetFree(struct Buffer* b){
     return b->size-bufferGetSize(b)-1; //Even that the physical space available is N, the usable space at one time is N-1.
 }
 
+//Get character at position P in the buffer. 
+char bufferGetAtPos(struct Buffer* b,char p){
+    if(b->cLast==b->cRead) return 0; //Buffer empty
+    if(p>=bufferGetSize(b)) return 0; //Position past the end of the buffer
+    
+    if(b->cLast>b->cRead) {
+        return b->cont[b->cRead+p];
+    } else {
+        b->cont[p-(b->size-b->cRead)];
+    }
+    
+}
+
 //Empty the buffer
 void bufferEmpty(struct Buffer* b){
     b->cRead=b->cLast;
+}
+
+//Search for the CRLF command terminator (0x0D 0x0A)
+char bufferSearchTerminator(struct Buffer* b){
+    char p;
+    p=bufferSearchByte(b,0x0D);
+    
 }
 
 //Search for byte in buffer. Returns the offset in array if found, or 0xFF if not found.
@@ -82,8 +110,8 @@ char bufferSearchByte(struct Buffer* b,char c){
     return 0xFF;
 }
 
-//Try to find a string command in the buffer. The search starts form cRead. On first mismatch the function returns Not Found
-char bufferFindCommand(struct Buffer* b,char* c){
+//Try to find a string in the buffer starting from the first position. The search starts form cRead. On first mismatch the function returns Not Found
+char bufferFindString(struct Buffer* b,char* c){
     char p,l;
     l=strlen(c);
     if(bufferGetSize(b)<l) return 0; //If the buffer size is smaller than the search command, return Not Found
@@ -119,3 +147,5 @@ void bufferAdvanceCRead(struct Buffer* b,char n){
         if(b->cRead==b->size) b->cRead=0;
     }
 }
+
+

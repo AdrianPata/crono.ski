@@ -8,6 +8,8 @@ void startupConfig(){
     
     ANSA1=0;TRISA1=0;LATA1=0; //Configure pin for control 
     
+
+    
     while(HFIOFS==0){} //0 = HFINTOSC frequency is not stable, wait until stable
     LATA0=0; //Shut down LED, frequency is stable
     
@@ -18,6 +20,7 @@ void startupConfig(){
     irq_config();
     bluetooth_config();
     timer_config();
+    gsm_config();
     
     GIEL=1;//Enable low priority interrupts
     GIEH=1;//Enable high priority interrupts
