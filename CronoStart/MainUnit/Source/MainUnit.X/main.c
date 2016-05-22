@@ -13,7 +13,15 @@
 void main(void) {
     startupConfig();
     
-    
+    /*
+    char f;
+    bufferAddStr(&bluetooth_TxBuf,"COCO");
+    bufferAdd(&bluetooth_TxBuf,0x0D);
+    bufferAddStr(&bluetooth_TxBuf,"JAM");
+    f=bufferGetSize(&bluetooth_TxBuf); PORTB=f;
+    bufferDiscardCR(&bluetooth_TxBuf);
+    f=bufferGetSize(&bluetooth_TxBuf); PORTB=f;
+     */
     
     while(1){
         uart_doWork();

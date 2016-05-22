@@ -52,15 +52,20 @@ char bufferGetFree(struct Buffer* b){
 
 //Get character at position P in the buffer. 
 char bufferGetAtPos(struct Buffer* b,char p){
+    int bp; //buffer pointer must be int because when adding P to cRead it can overflow char.
+    char t;
+    
     if(b->cLast==b->cRead) return 0; //Buffer empty
     if(p>=bufferGetSize(b)) return 0; //Position past the end of the buffer
     
-    if(b->cLast>b->cRead) {
-        return b->cont[b->cRead+p];
-    } else {
-        b->cont[p-(b->size-b->cRead)];
-    }
+    bp=b->cRead+p;
     
+    if(bp<b->size) { //bp is inside the buffer? 0 to size-1
+        return b->cont[bp];
+    } else {
+        t=p-(b->size-b->cRead);
+        return b->cont[t];
+    }
 }
 
 //Empty the buffer
@@ -72,56 +77,42 @@ void bufferEmpty(struct Buffer* b){
 char bufferSearchTerminator(struct Buffer* b){
     char p;
     p=bufferSearchByte(b,0x0D);
-    
+    return 0;
 }
 
-//Search for byte in buffer. Returns the offset in array if found, or 0xFF if not found.
+//Search for byte in buffer. Returns the relative position in array if found, or 0xFF if not found.
 char bufferSearchByte(struct Buffer* b,char c){
-    char * p,* s;
-    char off,len;
-    if(b->cRead == b->cLast) return 0xFF; //Buffer is empty
+    char s=bufferGetSize(b);
     
-    if(b->cRead < b->cLast){
-        len=b->cLast-b->cRead;
-        s=b->cont+b->cRead; 
-        p=memchr(s,c,len);
-        if(p!=NULL){
-            off=p-(char *)b->cont; //Offset in array
-            return off;
-        }
-    }
-    
-    if(b->cRead > b->cLast){
-        len=b->size-b->cRead; //Search from cRead o end of buffer
-        s=b->cont+b->cRead; 
-        p=memchr(s,c,len);
-        if(p!=NULL){
-            off=p-(char *)b->cont; //Offset in array
-            return off;
-        }
-        len=b->cLast; //Search from start of buffer to cLast
-        s=b->cont; 
-        p=memchr(s,c,len);
-        if(p!=NULL){
-            off=p-(char *)b->cont; //Offset in array
-            return off;
-        }
+    for(char i=0;i<s;i++){
+        if(bufferGetAtPos(b,i)==c) return i;
     }
     return 0xFF;
 }
 
-//Try to find a string in the buffer starting from the first position. The search starts form cRead. On first mismatch the function returns Not Found
-char bufferFindString(struct Buffer* b,char* c){
-    char p,l;
+//Try to find a string in the buffer starting from the first relative position.
+//If found returns relative position.
+//If not, returns 0xFF
+char bufferFindString(struct Buffer* b,const char* c){
+    char p,l,s,i;
     l=strlen(c);
-    if(bufferGetSize(b)<l) return 0; //If the buffer size is smaller than the search command, return Not Found
-    p=b->cRead;
-    for(char i=0;i<l;i++){
-        if(c[i]!=b->cont[p]) return 0; //Compare c and buffer. If one byte is different, return Not Found
+    s=bufferGetSize(b);
+    p=0;
+    while(p+l<=s){ //parse as long as the searched string can fit in the remaining buffer
+        if(bufferGetAtPos(b,p)==c[0]){ //if the first character in searched string is found
+            for(i=0;i<l;i++){ //search string at position p
+                if(bufferGetAtPos(b,p+i)!=c[i]){ //difference found
+                    break; //exit for
+                }
+                if(i==l-1){ //if it got to last position it means the string was found
+                    return p;
+                }
+            }
+        }
         p++;
-        if(p==b->size) p=0;
-    }
-    return 1;
+    }   
+    
+    return 0xFF;
 }
 
 //Reset the cRead cursor to p+1.
@@ -148,4 +139,12 @@ void bufferAdvanceCRead(struct Buffer* b,char n){
     }
 }
 
-
+//Discard bytes in buffer up to 0x0D (CR)
+void bufferDiscardCR(struct Buffer* b){
+    char p;
+    p=bufferSearchByte(b,0x0D);
+    if(p!=0xFF){ //CR found at position p
+        p++; //step over CR
+        bufferAdvanceCRead(b,p);
+    }
+}

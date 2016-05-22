@@ -11,18 +11,18 @@ void uart_console_processBuffer(struct Buffer* buf){
     off=bufferSearchByte(buf,0xD); //Search for CR (0xD,\r))
     if(off!=0xFF){
         strcpy(com,"uerr"); //UART err byte
-        if(bufferFindString(buf,com)!=0) uart_console_GetUARTErrors();
+        if(bufferFindString(buf,com)==0) uart_console_GetUARTErrors();
         
         strcpy(com,"bt:"); //send to bluetooth - the data after the ":". Also a terminator will be added.
-        if(bufferFindString(buf,com)!=0) uart_console_SendToBluetooth(buf,off);
+        if(bufferFindString(buf,com)==0) uart_console_SendToBluetooth(buf,off);
 
         strcpy(com,"irq"); //Simulate IRQ
-        if(bufferFindString(buf,com)!=0) irq_i2c=1;
+        if(bufferFindString(buf,com)==0) irq_i2c=1;
         
         strcpy(com,"systime"); //Display time since startup
-        if(bufferFindString(buf,com)!=0) uart_console_DisplaySystemTime();
+        if(bufferFindString(buf,com)==0) uart_console_DisplaySystemTime();
 
-        bufferResetCRead(buf,off);
+        bufferDiscardCR(buf);
         printf("\n>");
     }
 }
