@@ -12,6 +12,10 @@ char gsm_currentStateMachine; //Current state machine id
 char gsm_currentStateMachineInitialized; //Initialization should be done once. When it's done, the variable will be 1
 char gsm_currentStateMachineExecuted; //The gsm_state_exec code will be executed as long as this variable is 0.
 
+//Variables with values from populated from GSM responses
+char gsm_v_OK=0; //OK received
+char gsm_v_PIN_REQUEST=0;
+
 void gsm_executeState(char state);
 void gsm_state_ChangeState(char s);
 

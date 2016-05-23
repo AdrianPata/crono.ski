@@ -29,6 +29,9 @@ void bufferAdvanceCRead(struct Buffer* b,char n);
 void bufferAddStr(struct Buffer* b,const char* c);
 char bufferGetAtPos(struct Buffer* b,char p);
 void bufferDiscardCR(struct Buffer* b);
+char bufferFindStringLim(struct Buffer* b,const char* c,char lim);
+char bufferSearchCRLF(struct Buffer* b);
+void bufferDiscardCRLF(struct Buffer* b);
 
 #endif	/* TOOLS_BUFFER_H */
 

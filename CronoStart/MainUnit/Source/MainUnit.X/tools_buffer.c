@@ -74,10 +74,19 @@ void bufferEmpty(struct Buffer* b){
 }
 
 //Search for the CRLF command terminator (0x0D 0x0A)
-char bufferSearchTerminator(struct Buffer* b){
-    char p;
+// return position where CRLF was found
+// 0xFF if not found
+char bufferSearchCRLF(struct Buffer* b){
+    char p,s;
     p=bufferSearchByte(b,0x0D);
-    return 0;
+    
+    if(p!=0xFF){ //0x0D found
+        s=bufferGetSize(b);
+        if((p+1)<s && bufferGetAtPos(b,p+1)==0x0A){//if incremented p is still in buffer and equals 0x0A
+            return p; //CRLF found
+        }
+    }
+    return 0xFF;
 }
 
 //Search for byte in buffer. Returns the relative position in array if found, or 0xFF if not found.
@@ -90,15 +99,23 @@ char bufferSearchByte(struct Buffer* b,char c){
     return 0xFF;
 }
 
+
+char bufferFindString(struct Buffer* b,const char* c){
+    char s=bufferGetSize(b)-1;
+    return bufferFindStringLim(b,c,s); //Search the entire buffer
+}
+
 //Try to find a string in the buffer starting from the first relative position.
+//The search is limited up to a specific limit (does not search to the end of the buffer).
 //If found returns relative position.
 //If not, returns 0xFF
-char bufferFindString(struct Buffer* b,const char* c){
+char bufferFindStringLim(struct Buffer* b,const char* c,char lim){
     char p,l,s,i;
     l=strlen(c);
     s=bufferGetSize(b);
     p=0;
-    while(p+l<=s){ //parse as long as the searched string can fit in the remaining buffer
+    if(lim>=s) lim=s-1; //if limit si greater than size, modify limit to size
+    while(p+l<=lim){ //parse as long as the searched string can fit in the remaining buffer
         if(bufferGetAtPos(b,p)==c[0]){ //if the first character in searched string is found
             for(i=0;i<l;i++){ //search string at position p
                 if(bufferGetAtPos(b,p+i)!=c[i]){ //difference found
@@ -145,6 +162,16 @@ void bufferDiscardCR(struct Buffer* b){
     p=bufferSearchByte(b,0x0D);
     if(p!=0xFF){ //CR found at position p
         p++; //step over CR
+        bufferAdvanceCRead(b,p);
+    }
+}
+
+//Discard bytes in buffer up to 0x0D 0x0A (CRLF)
+void bufferDiscardCRLF(struct Buffer* b){
+    char p;
+    p=bufferSearchCRLF(b);
+    if(p!=0xFF){
+        p+=2; //step over CRLF
         bufferAdvanceCRead(b,p);
     }
 }

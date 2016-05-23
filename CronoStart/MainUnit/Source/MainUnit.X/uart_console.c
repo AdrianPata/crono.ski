@@ -7,7 +7,7 @@ void uart_console_DisplaySystemTime();
 
 void uart_console_processBuffer(struct Buffer* buf){
     char off;  
-    char com[10];
+    char com[20];
     off=bufferSearchByte(buf,0xD); //Search for CR (0xD,\r))
     if(off!=0xFF){
         strcpy(com,"uerr"); //UART err byte

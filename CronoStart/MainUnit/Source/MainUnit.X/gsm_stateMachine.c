@@ -29,28 +29,32 @@ void gsm_state_ChangeState(char s){
 }
 
 void gsm_state_init(char state){
-    if(state==0){
-        timer_CounterSet(TIMER_GSM_WAIT,2); 
-    }else if(state==1){
+    if(state==0){ //System power up. Wait one second
+        timer_CounterSet(TIMER_GSM_WAIT,1); 
+    }else if(state==1){ //Power on GSM module by pulling PWK up for two seconds
         timer_CounterSet(TIMER_GSM_WAIT,2); 
         LATC0=1; //GSM PWK Up
-    }else if (state==2){
-        bufferAddStr(&gsm_TxBuf,"AT");
-        bufferAdd(&gsm_TxBuf,0x0D);
-        printf("\r\nGSM OK\r\n");
+    }else if (state==2){ //Wait for PIN request from modules
+        
     }
 }
 void gsm_state_exec(char state){
     if(state==0){
-        if(timer_CounterExpired(TIMER_GSM_WAIT)==0){ //Wait for a specified time
+        if(timer_CounterExpired(TIMER_GSM_WAIT)==0){ 
             gsm_currentStateMachineExecuted=1; 
-            gsm_state_ChangeState(1); //Got to state: Power Up GSM Module
+            gsm_state_ChangeState(1); 
         }
     }else if(state==1){
         if(timer_CounterExpired(TIMER_GSM_WAIT)==0){
             LATC0=0;//GSM PWK Down
             gsm_currentStateMachineExecuted=1; 
-            gsm_state_ChangeState(2); //Got to state: Send AT for baud synchronization
+            gsm_state_ChangeState(2); 
+        }
+    }else if(state==2){
+        if(gsm_v_PIN_REQUEST==1){
+            printf("\r\nPIN REQ\r\n");
+            gsm_currentStateMachineExecuted=1; 
+            gsm_state_ChangeState(3); 
         }
     }
 }
