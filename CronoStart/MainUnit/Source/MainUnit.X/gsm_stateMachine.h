@@ -14,7 +14,9 @@ char gsm_currentStateMachineExecuted; //The gsm_state_exec code will be executed
 
 //Variables with values from populated from GSM responses
 char gsm_v_OK=0; //OK received
-char gsm_v_PIN_REQUEST=0;
+char gsm_v_PIN=0; // 1:SIM PIN (pin request)
+                  // 2:READY (pin ok)
+char gsm_v_CREG=0;
 
 void gsm_executeState(char state);
 void gsm_state_ChangeState(char s);

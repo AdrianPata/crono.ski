@@ -14,10 +14,29 @@ import gnu.io.UnsupportedCommOperationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.ListIterator;
+import javax.swing.DefaultListModel;
 
 public class ComTool {
     
     CommPort commPort;
+    InputStream in;
+    OutputStream out;
+    
+    DefaultListModel modelRX;
+    
+    public ComTool(DefaultListModel m){
+        modelRX=m;
+    }
+    
+    public void Send(byte[] b) throws IOException{
+        out.write(0x0D);
+        out.write(0x0A);
+        out.write(b);
+        out.write(0x0D);
+        out.write(0x0A);
+    }
     
     void Connect() throws NoSuchPortException, PortInUseException, UnsupportedCommOperationException, IOException{
         CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier("COM2");
@@ -33,8 +52,8 @@ public class ComTool {
                 SerialPort serialPort = (SerialPort) commPort;
                 serialPort.setSerialPortParams(19200,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
                 
-                InputStream in = serialPort.getInputStream();
-                OutputStream out = serialPort.getOutputStream();
+                in = serialPort.getInputStream();
+                out = serialPort.getOutputStream();
                 
                 (new Thread(new SerialReader(in))).start();
                 (new Thread(new SerialWriter(out))).start();
@@ -42,30 +61,62 @@ public class ComTool {
         }
     }
     
-    void Close(){
-        commPort.close();
-    }
-    
+   
     /** */
     public class SerialReader implements Runnable 
     {
         InputStream in;
+        ArrayList<Byte> buffer=new ArrayList<>();
         
         public SerialReader ( InputStream in )
         {
             this.in = in;
         }
         
+        int findCRLF(){
+            int p=0;
+            for(Byte b:buffer){
+                if(b==0x0D) return p;
+                p++;
+            }
+            return -1;
+        }
+        
+        String getCommand(int p){
+            String r="";
+            ListIterator<Byte> lst=buffer.listIterator();
+            for(int i=0;i<p;i++){
+                r+=(char)(byte)lst.next();
+                lst.remove();
+            }
+            lst.next(); //the last one is 0x0D. we don't want to add that.
+            lst.remove();
+            return r;
+        }
+        
+        void processIn(byte[] bytes,int l){
+            for(int i=0;i<l;i++){
+                buffer.add(bytes[i]);
+            }
+            int lc=findCRLF();
+            if(lc>=0){
+                ComTool.this.modelRX.addElement(getCommand(lc));
+            } 
+        }
+        
         @Override
         public void run ()
         {
-            byte[] buffer = new byte[1024];
+            byte[] b = new byte[1024];
             int len;
             try
             {
-                while ( ( len = this.in.read(buffer)) > -1 )
+                while ( ( len = this.in.read(b)) > -1 )
                 {
-                    System.out.print(new String(buffer,0,len));
+                    if(len>0){
+                        processIn(b,len);
+                        System.out.print(new String(b,0,len));
+                    }
                 }
             }
             catch ( IOException e )
