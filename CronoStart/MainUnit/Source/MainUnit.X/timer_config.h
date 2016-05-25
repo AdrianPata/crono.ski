@@ -25,8 +25,7 @@ unsigned long timer_alive=0;
 char timer_overflow=0;
 
 void timer_config();
-void timer_CounterSet(char counter,int sec);
-char timer_CounterExpired(char counter);
+
 
 #endif	/* TIMER_CONFIG_H */
 
