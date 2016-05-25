@@ -6,7 +6,7 @@ struct Buffer uart_RxBuf;
 void uart_config(){
     ANSC6=0;ANSC7=0; // Tx/Rx pins set as digital
     TRISA6=1; TRISA7=1; // Tx/Rx pins as input
-    BRGH1=0;BRG161=0;SPBRG1=12; // 19200bps at 16Mhz
+    BRGH1=1;BRG161=1;SPBRG1=68; // 57600bps at 16Mhz
     TXEN1=1; //Transmission is enabled
     CREN1=1; //Reception is enabled
     SYNC1=0; //Asynchronous

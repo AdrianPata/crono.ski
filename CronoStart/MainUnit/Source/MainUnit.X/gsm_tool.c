@@ -1,9 +1,10 @@
 #include "main.h"
 
-void processGSMBuffer();
+void gsm_processGSMBuffer();
+void gsm_printRxCommand(struct Buffer* b,char p);
 
 void gsm_doWork() {
-    processGSMBuffer();
+    gsm_processGSMBuffer();
     gsm_executeState(gsm_currentStateMachine); //Execute current state machine
     
     
@@ -11,10 +12,13 @@ void gsm_doWork() {
 
 //Search for command terminator in gsm buffer
 //Parse command if found
-void processGSMBuffer(){
+void gsm_processGSMBuffer(){
     char p;
     p=bufferSearchCRLF(&gsm_RxBuf);
     if (p!=0xFF){ //CRLF found
+       
+        //Print received command to console
+        gsm_printRxCommand(&gsm_RxBuf,p);
         
         //OK received
         if(bufferFindStringLim(&gsm_RxBuf,"OK",p)==0) gsm_v_OK=1;
@@ -32,4 +36,13 @@ void processGSMBuffer(){
         
         bufferDiscardCRLF(&gsm_RxBuf);
     }
+}
+
+//Print received bytes from GSM module up to position p
+void gsm_printRxCommand(struct Buffer* b,char p){
+    if(p==0) return;
+    for(char i=0;i<p;i++){
+        printf("%c",bufferGetAtPos(b,i));
+    }
+    printf("\r\n");
 }

@@ -39,6 +39,10 @@ void gsm_state_init(char state){
         bufferAddStr(&gsm_TxBuf,"AT+CPIN=0000");
         bufferAdd(&gsm_TxBuf,0x0D);
     }else if (state==4){// *** Wait for CREG: 1 (module registered into network)       
+    }else if (state==5){// *** Set settings
+        gsm_v_OK=0;
+        bufferAddStr(&gsm_TxBuf,"AT+SAPBR=3,1,\"Contype\",\"GPRS\";+SAPBR=3,1,\"APN\",\"net\";+CSTT=\"net\"");
+        bufferAdd(&gsm_TxBuf,0x0D);
     }
 }
 void gsm_state_exec(char state){
@@ -71,6 +75,11 @@ void gsm_state_exec(char state){
             gsm_currentStateMachineExecuted=1;
             gsm_state_ChangeState(5);
             printf("\r\nGSM: NET REG\r\n");
+        }
+    }else if(state==5){
+        if(gsm_v_OK==1){
+            gsm_currentStateMachineExecuted=1;
+            printf("\r\nGSM: Set OK\r\n");
         }
     }
 }

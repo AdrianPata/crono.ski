@@ -136,6 +136,7 @@ public class SIM800H extends javax.swing.JFrame {
         modelTX.addElement("+CPIN: SIM PIN");
         modelTX.addElement("+CPIN: READY");
         modelTX.addElement("+CREG: 1,\"00AA\",\"54BB\"");
+        modelTX.addElement("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
         
         lstTX.setModel(modelTX);
         lstRX.setModel(modelRX);

@@ -4,23 +4,26 @@ void uart_console_RxBufferStatus(struct Buffer* buf);
 void uart_console_GetUARTErrors();
 void uart_console_SendToBluetooth(struct Buffer* buff,char off);
 void uart_console_DisplaySystemTime();
+void uart_console_SendToGSM(struct Buffer* b,char p);
 
 void uart_console_processBuffer(struct Buffer* buf){
     char off;  
-    char com[20];
     off=bufferSearchByte(buf,0xD); //Search for CR (0xD,\r))
     if(off!=0xFF){
-        strcpy(com,"uerr"); //UART err byte
-        if(bufferFindString(buf,com)==0) uart_console_GetUARTErrors();
+        //UART err byte
+        if(bufferFindString(buf,"uerr")==0) uart_console_GetUARTErrors();
         
-        strcpy(com,"bt:"); //send to bluetooth - the data after the ":". Also a terminator will be added.
-        if(bufferFindString(buf,com)==0) uart_console_SendToBluetooth(buf,off);
+        //send to bluetooth - the data after the ":". Also a terminator will be added.
+        if(bufferFindString(buf,"bt:")==0) uart_console_SendToBluetooth(buf,off);
 
-        strcpy(com,"irq"); //Simulate IRQ
-        if(bufferFindString(buf,com)==0) irq_i2c=1;
+        //Simulate I2CBus IRQ
+        if(bufferFindString(buf,"irq")==0) irq_i2c=1;
         
-        strcpy(com,"systime"); //Display time since startup
-        if(bufferFindString(buf,com)==0) uart_console_DisplaySystemTime();
+        //Display time since startup
+        if(bufferFindString(buf,"systime")==0) uart_console_DisplaySystemTime();
+        
+        //send bytes directly to GSM module
+        if(bufferFindString(buf,"gsm:")==0) uart_console_SendToGSM(buf,off);
 
         bufferDiscardCR(buf);
         printf("\n>");
@@ -46,6 +49,17 @@ void uart_console_SendToBluetooth(struct Buffer* buff,char off){
         bufferAdd(&bluetooth_TxBuf,c); //Put byte into bluetooth TX buffer
     }
     bufferAdd(&bluetooth_TxBuf,0x0D); //Add a CR at the end of the command
+}
+
+//Send bytes to GSM module. Send bytes up to P including it (it's 0x0D, command terminator)
+void uart_console_SendToGSM(struct Buffer* b,char p){
+    char c;
+    if(p<4) return;
+    bufferAdvanceCRead(b,4);
+    for(char i=0;i<=p;i++){
+        c=bufferGet(b);
+        bufferAdd(&gsm_TxBuf,c);
+    }
 }
 
 //Print current time
