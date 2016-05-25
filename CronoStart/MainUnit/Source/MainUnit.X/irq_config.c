@@ -6,4 +6,9 @@ void irq_config(){
     INTEDG1=0; //Interrupt on falling edge
     INT1IP=1; //High priority
     INT1IE=1; //Enable interrupt
+    
+    //Configure IRQ on INT0 for Photo Start (RB0)
+    ANSB0=0; //Digital input
+    INTEDG0=0; //Interrupt on falling edge
+    INT0IE=0; //Interrupt initially disabled. Will be enabled when a valid start is available.
 }

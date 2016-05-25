@@ -17,7 +17,6 @@
 #include "config.h"
 
 #include "irq_config.h"
-#include "irq_globals.h"
 #include "irq_interrupt.h"
 
 #include "uart_config.h"
@@ -42,6 +41,9 @@
 #include "gsm_tool.h"
 #include "gsm_config.h"
 #include "gsm_stateMachine.h"
+
+#include "stopwatch_config.h"
+#include "stopwatch_tool.h"
 
 #endif	/* MAIN_H */
 

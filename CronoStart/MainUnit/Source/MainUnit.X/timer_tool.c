@@ -18,7 +18,7 @@ void timer_IsOverflow(){
 }
 
 //Set the counter to a number of seconds
-void timer_CounterSet(char counter,int sec){
+void timer_CounterSet(char counter,unsigned int sec){
     timer_counter[counter]=sec*_TIMER_SEC;
 }
 

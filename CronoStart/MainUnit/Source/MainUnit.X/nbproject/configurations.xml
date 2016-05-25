@@ -22,8 +22,11 @@
       </logicalFolder>
       <logicalFolder name="f2" displayName="irq" projectFiles="true">
         <itemPath>irq_config.h</itemPath>
-        <itemPath>irq_globals.h</itemPath>
         <itemPath>irq_interrupt.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f9" displayName="stopwatch" projectFiles="true">
+        <itemPath>stopwatch_config.h</itemPath>
+        <itemPath>stopwatch_tool.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="timer" projectFiles="true">
         <itemPath>timer_config.h</itemPath>
@@ -69,6 +72,10 @@
       <logicalFolder name="f2" displayName="irq" projectFiles="true">
         <itemPath>irq_config.c</itemPath>
         <itemPath>irq_interrupt.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f9" displayName="stopwatch" projectFiles="true">
+        <itemPath>stopwatch_config.c</itemPath>
+        <itemPath>stopwatch_tool.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="timer" projectFiles="true">
         <itemPath>timer_config.c</itemPath>

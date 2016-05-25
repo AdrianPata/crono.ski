@@ -29,6 +29,7 @@ void main(void) {
         bluetooth_doWork();
         gsm_doWork();
         timer_doWork();
+        stopwatch_doWork();
         
         //Blink LED on RA0        
         if(timer_CounterExpired(TIMER_COUNTER_LED_BLINK)==0){
