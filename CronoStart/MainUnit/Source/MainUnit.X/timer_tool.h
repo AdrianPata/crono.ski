@@ -9,7 +9,7 @@
 #define	TIMER_TOOL_H
 
 void timer_doWork();
-void timer_CounterSet(char counter,unsigned int sec);
+void timer_CounterSet(char counter,int sec);
 char timer_CounterExpired(char counter);
 
 #endif	/* TIMER_TOOL_H */

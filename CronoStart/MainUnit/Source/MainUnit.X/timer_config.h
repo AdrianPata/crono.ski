@@ -16,7 +16,9 @@ const char TIMER_COUNTER_LED_BLINK=0; // RA0 led will blink once a second.
 const char TIMER_GSM_WAIT=1; // GSMM need some wait times on specific functions.
 
 //Timer counter array for above variables
-int timer_counter[10];
+const char timer_counter_size=10;
+int timer_counter[timer_counter_size];
+
 
 //Is incremented on every Timer1 overflow. Is used to measure the time since the system has started (it is only increased by overflow interrupt).
 unsigned long timer_alive=0; 

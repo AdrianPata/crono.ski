@@ -52,7 +52,7 @@ char bufferGetFree(struct Buffer* b){
 
 //Get character at position P in the buffer. 
 char bufferGetAtPos(struct Buffer* b,char p){
-    unsigned int bp; //buffer pointer must be int because when adding P to cRead it can overflow char.
+    int bp; //buffer pointer must be int because when adding P to cRead it can overflow char.
     char t;
     
     if(b->cLast==b->cRead) return 0; //Buffer empty

@@ -22,6 +22,6 @@ void uart_init(){
     bufferInit(&uart_TxBuf,uart_TxBufferMemory,uart_TxBufferMemorySize); //Initialize TX buffer
     bufferInit(&uart_RxBuf,uart_RxBufferMemory,uart_RxBufferMemorySize); //Initialize RX buffer
     
-    printf("CronoStart Console 0.1\r\n");
+    printf("CronoStart Console 1.0\r\n");
     printf(">"); //Output the command cursor
 }

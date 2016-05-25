@@ -10,15 +10,14 @@ void timer_doWork(){
 //Decrease all counter greater than zero.
 void timer_IsOverflow(){
     timer_overflow=0;
-    
-    for(char i=0;i<sizeof timer_counter;i++){
+    for(char i=0;i<timer_counter_size;i++){
         if(timer_counter[i]>0) timer_counter[i]--;
     }
     
 }
 
 //Set the counter to a number of seconds
-void timer_CounterSet(char counter,unsigned int sec){
+void timer_CounterSet(char counter,int sec){
     timer_counter[counter]=sec*_TIMER_SEC;
 }
 

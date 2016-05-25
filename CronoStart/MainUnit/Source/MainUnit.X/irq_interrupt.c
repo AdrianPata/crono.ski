@@ -7,6 +7,7 @@ void irq_int(){
         irq_i2c=1; //An interrupt request was received on I2C Bus.
     }
     
+    
     if(INT0IE && INT0IF){
         INT0IF=0; //Clear flag.
         stopwatch_interrupt=1;
@@ -21,4 +22,5 @@ void irq_int(){
             stopwatch_running=0;
         }            
     }
+    
 }
