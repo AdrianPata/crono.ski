@@ -11,6 +11,7 @@
 #include "sha256.h"
 #include "aes256.h"
 #include "hmac.h"
+#include "base64.h"
 
 // CONFIG1H
 #pragma config FOSC = INTIO67   // Internal oscillator block
@@ -101,11 +102,20 @@ void main(void) {
 	sha256_final(&ctx1, buf1);
     */
     
+    //***************** Base64
+    char msg[]="YW55IGNhcm5hbCBwbGVhc3VyZQ==";
+    char len=strlen(msg);
+    char rez[200];
     
-    BYTE msg[]="abc";
-    BYTE key[SHA256_BLOCK_SIZE]="cotoi";
+    base64_decode(msg,&len,rez);
     
-    hmac(key,msg);
+    TX1REG=rez[0];
+    
+    //*************** HMAC
+    //BYTE msg[]="abc";
+    //BYTE key[SHA256_BLOCK_SIZE]="cotoi";
+    
+    //hmac(key,msg);
     
     
     
@@ -119,6 +129,7 @@ void main(void) {
     return;
     */
     
+    //******************** AES
     
     //aes256_context ctx; 
     //uint8_t key[32];

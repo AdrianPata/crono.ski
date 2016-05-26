@@ -7,6 +7,7 @@
       <itemPath>sha256.h</itemPath>
       <itemPath>aes256.h</itemPath>
       <itemPath>hmac.h</itemPath>
+      <itemPath>base64.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -19,6 +20,7 @@
       <itemPath>sha256.c</itemPath>
       <itemPath>aes256.c</itemPath>
       <itemPath>hmac.c</itemPath>
+      <itemPath>base64.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -126,6 +128,7 @@
         <property key="program-the-device-with-default-config-words" value="true"/>
       </HI-TECH-LINK>
       <Simulator>
+        <property key="W1601_PPS_INVALID_PIN_DESCRIPTION" value="report"/>
         <property key="codecoverage.enabled" value="Disable"/>
         <property key="codecoverage.enableoutputtofile" value="false"/>
         <property key="codecoverage.outputfile" value=""/>
