@@ -16,6 +16,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 public class ComTool {
@@ -30,7 +32,19 @@ public class ComTool {
         modelRX=m;
     }
     
+    public void processCommand(String c){
+        try {
+            if(c.equals("AT+CPIN=0000")){
+                Send("+CPIN: READY".getBytes());
+                Send("+CREG: 1,\"00AA\",\"54BB\"".getBytes());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ComTool.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void Send(byte[] b) throws IOException{
+        modelRX.addElement("<-- "+new String(b));
         out.write(0x0D);
         out.write(0x0A);
         out.write(b);
@@ -95,12 +109,15 @@ public class ComTool {
         }
         
         void processIn(byte[] bytes,int l){
+            String com;
             for(int i=0;i<l;i++){
                 buffer.add(bytes[i]);
             }
             int lc=findCRLF();
             if(lc>=0){
-                ComTool.this.modelRX.addElement(getCommand(lc));
+                com=getCommand(lc);
+                ComTool.this.modelRX.addElement("--> "+com);
+                ComTool.this.processCommand(com);
             } 
         }
         

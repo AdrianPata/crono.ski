@@ -33,7 +33,7 @@ void gsm_state_init(char state){
         timer_CounterSet(TIMER_GSM_WAIT,1); 
     }else if(state==1){ // *** Power on GSM module by pulling PWK up for two seconds
         timer_CounterSet(TIMER_GSM_WAIT,2); 
-        LATC0=1; //GSM PWK Up
+        LATA7=1; //GSM PWK Up
     }else if (state==2){ // *** Wait for PIN request from modules. 
     }else if (state==3){ // *** Submit PIN. Wait for OK.
         bufferAddStr(&gsm_TxBuf,"AT+CPIN=0000");
@@ -53,9 +53,9 @@ void gsm_state_exec(char state){
         }
     }else if(state==1){
         if(timer_CounterExpired(TIMER_GSM_WAIT)==0){
-            LATC0=0;//GSM PWK Down
+            LATA7=0;//GSM PWK Down
             gsm_currentStateMachineExecuted=1; 
-            gsm_state_ChangeState(2); 
+            //gsm_state_ChangeState(2); 
             printf("\r\nGSM: POWER\r\n");
         }
     }else if(state==2){

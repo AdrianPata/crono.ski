@@ -102,9 +102,9 @@ public class SIM800H extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSend)
@@ -136,7 +136,6 @@ public class SIM800H extends javax.swing.JFrame {
         modelTX.addElement("+CPIN: SIM PIN");
         modelTX.addElement("+CPIN: READY");
         modelTX.addElement("+CREG: 1,\"00AA\",\"54BB\"");
-        modelTX.addElement("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
         
         lstTX.setModel(modelTX);
         lstRX.setModel(modelRX);

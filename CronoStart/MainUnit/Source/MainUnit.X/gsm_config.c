@@ -8,7 +8,7 @@ void gsm_init();
 void gsm_config(){
     gsm_init();
     
-    TRISC0=0;LATC0=0; //GSM PWK used for powering up the gsm module.
+    TRISA7=0;LATA7=0; //GSM PWK used for powering up the gsm module.
     
     //Set initial state machine
     gsm_state_ChangeState(0); 

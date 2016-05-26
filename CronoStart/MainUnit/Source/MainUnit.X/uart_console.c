@@ -65,7 +65,7 @@ void uart_console_SendToGSM(struct Buffer* b,char p){
     char c;
     if(p<4) return;
     bufferAdvanceCRead(b,4);
-    for(char i=0;i<=p;i++){
+    for(char i=0;i<=p-4;i++){
         c=bufferGet(b);
         bufferAdd(&gsm_TxBuf,c);
     }
