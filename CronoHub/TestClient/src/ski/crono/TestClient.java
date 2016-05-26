@@ -7,6 +7,7 @@ package ski.crono;
 
 import java.net.*;
 import java.io.*;
+import java.security.InvalidAlgorithmParameterException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +24,7 @@ public class TestClient {
     static CryptoTool ct=new CryptoTool();
     static NetProcess net;
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidAlgorithmParameterException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String serverName = "127.0.0.1";
         int port = 4523;
@@ -57,7 +58,7 @@ public class TestClient {
         }
     }
     
-    static void sendCommand(byte[] b){
+    static void sendCommand(byte[] b) throws InvalidAlgorithmParameterException{
         try {
             outToServer.write("SEND".getBytes());
             outToServer.write(ct.base64encode(ct.AESencode(b, net.secret)));

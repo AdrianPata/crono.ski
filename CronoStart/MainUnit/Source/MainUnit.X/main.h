@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stddef.h>
 
 #include "config.h"
 
@@ -44,6 +45,11 @@
 
 #include "stopwatch_config.h"
 #include "stopwatch_tool.h"
+
+#include "crypto_sha256.h"
+#include "crypto_tools.h"
+#include "crypto_hmac.h"
+#include "crypto_aes.h"
 
 #endif	/* MAIN_H */
 

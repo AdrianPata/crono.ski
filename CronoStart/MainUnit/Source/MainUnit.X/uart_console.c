@@ -27,7 +27,13 @@ void uart_console_processBuffer(struct Buffer* buf){
         
         //Enable Photo Start interrupt so it can start the stopwatch
         if(bufferFindString(buf,"start")==0) stopwatch_enableStartStop();
+        
+        //SHA
+        if(bufferFindString(buf,"sha:")==0) crypto_doSHA(buf,off);
 
+        //AES
+        if(bufferFindString(buf,"aes:")==0) crypto_doAES(buf,off);
+        
         bufferDiscardCR(buf);
         printf("\n>");
     }

@@ -12,6 +12,10 @@
         <itemPath>config.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="crypto" projectFiles="true">
+        <itemPath>crypto_sha256.h</itemPath>
+        <itemPath>crypto_tools.h</itemPath>
+        <itemPath>crypto_hmac.h</itemPath>
+        <itemPath>crypto_aes.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="gsm" projectFiles="true">
         <itemPath>gsm_tool.h</itemPath>
@@ -63,6 +67,10 @@
         <itemPath>config.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="crypto" projectFiles="true">
+        <itemPath>crypto_sha256.c</itemPath>
+        <itemPath>crypto_tools.c</itemPath>
+        <itemPath>crypto_hmac.c</itemPath>
+        <itemPath>crypto_aes.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="gsm" projectFiles="true">
         <itemPath>gsm_tool.c</itemPath>

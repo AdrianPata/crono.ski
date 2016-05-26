@@ -14,3 +14,4 @@ Chip: PIC18F46K22
 
 * Program logic for Stopwatch module
 * Implement GSM connection to GPRS
+* Protect cryptographic functions against memory leak
