@@ -12,5 +12,5 @@ Chip: PIC18F46K22
 
 ### ToDo
 
-* Test function bufferGetAtPos
-* Fill MPU GSM Wiki
+* Program logic for Stopwatch module
+* Implement GSM connection to GPRS

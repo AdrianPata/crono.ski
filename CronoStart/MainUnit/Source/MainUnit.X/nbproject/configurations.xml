@@ -11,6 +11,8 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <itemPath>config.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f10" displayName="crypto" projectFiles="true">
+      </logicalFolder>
       <logicalFolder name="f8" displayName="gsm" projectFiles="true">
         <itemPath>gsm_tool.h</itemPath>
         <itemPath>gsm_stateMachine.h</itemPath>
@@ -59,6 +61,8 @@
       </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <itemPath>config.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="crypto" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="f8" displayName="gsm" projectFiles="true">
         <itemPath>gsm_tool.c</itemPath>
