@@ -35,7 +35,7 @@ void uart_console_processBuffer(struct Buffer* buf){
         if(bufferFindString(buf,"aes:")==0) crypto_doAES(buf,off);
         
         bufferDiscardCR(buf);
-        printf("\n>");
+        printf("\r\n");
     }
 }
 

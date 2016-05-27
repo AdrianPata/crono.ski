@@ -99,6 +99,17 @@ char bufferSearchByte(struct Buffer* b,char c){
     return 0xFF;
 }
 
+//Search for byte in buffer. Returns the relative position in array if found, or 0xFF if not found.
+//The search is limited by a position p (exclusive).
+char bufferSearchByteLim(struct Buffer* b,char c,char p){
+    char s=bufferGetSize(b);
+    if(p<s) s=p;
+    
+    for(char i=0;i<s;i++){
+        if(bufferGetAtPos(b,i)==c) return i;
+    }
+    return 0xFF;
+}
 
 char bufferFindString(struct Buffer* b,const char* c){
     char s=bufferGetSize(b)-1;

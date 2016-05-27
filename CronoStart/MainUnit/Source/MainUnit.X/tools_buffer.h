@@ -32,6 +32,7 @@ void bufferDiscardCR(struct Buffer* b);
 char bufferFindStringLim(struct Buffer* b,const char* c,char lim);
 char bufferSearchCRLF(struct Buffer* b);
 void bufferDiscardCRLF(struct Buffer* b);
+char bufferSearchByteLim(struct Buffer* b,char c,char p);
 
 #endif	/* TOOLS_BUFFER_H */
 

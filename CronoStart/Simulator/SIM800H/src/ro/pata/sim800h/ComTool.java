@@ -34,9 +34,21 @@ public class ComTool {
     
     public void processCommand(String c){
         try {
-            if(c.equals("AT+CPIN=0000")){
+            if(c.indexOf("AT+CPIN=")==0){
                 Send("+CPIN: READY".getBytes());
                 Send("+CREG: 1,\"00AA\",\"54BB\"".getBytes());
+            }
+            if(c.indexOf("AT+CSTT=")==0){
+                Send("OK".getBytes());                
+            }
+            if(c.equals("AT+CIICR")){
+                Send("OK".getBytes());                
+            }
+            if(c.equals("AT+CIFSR")){
+                Send("10.135.239.169".getBytes());                
+            }
+            if(c.equals("AT+CDNSGIP=")){
+                Send("+CDNSGIP: 1,\"crono.ski\",\"77.81.165.88\"".getBytes());                
             }
         } catch (IOException ex) {
             Logger.getLogger(ComTool.class.getName()).log(Level.SEVERE, null, ex);

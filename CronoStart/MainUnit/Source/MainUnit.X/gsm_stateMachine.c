@@ -39,9 +39,20 @@ void gsm_state_init(char state){
         bufferAddStr(&gsm_TxBuf,"AT+CPIN=0000");
         bufferAdd(&gsm_TxBuf,0x0D);
     }else if (state==4){// *** Wait for CREG: 1 (module registered into network)       
-    }else if (state==5){// *** Set settings
+    }else if (state==5){// *** Set APN
         gsm_v_OK=0;
-        bufferAddStr(&gsm_TxBuf,"AT+SAPBR=3,1,\"Contype\",\"GPRS\";+SAPBR=3,1,\"APN\",\"net\";+CSTT=\"net\"");
+        bufferAddStr(&gsm_TxBuf,"AT+CSTT=\"net\"");
+        bufferAdd(&gsm_TxBuf,0x0D);
+    }else if(state==6){// *** Bring Up Wireless Connection with GPRS or CSD
+        gsm_v_OK=0;
+        bufferAddStr(&gsm_TxBuf,"AT+CIICR");
+        bufferAdd(&gsm_TxBuf,0x0D);
+    }else if(state==7){// *** Get Local IP Address
+        gsm_v_IP=0;
+        bufferAddStr(&gsm_TxBuf,"AT+CIFSR");
+        bufferAdd(&gsm_TxBuf,0x0D);
+    }else if(state==8){// *** Query the IP Address of Given Domain Name
+        bufferAddStr(&gsm_TxBuf,"AT+CDNSGIP=crono.ski");
         bufferAdd(&gsm_TxBuf,0x0D);
     }
 }
@@ -55,7 +66,7 @@ void gsm_state_exec(char state){
         if(timer_CounterExpired(TIMER_GSM_WAIT)==0){
             LATA7=0;//GSM PWK Down
             gsm_currentStateMachineExecuted=1; 
-            //gsm_state_ChangeState(2); 
+            gsm_state_ChangeState(2); 
             printf("\r\nGSM: POWER\r\n");
         }
     }else if(state==2){
@@ -79,7 +90,20 @@ void gsm_state_exec(char state){
     }else if(state==5){
         if(gsm_v_OK==1){
             gsm_currentStateMachineExecuted=1;
-            printf("\r\nGSM: Set OK\r\n");
+            gsm_state_ChangeState(6);
+            printf("\r\nGSM: APN set\r\n");
+        }
+    }else if(state==6){
+        if(gsm_v_OK==1){
+            gsm_currentStateMachineExecuted=1;
+            gsm_state_ChangeState(7);
+            printf("\r\nGSM: GPRS\r\n");
+        }
+    }else if(state==7){
+        if(gsm_v_IP==1){
+            gsm_currentStateMachineExecuted=1;
+            gsm_state_ChangeState(8);
+            printf("\r\nGSM: IP\r\n");
         }
     }
 }
