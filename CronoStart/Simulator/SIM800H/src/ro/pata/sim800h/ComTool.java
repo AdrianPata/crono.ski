@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 public class ComTool {
-    
+    Hub hub;
     CommPort commPort;
     InputStream in;
     OutputStream out;
@@ -30,6 +30,19 @@ public class ComTool {
     
     public ComTool(DefaultListModel m){
         modelRX=m;
+    }
+    
+    public void connect(){
+        if(hub==null){
+            hub=new Hub(this);
+            if(hub.connect()) hub.start();
+        }
+    }
+    
+    public void disconnect(){
+        if(hub!=null){
+            hub.disconnect();
+        }
     }
     
     public void processCommand(String c){
@@ -41,31 +54,74 @@ public class ComTool {
             if(c.indexOf("AT+CSTT=")==0){
                 Send("OK".getBytes());                
             }
-            if(c.equals("AT+CIICR")){
+            if(c.indexOf("AT+CIICR")==0){
                 Send("OK".getBytes());                
             }
-            if(c.equals("AT+CIFSR")){
+            if(c.indexOf("AT+CIFSR")==0){
                 Send("10.135.239.169".getBytes());                
             }
-            if(c.equals("AT+CDNSGIP=")){
-                Send("+CDNSGIP: 1,\"crono.ski\",\"77.81.165.88\"".getBytes());                
+            if(c.indexOf("AT+CDNSGIP=")==0){
+                Send("+CDNSGIP: 1,\"crono.ski\",\"192.168.157.1\"".getBytes());                
+            }
+            if(c.indexOf("AT+CIPSTART=")==0){
+                if(hub==null){
+                    hub=new Hub(this);
+                    if(hub.connect()) {
+                        hub.start();
+                        Send("CONNECT OK".getBytes());
+                    }
+                }                
+            }
+            if(c.indexOf("AT+CIPCLOSE=0")==0){
+                hub.disconnect();
+                hub=null;
+                Send("CLOSE OK".getBytes());
+            }
+            if(c.indexOf("AT+CPOWD=1")==0){
+                Send("NORMAL POWER DOWN".getBytes());
             }
         } catch (IOException ex) {
             Logger.getLogger(ComTool.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+    public void SendRaw(byte[] b) throws IOException{
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ComTool.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        modelRX.addElement("<-- "+javax.xml.bind.DatatypeConverter.printHexBinary(b)+" ("+new String(b)+")");
+        for(int i=0;i<b.length;i++){
+            out.write(b[i]);            
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ComTool.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     public void Send(byte[] b) throws IOException{
+                
         modelRX.addElement("<-- "+new String(b));
         out.write(0x0D);
         out.write(0x0A);
-        out.write(b);
+        for(int i=0;i<b.length;i++){
+            out.write(b[i]);            
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ComTool.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         out.write(0x0D);
         out.write(0x0A);
     }
     
     void Connect() throws NoSuchPortException, PortInUseException, UnsupportedCommOperationException, IOException{
-        CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier("COM2");
+        CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier("COM3");
         if ( portIdentifier.isCurrentlyOwned() )
         {
             System.out.println("Error: Port is currently in use");

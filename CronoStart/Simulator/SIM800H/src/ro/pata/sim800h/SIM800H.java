@@ -21,6 +21,7 @@ public class SIM800H extends javax.swing.JFrame {
     DefaultListModel modelRX;
     DefaultListModel modelTX;
     
+    
     /**
      * Creates new form SIM800H
      */
@@ -43,6 +44,7 @@ public class SIM800H extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         lstTX = new javax.swing.JList<>();
         btmClear = new javax.swing.JButton();
+        btnTest = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -82,6 +84,13 @@ public class SIM800H extends javax.swing.JFrame {
             }
         });
 
+        btnTest.setText("Test");
+        btnTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTestActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,7 +99,9 @@ public class SIM800H extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 526, Short.MAX_VALUE)
+                        .addGap(0, 467, Short.MAX_VALUE)
+                        .addComponent(btnTest)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btmClear)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSend))
@@ -108,7 +119,8 @@ public class SIM800H extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSend)
-                    .addComponent(btmClear))
+                    .addComponent(btmClear)
+                    .addComponent(btnTest))
                 .addContainerGap())
         );
 
@@ -125,7 +137,7 @@ public class SIM800H extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSendActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        
+        comTool.disconnect();
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -151,6 +163,10 @@ public class SIM800H extends javax.swing.JFrame {
     private void btmClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmClearActionPerformed
         modelRX.clear();
     }//GEN-LAST:event_btmClearActionPerformed
+
+    private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
+        comTool.connect();
+    }//GEN-LAST:event_btnTestActionPerformed
 
     /**
      * @param args the command line arguments
@@ -190,6 +206,7 @@ public class SIM800H extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmClear;
     private javax.swing.JButton btnSend;
+    private javax.swing.JButton btnTest;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> lstRX;

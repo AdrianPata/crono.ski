@@ -3,6 +3,7 @@
 void gsm_processGSMBuffer();
 void gsm_printRxCommand(struct Buffer* b,char p);
 char gsm_isIP(struct Buffer* b,char p);
+void gsm_getParam(struct Buffer* b,char p,char n,char* param,char s);
 
 void gsm_doWork() {
     gsm_processGSMBuffer();
@@ -43,6 +44,28 @@ void gsm_processGSMBuffer(){
             gsm_v_IP=1;
         }
         
+        //Response from: Query the IP Address of Given Domain Name
+        if(bufferFindStringLim(&gsm_RxBuf,"+CDNSGIP:",p)==0){
+            gsm_v_IP_DNS=1;
+            gsm_getParam(&gsm_RxBuf,p,3,gsm_hub_ip,sizeof(gsm_hub_ip));
+        }
+        
+        //Connected
+        if(bufferFindStringLim(&gsm_RxBuf,"CONNECT OK",p)==0){ 
+            gsm_v_Connected=1;
+        }
+
+        //Disconnected
+        if(bufferFindStringLim(&gsm_RxBuf,"CLOSE OK",p)==0){ 
+            gsm_v_Connected=0;
+        }
+        
+        //Disconnected
+        if(bufferFindStringLim(&gsm_RxBuf,"NORMAL POWER DOWN",p)==0){ 
+            gsm_v_Power=0;
+        }
+        
+        
         bufferDiscardCRLF(&gsm_RxBuf);
     }
 }
@@ -80,6 +103,28 @@ char gsm_isIP(struct Buffer* b,char p){
 //The search is up to p (exclusive)
 //N is the parameter number. Parameters are split by comma(,)
 //param is the returned parameter
-char gsm_getParam(struct Buffer* b,char p,char n,char* param){
+//size of param
+void gsm_getParam(struct Buffer* b,char p,char n,char* param,char s){
+    char c;
+    char pp=0; //position in param array
+    char curp=1; //current parameter; will be incremented if comma is found
     
+    for(char i=0;i<p;i++){
+        c=bufferGetAtPos(b,i);
+        if(c==',') { //change current parameter
+            curp++;
+            continue;
+        }
+        
+        if(curp==n){ //we are at the right parameter, so we add bye to response array (param)
+            if(pp<s){ //Do not get out of the assigned memory
+                param[pp]=c;
+            }
+            pp++;
+        }
+    }
+    
+    if(pp<sizeof param){ //Do not get out of the assigned memory
+        param[pp]=0; //String terminator
+    }
 }

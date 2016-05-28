@@ -29,8 +29,8 @@ void gsm_state_ChangeState(char s){
 }
 
 void gsm_state_init(char state){
-    if(state==0){ // *** System power up. Wait one second
-        timer_CounterSet(TIMER_GSM_WAIT,1); 
+    char str[45]; //Used for composing the connect string
+    if(state==0){ // *** System power up.
     }else if(state==1){ // *** Power on GSM module by pulling PWK up for two seconds
         timer_CounterSet(TIMER_GSM_WAIT,2); 
         LATA7=1; //GSM PWK Up
@@ -52,13 +52,29 @@ void gsm_state_init(char state){
         bufferAddStr(&gsm_TxBuf,"AT+CIFSR");
         bufferAdd(&gsm_TxBuf,0x0D);
     }else if(state==8){// *** Query the IP Address of Given Domain Name
-        bufferAddStr(&gsm_TxBuf,"AT+CDNSGIP=crono.ski");
+        gsm_v_IP_DNS=0;
+        bufferAddStr(&gsm_TxBuf,"AT+CDNSGIP=hub.crono.ski");
+        bufferAdd(&gsm_TxBuf,0x0D);
+    }else if(state==9){// *** Start Up TCP Connection
+        gsm_v_Connected=0;
+        memset(str,0,sizeof(str));
+        strcat(str,"AT+CIPSTART=\"TCP\",");
+        strcat(str,gsm_hub_ip);
+        strcat(str,",\"3895\"");
+        bufferAddStr(&gsm_TxBuf,str);
+        bufferAdd(&gsm_TxBuf,0x0D);
+    }else if(state==90){// *** Close connection
+        bufferAddStr(&gsm_TxBuf,"AT+CIPCLOSE=0");
+        bufferAdd(&gsm_TxBuf,0x0D);
+        timer_CounterSet(TIMER_GSM_WAIT,2); //Wait two seconds before validating the connection close. (if after CLOSE OK message it goes directly to Power Off, the connection is not closed clean)
+    }else if(state==99){// *** Poweroff
+        bufferAddStr(&gsm_TxBuf,"AT+CPOWD=1");
         bufferAdd(&gsm_TxBuf,0x0D);
     }
 }
 void gsm_state_exec(char state){
     if(state==0){
-        if(timer_CounterExpired(TIMER_GSM_WAIT)==0){ 
+        if(gsm_v_Power==1){ 
             gsm_currentStateMachineExecuted=1; 
             gsm_state_ChangeState(1); 
         }
@@ -72,7 +88,7 @@ void gsm_state_exec(char state){
     }else if(state==2){
         if(gsm_v_PIN==1){ 
             gsm_currentStateMachineExecuted=1; 
-            gsm_state_ChangeState(3); 
+            //gsm_state_ChangeState(3); //If commented the PIN will be sent by console (command: pin)
             printf("\r\nGSM: PIN REQ\r\n");
         }
     }else if(state==3){
@@ -103,7 +119,31 @@ void gsm_state_exec(char state){
         if(gsm_v_IP==1){
             gsm_currentStateMachineExecuted=1;
             gsm_state_ChangeState(8);
-            printf("\r\nGSM: IP\r\n");
+            printf("\r\nGSM: Local IP\r\n");
+        }
+    }else if(state==8){
+        if(gsm_v_IP_DNS==1){
+            gsm_currentStateMachineExecuted=1;
+            gsm_state_ChangeState(9);
+            printf("\r\nGSM: DNS IP %s\r\n",gsm_hub_ip);
+        }
+    }else if(state==9){
+        if(gsm_v_Connected==1){
+            gsm_currentStateMachineExecuted=1;
+            gsm_state_ChangeState(10);
+            printf("\r\nGSM: Connected \r\n");
+        }
+    }else if(state==90){
+        if(gsm_v_Connected==0 && timer_CounterExpired(TIMER_GSM_WAIT)==0){
+            gsm_currentStateMachineExecuted=1;
+            gsm_state_ChangeState(99);
+            printf("\r\nGSM: Disconnected \r\n");
+        }
+    }else if(state==99){
+        if(gsm_v_Power==0){
+            gsm_currentStateMachineExecuted=1;
+            gsm_state_ChangeState(0);
+            printf("\r\nGSM: PowerDown \r\n");
         }
     }
 }

@@ -25,6 +25,15 @@ void uart_console_processBuffer(struct Buffer* buf){
         //send bytes directly to GSM module
         if(bufferFindString(buf,"gsm:")==0) uart_console_SendToGSM(buf,off);
         
+        //Power up GSM
+        if(bufferFindString(buf,"gsmp")==0) gsm_v_Power=1;
+
+        //Send pin and register to network
+        if(bufferFindString(buf,"pin")==0) gsm_state_ChangeState(3);
+        
+        //Close GSM connection
+        if(bufferFindString(buf,"gsmc")==0) gsm_state_ChangeState(90);
+        
         //Enable Photo Start interrupt so it can start the stopwatch
         if(bufferFindString(buf,"start")==0) stopwatch_enableStartStop();
         
