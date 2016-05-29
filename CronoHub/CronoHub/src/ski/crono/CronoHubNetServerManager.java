@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class CronoHubNetServerManager extends Thread {
     public boolean running=true;
-    private int listenPort=4523;
+    private int listenPort=3895;
     private ArrayList<CronoHubNetServer> servers=new ArrayList();
     private ServerSocket serverSocket;
     private int serverId=0;

@@ -7,7 +7,7 @@ void doit(){
     BYTE text[] = "abc";
     BYTE key[SHA256_BLOCK_SIZE];
     BYTE buf[SHA256_BLOCK_SIZE];
-    BYTE concat[1024];
+    BYTE concat[130];
     BYTE o_key_pad[65];
     BYTE i_key_pad[65];
     SHA256_CTX ctx;
@@ -28,7 +28,7 @@ void doit(){
         i_key_pad[i]^=0x36;
     }
     
-    memset(concat,0,1024);
+    memset(concat,0,sizeof concat);
     memcpy(concat,i_key_pad,64);
     memcpy(concat+64,text,strlen(text));
     

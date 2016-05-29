@@ -63,7 +63,7 @@ public class TestClient {
             outToServer.write("SEND".getBytes());
             outToServer.write(ct.base64encode(ct.AESencode(b, net.secret)));
             outToServer.write(0x0D);outToServer.write(0x0A); //Command terminator
-        } catch (IOException ex) {
+        } catch (IOException | InvalidAlgorithmParameterException ex) {
             Logger.getLogger(TestClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

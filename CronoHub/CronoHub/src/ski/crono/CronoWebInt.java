@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class CronoWebInt {
     String cookie="";
-    String targetURL="http://localhost/cronoski/service.php"; 
+    String targetURL="http://crono/service.php"; 
     
     public void doLogin(){
         System.out.println(getServiceData("com=login&usr=adi&pass=salam"));

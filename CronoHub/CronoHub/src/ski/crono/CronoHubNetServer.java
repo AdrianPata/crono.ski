@@ -49,6 +49,7 @@ public class CronoHubNetServer extends Thread {
     public void sendData(String com,byte[] b){
         try {
             OutputStream out=server.getOutputStream();
+            out.write("\r\n".getBytes());
             out.write("SEND".getBytes());
             out.write(com.getBytes());
             out.write(b);
@@ -95,6 +96,7 @@ public class CronoHubNetServer extends Thread {
     
     //Share public key
     private void initConnection(){
-        sendData("KEY", crypto.randomKey());        
+        //sendData("KEY", crypto.randomKey());        
+        sendData("HELLO", "OK".getBytes());        
     }
 }
