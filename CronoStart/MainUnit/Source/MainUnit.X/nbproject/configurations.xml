@@ -17,6 +17,7 @@
         <itemPath>crypto_hmac.h</itemPath>
         <itemPath>crypto_aes.h</itemPath>
         <itemPath>crypto_base64.h</itemPath>
+        <itemPath>crypto_crc8.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="gsm" projectFiles="true">
         <itemPath>gsm_tool.h</itemPath>
@@ -73,6 +74,7 @@
         <itemPath>crypto_hmac.c</itemPath>
         <itemPath>crypto_aes.c</itemPath>
         <itemPath>crypto_base64.c</itemPath>
+        <itemPath>crypto_crc8.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="gsm" projectFiles="true">
         <itemPath>gsm_tool.c</itemPath>

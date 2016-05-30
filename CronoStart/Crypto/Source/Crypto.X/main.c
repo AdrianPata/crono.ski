@@ -12,6 +12,7 @@
 #include "aes256.h"
 #include "hmac.h"
 #include "base64.h"
+#include "crc8.h"
 
 // CONFIG1H
 #pragma config FOSC = INTIO67   // Internal oscillator block
@@ -84,6 +85,12 @@
 void main(void) {
     IRCF2=1;IRCF1=1;IRCF0=1; //HFINTOSC ? (16 MHz)
     
+    //***************** CRC8
+    char msg[]={0x09,0x97,0xAD,0x02,0x00};
+    char r=CRCCalc(msg,5);
+    
+    TX1REG=r;
+    
     /*
     BYTE text1[] = "abc";
     BYTE buf1[SHA256_BLOCK_SIZE];
@@ -103,6 +110,7 @@ void main(void) {
     */
     
     //***************** Base64
+    /*
     char msg[]="YW55IGNhcm5hbCBwbGVhc3VyZQ==";
     char len=strlen(msg);
     char rez[200];
@@ -110,6 +118,7 @@ void main(void) {
     base64_decode(msg,&len,rez);
     
     TX1REG=rez[0];
+     */
     
     //*************** HMAC
     //BYTE msg[]="abc";

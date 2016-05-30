@@ -51,6 +51,7 @@
 #include "crypto_hmac.h"
 #include "crypto_aes.h"
 #include "crypto_base64.h"
+#include "crypto_crc8.h"
 
 #endif	/* MAIN_H */
 

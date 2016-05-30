@@ -84,4 +84,15 @@ public class CryptoTool {
         }
         return null;
     }
+    
+    int getCrc8(byte[] data) {
+        int tmp;
+        int res = 0;
+        for(int i = 0; i < data.length; i++) {
+            tmp = res << 1;
+            tmp += 0xff & data[i];
+            res = ((tmp & 0xff) + (tmp >> 8)) & 0xff;
+        }
+        return res;
+    }
 }

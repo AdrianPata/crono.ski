@@ -8,6 +8,7 @@
       <itemPath>aes256.h</itemPath>
       <itemPath>hmac.h</itemPath>
       <itemPath>base64.h</itemPath>
+      <itemPath>crc8.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -21,6 +22,7 @@
       <itemPath>aes256.c</itemPath>
       <itemPath>hmac.c</itemPath>
       <itemPath>base64.c</itemPath>
+      <itemPath>crc8.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
