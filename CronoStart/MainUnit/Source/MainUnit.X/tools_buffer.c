@@ -116,15 +116,19 @@ char bufferFindString(struct Buffer* b,const char* c){
     return bufferFindStringLim(b,c,s); //Search the entire buffer
 }
 
-//Try to find a string in the buffer starting from the first relative position.
+//Search using bufferFindStringLim2, but start from first position (P==0)
+char bufferFindStringLim(struct Buffer* b,const char* c,char lim){
+    return bufferFindStringLim2(b,c,0,lim);
+}
+
+//Try to find a string in the buffer starting from the P position.
 //The search is limited up to a specific limit (does not search to the end of the buffer).
 //If found returns relative position.
 //If not, returns 0xFF
-char bufferFindStringLim(struct Buffer* b,const char* c,char lim){
-    char p,l,s,i;
+char bufferFindStringLim2(struct Buffer* b,const char* c,char p,char lim){
+    char l,s,i;
     l=strlen(c);
     s=bufferGetSize(b);
-    p=0;
     if(lim>=s) lim=s-1; //if limit si greater than size, modify limit to size
     while(p+l<=lim){ //parse as long as the searched string can fit in the remaining buffer
         if(bufferGetAtPos(b,p)==c[0]){ //if the first character in searched string is found

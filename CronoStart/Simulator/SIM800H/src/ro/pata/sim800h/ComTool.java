@@ -121,7 +121,7 @@ public class ComTool {
     }
     
     void Connect() throws NoSuchPortException, PortInUseException, UnsupportedCommOperationException, IOException{
-        CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier("COM3");
+        CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier("COM2");
         if ( portIdentifier.isCurrentlyOwned() )
         {
             System.out.println("Error: Port is currently in use");

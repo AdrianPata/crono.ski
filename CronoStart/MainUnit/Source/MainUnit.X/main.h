@@ -42,6 +42,7 @@
 #include "gsm_tool.h"
 #include "gsm_config.h"
 #include "gsm_stateMachine.h"
+#include "gsm_dataProcessor.h"
 
 #include "stopwatch_config.h"
 #include "stopwatch_tool.h"
@@ -52,6 +53,7 @@
 #include "crypto_aes.h"
 #include "crypto_base64.h"
 #include "crypto_crc8.h"
+#include "crypto_config.h"
 
 #endif	/* MAIN_H */
 

@@ -34,6 +34,12 @@ public class CryptoTool {
             byte bytes[] = new byte[32];
             random.nextBytes(bytes);
             sharedKey=bytes;
+            
+            //For testing
+            for(int i=0;i<32;i++) sharedKey[i]=(byte)0xAA;
+            sharedKey[30]=(byte)0xBB;
+            sharedKey[31]=(byte)0xBB;
+            
             return bytes;
         } else {
             return sharedKey;

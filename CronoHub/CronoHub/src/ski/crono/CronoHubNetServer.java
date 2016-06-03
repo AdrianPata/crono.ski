@@ -8,11 +8,8 @@ package ski.crono;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -50,14 +47,14 @@ public class CronoHubNetServer extends Thread {
         try {
             OutputStream out=server.getOutputStream();
             out.write("\r\n".getBytes());
-            out.write("SEND".getBytes());
+            out.write("HUB:".getBytes());
+            com+=":";            
             out.write(com.getBytes());
-            out.write(b);
+            out.write(crypto.base64encode(b));
             out.write("\r\n".getBytes());
         } catch (IOException ex) {
             Log.out(id+" send data error: "+ex.getMessage());
         }
-        
     }
     
     @Override
@@ -96,7 +93,7 @@ public class CronoHubNetServer extends Thread {
     
     //Share public key
     private void initConnection(){
-        //sendData("KEY", crypto.randomKey());        
-        sendData("HELLO", "OK".getBytes());        
+        sendData("KEY", crypto.randomKey());        
+        //sendData("HELLO", "OK".getBytes());        
     }
 }

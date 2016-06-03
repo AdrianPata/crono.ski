@@ -17,12 +17,9 @@ public class CronoHub {
             input = br.readLine();
             if(input.equals("login")) cw.doLogin();
             if(input.equals("serv")) cw.doServ();
-            
         } while (!input.equals("x"));
         
         netmgr.killAllServers();
-        
-        
     }
     
 }

@@ -30,8 +30,11 @@ public class Hub extends Thread {
     }
     
     public boolean connect(){
+        //String host="192.168.157.1";
+        String host="localhost";
+        
         try {
-            client = new Socket("192.168.157.1", 3895);            
+            client = new Socket(host, 3895);            
             System.out.println("Just connected to "  + client.getRemoteSocketAddress());
             connected=true;
             return true;

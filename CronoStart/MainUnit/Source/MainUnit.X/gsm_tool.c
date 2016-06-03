@@ -65,6 +65,10 @@ void gsm_processGSMBuffer(){
             gsm_v_Power=0;
         }
         
+        //Data received from CronoHub
+        if(bufferFindStringLim(&gsm_RxBuf,"HUB:",p)==0){
+            gsm_processReceivedData(&gsm_RxBuf,p);
+        }
         
         bufferDiscardCRLF(&gsm_RxBuf);
     }

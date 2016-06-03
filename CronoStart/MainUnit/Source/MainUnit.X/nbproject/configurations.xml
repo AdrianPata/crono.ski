@@ -18,11 +18,13 @@
         <itemPath>crypto_aes.h</itemPath>
         <itemPath>crypto_base64.h</itemPath>
         <itemPath>crypto_crc8.h</itemPath>
+        <itemPath>crypto_config.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="gsm" projectFiles="true">
         <itemPath>gsm_tool.h</itemPath>
         <itemPath>gsm_stateMachine.h</itemPath>
         <itemPath>gsm_config.h</itemPath>
+        <itemPath>gsm_dataProcessor.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="i2c" projectFiles="true">
         <itemPath>i2c_config.h</itemPath>
@@ -31,6 +33,8 @@
       <logicalFolder name="f2" displayName="irq" projectFiles="true">
         <itemPath>irq_config.h</itemPath>
         <itemPath>irq_interrupt.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f11" displayName="rfid" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="f9" displayName="stopwatch" projectFiles="true">
         <itemPath>stopwatch_config.h</itemPath>
@@ -80,6 +84,7 @@
         <itemPath>gsm_tool.c</itemPath>
         <itemPath>gsm_stateMachine.c</itemPath>
         <itemPath>gsm_config.c</itemPath>
+        <itemPath>gsm_dataProcessor.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="i2c" projectFiles="true">
         <itemPath>i2c_config.c</itemPath>
@@ -88,6 +93,8 @@
       <logicalFolder name="f2" displayName="irq" projectFiles="true">
         <itemPath>irq_config.c</itemPath>
         <itemPath>irq_interrupt.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f11" displayName="rfid" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="f9" displayName="stopwatch" projectFiles="true">
         <itemPath>stopwatch_config.c</itemPath>
