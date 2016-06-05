@@ -8,7 +8,7 @@
 #ifndef CRYPTO_BASE64_H
 #define	CRYPTO_BASE64_H
 
-void base64_encode(const char* in,char len,char* out);
+char base64_encode(const char* in,char len,char* out,char leno);
 void base64_decode(const char* in,char* len,char* out);
 
 #endif	/* CRYPTO_BASE64_H */

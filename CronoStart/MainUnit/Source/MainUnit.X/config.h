@@ -75,9 +75,10 @@ const char uart_TxBufferMemorySize=200; //Buffer for UART transmission
 const char uart_RxBufferMemorySize=50; //Buffer for UART reception
 const char bluetooth_TxBufferMemorySize=50; //Buffer for Bluetooth transmission
 const char bluetooth_RxBufferMemorySize=50; //Buffer for Bluetooth reception
-const char gsm_TxBufferMemorySize=200; //Buffer for GSM transmission
-const char gsm_RxBufferMemorySize=200; //Buffer for GSM reception
+const char gsm_TxBufferMemorySize=250; //Buffer for GSM transmission
+const char gsm_RxBufferMemorySize=250; //Buffer for GSM reception
 
+const char deviceID[8]={0x33,0x33,0x33,0x33,0x33,0x33,0x33,0x33};
 
 void startupConfig();
 

@@ -42,7 +42,8 @@
 #include "gsm_tool.h"
 #include "gsm_config.h"
 #include "gsm_stateMachine.h"
-#include "gsm_dataProcessor.h"
+#include "gsm_hubDataProcessor.h"
+#include "gsm_hubDataSender.h"
 
 #include "stopwatch_config.h"
 #include "stopwatch_tool.h"

@@ -85,11 +85,18 @@
 void main(void) {
     IRCF2=1;IRCF1=1;IRCF0=1; //HFINTOSC ? (16 MHz)
     
-    //***************** CRC8
-    char msg[]={0x09,0x97,0xAD,0x02,0x00};
-    char r=CRCCalc(msg,5);
     
+    char a=8;
+    char r;
+    
+    r=a%3;
     TX1REG=r;
+    
+    //***************** CRC8
+    //char msg[]={0x09,0x97,0xAD,0x02,0x00};
+    //char r=CRCCalc(msg,5);
+    
+    //TX1REG=r;
     
     /*
     BYTE text1[] = "abc";

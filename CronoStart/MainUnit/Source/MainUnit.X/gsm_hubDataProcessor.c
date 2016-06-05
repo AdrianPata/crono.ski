@@ -9,16 +9,18 @@ void gsm_processReceivedData(struct Buffer* b,char p){
     char b64[100]; //Base64 array
     char b64Len=0;
     char dec[100]; //Decoded Base64
-    char decLen=0;
     
+    //Received public shared key from CronoHub
     if(bufferFindStringLim2(b,"KEY:",4,p)==4){ //Search if "KEY:" is found on pos 4
         b64Len=44; //The key has 32 bytes, which takes 44 bytes in Base64
         for(char i=8;i<52;i++){ //Step 4 characters over "HUB:KEY:", goto to 8+44=52
+            if(i>=p) return; //If we get to P (which should be 0x0D terminator), something is wrong because we don't have enough bytes to fill a 32bit key
             b64[i-8]=bufferGetAtPos(b,i);            
         }
         base64_decode(b64,&b64Len,dec);
-        memcpy(crypto_PublicSharedKey,dec,32); //Copy the 32 bytes key
-        printf("\r\n %x \r\n",crypto_PublicSharedKey[0]);
+        memcpy(crypto_PublicSharedKey,dec,32); //Copy the 32 bytes of public share key
+        crypto_GenerateSessionKey(); //Generate session key
+        gsm_sendID(); //Send ID back
     }
 }
 
