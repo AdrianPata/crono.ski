@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import ski.crono.servicePJO.BaseResponse;
 
 /**
  *
@@ -21,10 +22,41 @@ import java.util.Map;
  */
 public class CronoWebInt {
     String cookie="";
-    String targetURL="http://crono/service.php"; 
+    String targetURL="http://crono:81/service.php"; 
+    boolean login=false;
     
-    public void doLogin(){
-        System.out.println(getServiceData("com=login&usr=adi&pass=salam"));
+    //Login to webservice
+    public boolean doLogin(){
+        Gson gson = new Gson();
+        String r=getServiceData("com=login&usr=adi&pass=salam");
+        if(r.equals("Err")) return false; //Error on web request
+        
+        BaseResponse resp=gson.fromJson(r, BaseResponse.class);
+        login = resp.retCode==0;
+        return login;
+    }
+    
+    //Verify if the login to service is still valid
+    //It can be invalidate if the session expire
+    public boolean validLogin(){
+        Gson gson = new Gson();
+        String r=getServiceData("com=loginValid");
+        if(r.equals("Err")) return false; //Error on web request        
+        BaseResponse resp=gson.fromJson(r, BaseResponse.class);
+        login = resp.retCode==0;
+        return login;
+    }
+    
+    //Get the secret shared key for a specific CronoStart ID
+    public String getSecretSharedKey(String id){
+        Gson gson = new Gson();
+        String r=getServiceData("com=getSSK&ID="+id);
+        if(r.equals("Err")) return null; //Error on web request        
+        BaseResponse resp=gson.fromJson(r, BaseResponse.class);
+        if(resp.retCode==0){
+            return resp.msg;
+        }
+        return "";
     }
     
     public void doServ(){
@@ -86,9 +118,9 @@ public class CronoWebInt {
             List<String> cookiesHeader = headerFields.get("Set-Cookie");
             
             if(cookiesHeader!=null && cookiesHeader.size()!=0) {
-                for(int i=0;i<cookiesHeader.size();i++){
-                    System.out.println("Cookie: "+cookiesHeader.get(i));
-                }
+                //for(int i=0;i<cookiesHeader.size();i++){
+                //    System.out.println("Cookie: "+cookiesHeader.get(i));
+                //}
                 cookie=cookiesHeader.get(0);
             }
 

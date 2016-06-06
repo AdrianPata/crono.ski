@@ -21,16 +21,19 @@ public class CronoHubNetServer extends Thread {
     private boolean connected=true; // While true the thread is running
     private final Socket server;
     private final int id;
-    private CryptoTool crypto=new CryptoTool();
+    CryptoTool crypto=new CryptoTool();
+    String CronoStartID=""; //base64 encoded ID
+    CronoWebInt webInt;
+    Boolean validConn=false; //The CronoStart is validated
 
-    
     CommandProcess comP; //Analyze and process received bytes (commands)
     
-    public CronoHubNetServer(Socket s,int id) throws IOException
+    public CronoHubNetServer(Socket s,int id,CronoWebInt w) throws IOException
     {
        server=s;
        this.id=id;
-       comP=new CommandProcess(id,crypto);
+       this.webInt=w;
+       comP=new CommandProcess(id,this);       
     }
     
     //Kill the connection and close the server

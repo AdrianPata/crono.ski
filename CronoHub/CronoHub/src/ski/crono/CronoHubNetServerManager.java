@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,6 +20,7 @@ public class CronoHubNetServerManager extends Thread {
     private ArrayList<CronoHubNetServer> servers=new ArrayList();
     private ServerSocket serverSocket;
     private int serverId=0;
+    CronoWebInt webInterface;
     
     @Override
     public void run(){
@@ -47,6 +46,10 @@ public class CronoHubNetServerManager extends Thread {
         }
     }
     
+    public void setWebInterface(CronoWebInt w){
+        this.webInterface=w;
+    }
+    
     public void killAllServers() throws IOException{
         serverSocket.close();
         running=false;
@@ -64,7 +67,7 @@ public class CronoHubNetServerManager extends Thread {
         Log.out("Creating server "+serverId+"...");
         CronoHubNetServer s;
         try{
-            s=new CronoHubNetServer(sock,serverId);
+            s=new CronoHubNetServer(sock,serverId,webInterface);
             s.start();
             servers.add(s);
         } catch(IOException ex){

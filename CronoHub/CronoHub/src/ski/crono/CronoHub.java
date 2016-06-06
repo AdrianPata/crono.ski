@@ -8,9 +8,20 @@ public class CronoHub {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String input;
-        CronoWebInt cw=new CronoWebInt();
+        String input;        
         
+        //Start web service
+        CronoHubWebService ws=new CronoHubWebService();
+        ws.start();
+        
+        //Log in to the web service
+        CronoWebInt cw=new CronoWebInt();
+        if(!cw.doLogin()){ //Invalid login
+            System.out.println("Can not log in to web service.");
+            return;
+        }
+        
+        netmgr.setWebInterface(cw);
         netmgr.start();
         
         do{
@@ -20,6 +31,7 @@ public class CronoHub {
         } while (!input.equals("x"));
         
         netmgr.killAllServers();
+        ws.close();
     }
     
 }

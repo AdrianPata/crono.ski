@@ -15,11 +15,12 @@ public class CommandProcess {
     byte[] buffer=new byte[1000];
     int bufferPos=0; //Buffer insert position. If it is 0, buffer is empty.
     int id;
-    private CryptoTool crypto;
+    CronoHubNetServer server;
     
-    public CommandProcess(int id,CryptoTool c){
+    
+    public CommandProcess(int id,CronoHubNetServer s){
         this.id=id;
-        this.crypto=c;
+        this.server=s;
     }
     
     //Add received to buffer
@@ -37,7 +38,7 @@ public class CommandProcess {
     //Search in buffer for a command terminator
     private int identifyCommand(){
         for (int i=0;i<bufferPos;i++){
-            if(buffer[i]==0x0D && buffer[i+1]==0x0A){ //CRLF found
+            if(buffer[i]==0x0D){ //CR found
                return i; 
             }
         }
@@ -55,16 +56,27 @@ public class CommandProcess {
         Log.out(id+" received command: "+command.toString());
         discardCommand(commandEndPos);
         
-        if(command.toString().startsWith("SEND")){
-            String cnt=command.toString().substring(4,command.toString().length());
-            Log.out("Mesaj: "+new String(crypto.AESdecode(crypto.base64decode(cnt.getBytes()))));
+        //CronoStart ID received. This will validate the connection.
+        if(command.toString().startsWith("ID:")){
+            String[] el=command.toString().split(":");
+            server.CronoStartID=el[1];
+            String ssk=server.webInt.getSecretSharedKey(server.CronoStartID);
+            server.crypto.setSecretSharedKey(ssk);
+            byte[] r=server.crypto.AESdecode(server.crypto.base64decode(el[2].getBytes()));
+            if(r!=null && new String(r).equals("HALLO")){
+                System.out.println(id+" valid connection.");
+                server.validConn=true;
+            }else{
+                System.out.println(id+" invalid connection.");
+                server.close();
+            }
         }
     }
     
     //Discard command from buffer
     private void discardCommand(int commandEndPos){
         int j=0;
-        commandEndPos+=2; //Step over CRLF (0x0D and 0x0A)
+        commandEndPos++; //Step over CR (0x0D)
         
         for(int i=commandEndPos;i<bufferPos;i++){
             buffer[j]=buffer[i]; //copy bytes from buffer to first position
