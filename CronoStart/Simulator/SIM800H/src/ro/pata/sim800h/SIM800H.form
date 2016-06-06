@@ -31,7 +31,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="467" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="435" max="32767" attributes="0"/>
                       <Component id="btnTest" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btmClear" min="-2" max="-2" attributes="0"/>
@@ -132,7 +132,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnTest">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Test"/>
+        <Property name="text" type="java.lang.String" value="Disconnect"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTestActionPerformed"/>

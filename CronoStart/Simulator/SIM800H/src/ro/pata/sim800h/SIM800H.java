@@ -84,7 +84,7 @@ public class SIM800H extends javax.swing.JFrame {
             }
         });
 
-        btnTest.setText("Test");
+        btnTest.setText("Disconnect");
         btnTest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTestActionPerformed(evt);
@@ -99,7 +99,7 @@ public class SIM800H extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 467, Short.MAX_VALUE)
+                        .addGap(0, 435, Short.MAX_VALUE)
                         .addComponent(btnTest)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btmClear)
@@ -165,7 +165,7 @@ public class SIM800H extends javax.swing.JFrame {
     }//GEN-LAST:event_btmClearActionPerformed
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        comTool.connect();
+        comTool.disconnect();
     }//GEN-LAST:event_btnTestActionPerformed
 
     /**

@@ -1,5 +1,42 @@
 #include "main.h"
 
+void crypto_EncAES(char* b);
+
+//Generate session key
+void crypto_GenerateSessionKey(){
+    hmac(crypto_SecretSharedKey,crypto_PublicSharedKey,32,crypto_SessionKey);
+}
+
+//Encrypt provided data (might be a string)
+void crypto_EncBlock(const char* b,char len,char * dest){
+    char e[16];
+    char c1,c2;
+    
+    if(len>12) return; //Can encrypt up to 12 bytes inside a block
+    
+    crypto_counter++;
+    c1=crypto_counter & 0b11111111;
+    crypto_counter=crypto_counter>>8;
+    c2=crypto_counter & 0b11111111;
+
+    memset(e,0,16); //Initialize work buffer
+    e[0]=c2;e[1]=c1;
+    e[2]=len;
+    memcpy(e+3,b,len); //Copy input into work buffer
+    e[15]=CRC8(e,15); //CRC first 15 bytes and put the result in the last byte (position 16)
+    crypto_EncAES(e); //Encrypt entire block
+    memcpy(dest,e,16);
+}
+
+//Encrypt a 16 bytes block with the session key
+void crypto_EncAES(char* b){
+    aes256_context ctx; 
+    
+    aes256_init(&ctx, crypto_SessionKey);
+    aes256_encrypt_ecb(&ctx, b);
+    aes256_done(&ctx);
+}
+
 //SHA the buffer up to offset of the 0x0D
 void crypto_doSHA(struct Buffer* buff,char off){
     char mes[32];

@@ -58,11 +58,21 @@ void base64_dec_4(char* in,char* out){ //four in, three out
     out[2]=b1;
 }
 
-void base64_encode(const char* in,char len,char* out){
+char base64_encode(const char* in,char len,char* out,char leno){
     char dec[3]; //Three decoded bytes
     char enc[4]; //Four encoded bytes
     char p=0;
     char po=0;
+    char r;
+    
+    //Test if we can fit the result in the out array of length leno
+    if(len%3==0){
+        r=len/3;
+    }else{
+        r=len/3+1;
+    }
+    r=r*4+1; //+1 because we want to put a \0 terminator in the end
+    if(r>leno) return 1;
     
     do{
         memset(dec,0,3);
@@ -86,10 +96,12 @@ void base64_encode(const char* in,char len,char* out){
         p+=3;
     }while(p<len);
     out[po]=0;
+    
+    return 0;
 }
 
 void base64_enc_3(char* in,char* out){ //three in, four out
-    char p,b1,b2;
+    char b1,b2;
     
     b1=in[0]>>2;    
     out[0]=base64_basis[b1];

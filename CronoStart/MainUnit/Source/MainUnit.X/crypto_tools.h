@@ -10,6 +10,8 @@
 
 void crypto_doSHA(struct Buffer* buff,char off);
 void crypto_doAES(struct Buffer* buff,char off);
+void crypto_EncBlock(const char* b,char len,char * dest);
+void crypto_GenerateSessionKey();
 
 #endif	/* CRYPTO_TOOLS_H */
 

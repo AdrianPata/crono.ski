@@ -30,8 +30,8 @@ public class Hub extends Thread {
     }
     
     public boolean connect(){
-        //String host="192.168.157.1";
-        String host="localhost";
+        String host="192.168.157.1";
+        //String host="localhost";
         
         try {
             client = new Socket(host, 3895);            
@@ -41,6 +41,22 @@ public class Hub extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(Hub.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        }
+    }
+    
+    public void send(byte[] b,int l){
+        try {
+            outToServer.write(b,0,l);
+        } catch (IOException ex) {
+            Logger.getLogger(Hub.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void send(int b){
+        try {
+            outToServer.write(b);
+        } catch (IOException ex) {
+            Logger.getLogger(Hub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

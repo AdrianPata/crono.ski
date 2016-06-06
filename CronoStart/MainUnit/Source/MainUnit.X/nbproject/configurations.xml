@@ -24,7 +24,8 @@
         <itemPath>gsm_tool.h</itemPath>
         <itemPath>gsm_stateMachine.h</itemPath>
         <itemPath>gsm_config.h</itemPath>
-        <itemPath>gsm_dataProcessor.h</itemPath>
+        <itemPath>gsm_hubDataSender.h</itemPath>
+        <itemPath>gsm_hubDataProcessor.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="i2c" projectFiles="true">
         <itemPath>i2c_config.h</itemPath>
@@ -84,7 +85,8 @@
         <itemPath>gsm_tool.c</itemPath>
         <itemPath>gsm_stateMachine.c</itemPath>
         <itemPath>gsm_config.c</itemPath>
-        <itemPath>gsm_dataProcessor.c</itemPath>
+        <itemPath>gsm_hubDataSender.c</itemPath>
+        <itemPath>gsm_hubDataProcessor.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="i2c" projectFiles="true">
         <itemPath>i2c_config.c</itemPath>

@@ -28,6 +28,9 @@ public class ComTool {
     
     DefaultListModel modelRX;
     
+    //S-a primit AT+CIPSEND=n, asta inseamna ca urmatorii n bytes vor fi trimisi catre Hub
+    CipSend cipsend=new CipSend();
+    
     public ComTool(DefaultListModel m){
         modelRX=m;
     }
@@ -80,6 +83,10 @@ public class ComTool {
             if(c.indexOf("AT+CPOWD=1")==0){
                 Send("NORMAL POWER DOWN".getBytes());
             }
+            if(c.indexOf("AT+CIPSEND=")==0){
+                cipsend.startSending(Integer.parseInt(c.split("=")[1]),hub);
+                modelRX.addElement("Hub: "+Integer.parseInt(c.split("=")[1])+" bytes");
+            }
         } catch (IOException ex) {
             Logger.getLogger(ComTool.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -121,7 +128,7 @@ public class ComTool {
     }
     
     void Connect() throws NoSuchPortException, PortInUseException, UnsupportedCommOperationException, IOException{
-        CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier("COM2");
+        CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier("COM3");
         if ( portIdentifier.isCurrentlyOwned() )
         {
             System.out.println("Error: Port is currently in use");
@@ -178,15 +185,35 @@ public class ComTool {
         
         void processIn(byte[] bytes,int l){
             String com;
+            boolean processed=false;
+            
             for(int i=0;i<l;i++){
-                buffer.add(bytes[i]);
+                if(ComTool.this.cipsend.needMore()){ //Daca trebuie sa transmitem octeti catre Hub, nu-i mai punem in buffer
+                    ComTool.this.cipsend.sendByte(bytes[i]);
+                }else{                
+                    buffer.add(bytes[i]);
+                }
             }
-            int lc=findCRLF();
-            if(lc>=0){
-                com=getCommand(lc);
-                ComTool.this.modelRX.addElement("--> "+com);
-                ComTool.this.processCommand(com);
-            } 
+            
+            do{
+                int lc=findCRLF();
+                if(lc>=0){
+                    com=getCommand(lc);
+                    System.out.println(com);
+                    ComTool.this.modelRX.addElement("--> "+com);
+                    ComTool.this.processCommand(com);
+                    
+                    if(ComTool.this.cipsend.needMore()){ //Daca exista octeti in buffer si trebuie sa transmitem date catre Hub, incepem sa-i luam din buffer
+                        ListIterator<Byte> lst=buffer.listIterator();
+                        while(lst.hasNext() && ComTool.this.cipsend.needMore()){
+                            ComTool.this.cipsend.sendByte((byte)lst.next());
+                            lst.remove();
+                        }
+                    }
+                } else {
+                    processed=true;
+                }
+            }while(!processed);
         }
         
         @Override
@@ -200,7 +227,6 @@ public class ComTool {
                 {
                     if(len>0){
                         processIn(b,len);
-                        System.out.print(new String(b,0,len));
                     }
                 }
             }
