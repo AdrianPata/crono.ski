@@ -16,5 +16,5 @@ void irq_config(){
     ANSB2=0; //Digital input
     INTEDG2=0; //Interrupt on falling edge
     INT2IP=1; //High priority
-    INT2IE=1; //Enable interrupt
+    INT2IE=0; //Enable interrupt
 }

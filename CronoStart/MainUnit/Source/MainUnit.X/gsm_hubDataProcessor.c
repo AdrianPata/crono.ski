@@ -20,6 +20,8 @@ void gsm_processReceivedData(struct Buffer* b,char p){
         base64_decode(b64,&b64Len,dec);
         memcpy(crypto_PublicSharedKey,dec,32); //Copy the 32 bytes of public share key
         crypto_GenerateSessionKey(); //Generate session key
+        
+        delay_10ms(100);
         gsm_sendID(); //Send ID back
     }
 }

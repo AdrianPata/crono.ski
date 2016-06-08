@@ -15,6 +15,8 @@ extern struct Buffer rfid_TxBuf; //Initialized in bluetooth_config.c
 char rfid_RxBufferMemory[rfid_RxBufferMemorySize];
 extern struct Buffer rfid_RxBuf; //Initialized in bluetooth_config.c
 
+char rfid_readID[8];
+
 void rfid_config();
 
 #endif	/* RFID_CONFIG_H */

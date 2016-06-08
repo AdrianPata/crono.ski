@@ -57,6 +57,7 @@
 #include "crypto_config.h"
 
 #include "rfid_config.h"
+#include "rfid_tools.h"
 
 #endif	/* MAIN_H */
 

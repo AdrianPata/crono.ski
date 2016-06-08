@@ -46,6 +46,9 @@ void uart_console_processBuffer(struct Buffer* buf){
         //AES
         if(bufferFindString(buf,"aes:")==0) crypto_doAES(buf,off);
         
+        //Interrogate rfid card for ID
+        if(bufferFindString(buf,"rfid")==0) rfid_getID();
+        
         bufferDiscardCR(buf);
         printf("\r\n");
     }

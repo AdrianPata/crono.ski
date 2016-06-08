@@ -91,9 +91,15 @@ char bufferSearchCRLF(struct Buffer* b){
 
 //Search for byte in buffer. Returns the relative position in array if found, or 0xFF if not found.
 char bufferSearchByte(struct Buffer* b,char c){
+    return bufferSearchByte2(b,0,c);
+}
+
+//Search for byte in buffer. Returns the relative position in array if found, or 0xFF if not found.
+//Start search from position p
+char bufferSearchByte2(struct Buffer* b,char p,char c){
     char s=bufferGetSize(b);
     
-    for(char i=0;i<s;i++){
+    for(char i=p;i<s;i++){
         if(bufferGetAtPos(b,i)==c) return i;
     }
     return 0xFF;

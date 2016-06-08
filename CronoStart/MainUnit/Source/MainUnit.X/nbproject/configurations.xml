@@ -37,6 +37,7 @@
       </logicalFolder>
       <logicalFolder name="f11" displayName="rfid" projectFiles="true">
         <itemPath>rfid_config.h</itemPath>
+        <itemPath>rfid_tools.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="stopwatch" projectFiles="true">
         <itemPath>stopwatch_config.h</itemPath>
@@ -99,6 +100,7 @@
       </logicalFolder>
       <logicalFolder name="f11" displayName="rfid" projectFiles="true">
         <itemPath>rfid_config.c</itemPath>
+        <itemPath>rfid_tools.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="stopwatch" projectFiles="true">
         <itemPath>stopwatch_config.c</itemPath>
@@ -139,7 +141,7 @@
         <targetDevice>PIC18F46K22</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>VSMViewerPlatformTool</platformTool>
+        <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC8</languageToolchain>
         <languageToolchainVersion>1.37</languageToolchainVersion>
         <platform>3</platform>
