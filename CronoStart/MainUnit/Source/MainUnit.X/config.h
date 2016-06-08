@@ -77,6 +77,9 @@ const char bluetooth_TxBufferMemorySize=50; //Buffer for Bluetooth transmission
 const char bluetooth_RxBufferMemorySize=50; //Buffer for Bluetooth reception
 const char gsm_TxBufferMemorySize=250; //Buffer for GSM transmission
 const char gsm_RxBufferMemorySize=250; //Buffer for GSM reception
+const char rfid_TxBufferMemorySize=50; //Buffer for RFID transmission
+const char rfid_RxBufferMemorySize=50; //Buffer for RFID reception
+
 
 const char deviceID[8]={0x33,0x33,0x33,0x33,0x33,0x33,0x33,0x33};
 

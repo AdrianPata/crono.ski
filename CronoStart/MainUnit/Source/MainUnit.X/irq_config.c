@@ -11,4 +11,10 @@ void irq_config(){
     ANSB0=0; //Digital input
     INTEDG0=0; //Interrupt on falling edge
     INT0IE=0; //Interrupt initially disabled. Will be enabled when a valid start is available.
+    
+    //Configure RFID IRQ on INT2 of PortB (RB2)
+    ANSB2=0; //Digital input
+    INTEDG2=0; //Interrupt on falling edge
+    INT2IP=1; //High priority
+    INT2IE=1; //Enable interrupt
 }

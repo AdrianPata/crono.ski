@@ -22,6 +22,7 @@ void i2c_doWork(){
     //Send bluetooth TX buffer
     i2c_SendBuffer(&bluetooth_TxBuf,I2C_ADR_BLUETOOTH);
     i2c_SendBuffer(&gsm_TxBuf,I2C_ADR_GSM);
+    i2c_SendBuffer(&rfid_TxBuf,I2C_ADR_RFID);
 }
 
 //Interrogate all slaves for data
@@ -38,6 +39,12 @@ void i2c_scanForUARTData(){
     n=i2c_getAvailableBytes(I2C_ADR_GSM);
     if(n>0){
         i2c_GetBytes(I2C_ADR_GSM,n,&gsm_RxBuf);
+    }
+    
+    //Get bytes from RFID device if there are any
+    n=i2c_getAvailableBytes(I2C_ADR_RFID);
+    if(n>0){
+        i2c_GetBytes(I2C_ADR_RFID,n,&rfid_RxBuf);
     }
 }
 

@@ -36,6 +36,7 @@
         <itemPath>irq_interrupt.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="rfid" projectFiles="true">
+        <itemPath>rfid_config.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="stopwatch" projectFiles="true">
         <itemPath>stopwatch_config.h</itemPath>
@@ -97,6 +98,7 @@
         <itemPath>irq_interrupt.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="rfid" projectFiles="true">
+        <itemPath>rfid_config.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="stopwatch" projectFiles="true">
         <itemPath>stopwatch_config.c</itemPath>
