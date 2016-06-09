@@ -75,6 +75,9 @@ public class ComTool {
                     }
                 }                
             }
+            if(c.indexOf("AT+CIPSPRT=")==0){
+                Send("OK".getBytes());                
+            }
             if(c.indexOf("AT+CIPCLOSE=0")==0){
                 hub.disconnect();
                 hub=null;
@@ -85,6 +88,8 @@ public class ComTool {
             }
             if(c.indexOf("AT+CIPSEND")==0){
                 cipsend.startSending(hub);
+                byte[] cursor={0x0D,0x0A,0x3E,0x20}; // Send cursor '>'
+                Send(cursor);
             }
         } catch (IOException ex) {
             Logger.getLogger(ComTool.class.getName()).log(Level.SEVERE, null, ex);

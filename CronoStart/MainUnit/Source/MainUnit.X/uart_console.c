@@ -32,7 +32,9 @@ void uart_console_processBuffer(struct Buffer* buf){
         if(bufferFindString(buf,"pin")==0) gsm_state_ChangeState(3);
         
         //Send data to CronoHub
-        if(bufferFindString(buf,"data")==0) gsm_v_readyToSendData=1;        
+        if(bufferFindString(buf,"data")==0) {
+            gsm_v_readyToSendData=1;        
+        }
         
         //Close GSM connection
         if(bufferFindString(buf,"gsmc")==0) gsm_state_ChangeState(90);

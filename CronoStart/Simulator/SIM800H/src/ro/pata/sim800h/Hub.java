@@ -30,8 +30,8 @@ public class Hub extends Thread {
     }
     
     public boolean connect(){
-        //String host="192.168.157.1";
-        String host="localhost";
+        String host="192.168.157.1";
+        //String host="localhost";
         
         try {
             client = new Socket(host, 3895);            

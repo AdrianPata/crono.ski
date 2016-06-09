@@ -55,7 +55,11 @@ void gsm_state_init(char state){
         gsm_v_IP_DNS=0;
         bufferAddStr(&gsm_TxBuf,"AT+CDNSGIP=hub.crono.ski");
         bufferAdd(&gsm_TxBuf,0x0D);
-    }else if(state==9){// *** Start Up TCP Connection
+    }else if(state==9){// *** Configure cursor for AT+CIPSEND
+        gsm_v_OK=0;
+        bufferAddStr(&gsm_TxBuf,"AT+CIPSPRT=1"); //It prompts echo '>' and shows "send ok" when sending is successful
+        bufferAdd(&gsm_TxBuf,0x0D);
+    }else if(state==10){// *** Start Up TCP Connection
         gsm_v_Connected=0;
         memset(str,0,sizeof(str));
         strcat(str,"AT+CIPSTART=\"TCP\",");
@@ -132,6 +136,12 @@ void gsm_state_exec(char state){
             printf("\r\nGSM: DNS IP %s\r\n",gsm_hub_ip);
         }
     }else if(state==9){
+        if(gsm_v_OK==1){
+            gsm_currentStateMachineExecuted=1;
+            gsm_state_ChangeState(10);
+            printf("\r\nGSM: Cursor \r\n");
+        }
+    }else if(state==10){
         if(gsm_v_Connected==1){
             gsm_currentStateMachineExecuted=1;
             printf("\r\nGSM: Connected \r\n");

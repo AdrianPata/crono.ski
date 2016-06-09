@@ -33,5 +33,5 @@ void gsm_prepare_sendID(){
     base64_encode(block,16,b64_hallo,25);
     bufferAddStr(&gsm_TxDataBuf,b64_hallo);
     
-    bufferAdd(&gsm_TxDataBuf,0x0D);//Transmission terminator
+    bufferAdd(&gsm_TxDataBuf,0x0D);//Command terminator (this byte is for CronoHub so it knows where the command ends)
 }
