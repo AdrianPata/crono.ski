@@ -27,6 +27,7 @@ public class CommandProcess {
     public void addBytes(byte[] b,int length){
         for (int i=0;i<length;i++){
             buffer[bufferPos+i]=b[i];
+            System.out.print((char)b[i]);
         }
         bufferPos+=length;
         

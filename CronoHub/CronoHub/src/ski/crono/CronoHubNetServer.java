@@ -97,6 +97,5 @@ public class CronoHubNetServer extends Thread {
     //Share public key
     private void initConnection(){
         sendData("KEY", crypto.randomKey());        
-        //sendData("HELLO", "OK".getBytes());        
     }
 }
