@@ -31,8 +31,8 @@ void uart_console_processBuffer(struct Buffer* buf){
         //Send pin and register to network
         if(bufferFindString(buf,"pin")==0) gsm_state_ChangeState(3);
         
-        //Send Device ID to CronoHub
-        if(bufferFindString(buf,"id")==0) gsm_sendID();        
+        //Send data to CronoHub
+        if(bufferFindString(buf,"data")==0) gsm_v_readyToSendData=1;        
         
         //Close GSM connection
         if(bufferFindString(buf,"gsmc")==0) gsm_state_ChangeState(90);

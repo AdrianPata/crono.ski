@@ -8,7 +8,8 @@
 #ifndef GSM_HUBDATASENDER_H
 #define	GSM_HUBDATASENDER_H
 
-void gsm_sendID();
+void gsm_prepare_sendID();
+void gsm_sendData();
 
 #endif	/* GSM_HUBDATASENDER_H */
 

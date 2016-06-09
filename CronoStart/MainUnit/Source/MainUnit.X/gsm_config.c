@@ -2,6 +2,7 @@
 
 struct Buffer gsm_TxBuf;
 struct Buffer gsm_RxBuf;
+struct Buffer gsm_TxDataBuf;
 
 void gsm_init();
 
@@ -17,4 +18,5 @@ void gsm_config(){
 void gsm_init(){
     bufferInit(&gsm_TxBuf,gsm_TxBufferMemory,gsm_TxBufferMemorySize); //Initialize TX buffer
     bufferInit(&gsm_RxBuf,gsm_RxBufferMemory,gsm_RxBufferMemorySize); //Initialize RX buffer
+    bufferInit(&gsm_TxDataBuf,gsm_TxDataBufferMemory,gsm_TxDataBufferMemorySize); //Initialize Data TX buffer
 }

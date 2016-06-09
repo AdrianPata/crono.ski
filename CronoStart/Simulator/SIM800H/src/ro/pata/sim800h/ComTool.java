@@ -28,7 +28,7 @@ public class ComTool {
     
     DefaultListModel modelRX;
     
-    //S-a primit AT+CIPSEND=n, asta inseamna ca urmatorii n bytes vor fi trimisi catre Hub
+    //S-a primit AT+CIPSEND
     CipSend cipsend=new CipSend();
     
     public ComTool(DefaultListModel m){
@@ -83,9 +83,8 @@ public class ComTool {
             if(c.indexOf("AT+CPOWD=1")==0){
                 Send("NORMAL POWER DOWN".getBytes());
             }
-            if(c.indexOf("AT+CIPSEND=")==0){
-                cipsend.startSending(Integer.parseInt(c.split("=")[1]),hub);
-                modelRX.addElement("Hub: "+Integer.parseInt(c.split("=")[1])+" bytes");
+            if(c.indexOf("AT+CIPSEND")==0){
+                cipsend.startSending(hub);
             }
         } catch (IOException ex) {
             Logger.getLogger(ComTool.class.getName()).log(Level.SEVERE, null, ex);

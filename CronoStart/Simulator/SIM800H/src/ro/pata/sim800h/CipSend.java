@@ -13,12 +13,10 @@ public class CipSend {
     byte[] buffer=new byte[1000];
     int l=0;
     boolean toSend=false;
-    int total=0;
     Hub hub;
     
-    public void startSending(int t,Hub h){
+    public void startSending(Hub h){
         hub=h;
-        total=t;
         toSend=true;
     }
     
@@ -27,13 +25,13 @@ public class CipSend {
     }
     
     public void sendByte(byte b){
-        buffer[l]=b;
-        l++;
-        if(l==total){
+        if(b!=0x1A){
+            buffer[l]=b;
+            l++;
+        }else{ //Ctrl+Z received (0x1A) - send all data in buffer
             hub.send(buffer,l);
             toSend=false;
             l=0;
-            total=0;
         }
     }
 }

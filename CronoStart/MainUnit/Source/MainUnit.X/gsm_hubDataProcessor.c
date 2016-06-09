@@ -21,8 +21,10 @@ void gsm_processReceivedData(struct Buffer* b,char p){
         memcpy(crypto_PublicSharedKey,dec,32); //Copy the 32 bytes of public share key
         crypto_GenerateSessionKey(); //Generate session key
         
-        delay_10ms(100);
-        gsm_sendID(); //Send ID back
+        //Prepare a response for the hub. It will be sent after the module is ready to send data.
+        gsm_prepare_sendID();
+        //Ask module to prepare to send data
+        gsm_state_ChangeState(20);
     }
 }
 

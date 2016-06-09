@@ -21,6 +21,7 @@ char gsm_v_CREG=0;
 char gsm_v_IP=0; //IP received (used for AT+CIFSR)
 char gsm_v_IP_DNS=0; //IP received from DNS request
 char gsm_v_Connected=0; //Connected to hub.crono.ski
+char gsm_v_readyToSendData=0; //AT+CIPSEND was issued and the GSM module is ready to send data
 
 //config variables
 char gsm_hub_ip[20]; //For an IP address, 15 is enough plus one terminator

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="5">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="7">
         <file>
             <url>gsm_stateMachine.c</url>
-            <bookmark id="1">
+            <bookmark id="6">
                 <name/>
-                <line>57</line>
+                <line>65</line>
                 <key/>
             </bookmark>
-            <bookmark id="5">
+            <bookmark id="7">
                 <name/>
-                <line>129</line>
+                <line>138</line>
                 <key/>
             </bookmark>
         </file>
@@ -18,8 +18,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/surse/crono.ski/CronoStart/MainUnit/Source/MainUnit.X/gsm_hubDataSender.c</file>
+            <file>file:/C:/surse/crono.ski/CronoStart/MainUnit/Source/MainUnit.X/uart_console.c</file>
+            <file>file:/C:/surse/crono.ski/CronoStart/MainUnit/Source/MainUnit.X/gsm_stateMachine.c</file>
             <file>file:/C:/surse/crono.ski/CronoStart/MainUnit/Source/MainUnit.X/gsm_hubDataProcessor.c</file>
-            <file>file:/C:/surse/crono.ski/CronoStart/MainUnit/Source/MainUnit.X/gsm_tool.c</file>
+            <file>file:/C:/surse/crono.ski/CronoStart/MainUnit/Source/MainUnit.X/gsm_config.h</file>
             <file>file:/C:/surse/crono.ski/CronoStart/MainUnit/Source/MainUnit.X/tools_buffer.c</file>
         </group>
     </open-files>

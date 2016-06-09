@@ -63,6 +63,10 @@ void gsm_state_init(char state){
         strcat(str,",\"3895\"");
         bufferAddStr(&gsm_TxBuf,str);
         bufferAdd(&gsm_TxBuf,0x0D);
+    }else if(state==20){// *** Prepare to send data to CronoHub 
+        gsm_v_readyToSendData=0;
+        bufferAddStr(&gsm_TxBuf,"AT+CIPSEND");
+        bufferAdd(&gsm_TxBuf,0x0D);
     }else if(state==90){// *** Close connection
         bufferAddStr(&gsm_TxBuf,"AT+CIPCLOSE=0");
         bufferAdd(&gsm_TxBuf,0x0D);
@@ -130,8 +134,13 @@ void gsm_state_exec(char state){
     }else if(state==9){
         if(gsm_v_Connected==1){
             gsm_currentStateMachineExecuted=1;
-            gsm_state_ChangeState(10);
             printf("\r\nGSM: Connected \r\n");
+        }
+    }else if(state==20){
+        if(gsm_v_readyToSendData==1){
+            gsm_v_readyToSendData=0;
+            gsm_sendData();
+            printf("\r\nGSM: Data sent \r\n");
         }
     }else if(state==90){
         if(gsm_v_Connected==0 && timer_CounterExpired(TIMER_GSM_WAIT)==0){
