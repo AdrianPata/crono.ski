@@ -13,6 +13,7 @@ public class CipSend {
     byte[] buffer=new byte[1000];
     int l=0;
     boolean toSend=false;
+    boolean dataSend=false;
     Hub hub;
     
     public void startSending(Hub h){
@@ -31,6 +32,7 @@ public class CipSend {
         }else{ //Ctrl+Z received (0x1A) - send all data in buffer
             hub.send(buffer,l);
             toSend=false;
+            dataSend=true;
             l=0;
         }
     }

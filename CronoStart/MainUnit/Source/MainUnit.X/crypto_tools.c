@@ -11,13 +11,15 @@ void crypto_GenerateSessionKey(){
 void crypto_EncBlock(const char* b,char len,char * dest){
     char e[16];
     char c1,c2;
+    char counter;
     
     if(len>12) return; //Can encrypt up to 12 bytes inside a block
     
     crypto_counter++;
-    c1=crypto_counter & 0b11111111;
-    crypto_counter=crypto_counter>>8;
-    c2=crypto_counter & 0b11111111;
+    counter=crypto_counter;
+    c1=counter & 0b11111111;
+    counter=counter>>8;
+    c2=counter & 0b11111111;
 
     memset(e,0,16); //Initialize work buffer
     e[0]=c2;e[1]=c1;

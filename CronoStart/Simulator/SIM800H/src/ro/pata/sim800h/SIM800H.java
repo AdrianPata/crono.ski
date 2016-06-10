@@ -45,6 +45,7 @@ public class SIM800H extends javax.swing.JFrame {
         lstTX = new javax.swing.JList<>();
         btmClear = new javax.swing.JButton();
         btnTest = new javax.swing.JButton();
+        btnTerm = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -91,6 +92,13 @@ public class SIM800H extends javax.swing.JFrame {
             }
         });
 
+        btnTerm.setText("CR LF");
+        btnTerm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTermActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,7 +107,9 @@ public class SIM800H extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 435, Short.MAX_VALUE)
+                        .addGap(0, 368, Short.MAX_VALUE)
+                        .addComponent(btnTerm)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnTest)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btmClear)
@@ -120,7 +130,8 @@ public class SIM800H extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSend)
                     .addComponent(btmClear)
-                    .addComponent(btnTest))
+                    .addComponent(btnTest)
+                    .addComponent(btnTerm))
                 .addContainerGap())
         );
 
@@ -168,6 +179,14 @@ public class SIM800H extends javax.swing.JFrame {
         comTool.disconnect();
     }//GEN-LAST:event_btnTestActionPerformed
 
+    private void btnTermActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermActionPerformed
+        try {
+            comTool.SendCRLF();
+        } catch (IOException ex) {
+            Logger.getLogger(SIM800H.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnTermActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -206,6 +225,7 @@ public class SIM800H extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmClear;
     private javax.swing.JButton btnSend;
+    private javax.swing.JButton btnTerm;
     private javax.swing.JButton btnTest;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

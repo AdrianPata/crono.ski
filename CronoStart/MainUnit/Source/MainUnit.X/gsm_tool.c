@@ -4,12 +4,28 @@ void gsm_processGSMBuffer();
 void gsm_printRxCommand(struct Buffer* b,char p);
 char gsm_isIP(struct Buffer* b,char p);
 void gsm_getParam(struct Buffer* b,char p,char n,char* param,char s);
+void gsm_cipsendCursor();
 
 void gsm_doWork() {
+    
+    //Search for cursor only if the gsm module has issued AT=CIPSEND
+    if(gsm_currentStateMachine==20 && gsm_v_readyToSendData==0){
+        gsm_cipsendCursor();    
+    }
+    
     gsm_processGSMBuffer();
     gsm_executeState(gsm_currentStateMachine); //Execute current state machine
+}
+
+//Search for a cursor returned bi AT+CIPSEND
+void gsm_cipsendCursor(){
+    char s=bufferGetSize(&gsm_RxBuf);
     
-    
+    //We search for '> ', cursor followed by a space. Since we search for a string.
+    if(s>=2 && bufferGetAtPos(&gsm_RxBuf,0)==0x3E && bufferGetAtPos(&gsm_RxBuf,1)==0x20){
+        gsm_v_readyToSendData=1;
+        bufferAdvanceCRead(&gsm_RxBuf,2);
+    }
 }
 
 //Search for command terminator in gsm buffer

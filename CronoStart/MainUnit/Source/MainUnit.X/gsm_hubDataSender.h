@@ -10,6 +10,7 @@
 
 void gsm_prepare_sendID();
 void gsm_sendData();
+void gsm_prepare_sendData(const char* b,char len);
 
 #endif	/* GSM_HUBDATASENDER_H */
 

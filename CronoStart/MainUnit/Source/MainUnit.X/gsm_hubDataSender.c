@@ -35,3 +35,31 @@ void gsm_prepare_sendID(){
     
     bufferAdd(&gsm_TxDataBuf,0x0D);//Command terminator (this byte is for CronoHub so it knows where the command ends)
 }
+
+//Add to data transmit buffer a byte array (data)
+void gsm_prepare_sendData(const char* b,char len){
+    char dataBlock[12];
+    char encBlock[16];
+    char procByte=0,bytesInBlock=0;
+    char b64[25];
+    
+    while(procByte<len){
+        //Add bytes to 12 bytes block
+        memset(dataBlock,0,12);
+        while(procByte<len && bytesInBlock<12){
+            dataBlock[bytesInBlock]=b[procByte];
+            bytesInBlock++;
+            procByte++;
+        }
+        //Encrypt data and encode BASE64
+        crypto_EncBlock(dataBlock,bytesInBlock,encBlock);
+        base64_encode(encBlock,16,b64,25);
+        //Add data to transmit buffer
+        bufferAddStr(&gsm_TxDataBuf,"DAT:");
+        bufferAddStr(&gsm_TxDataBuf,b64);
+        //Command terminator (this byte is for CronoHub so it knows where the command ends)
+        bufferAdd(&gsm_TxDataBuf,0x0D);
+        //Reset position in block
+        bytesInBlock=0;
+    }
+}

@@ -89,7 +89,7 @@ public class ComTool {
             if(c.indexOf("AT+CIPSEND")==0){
                 cipsend.startSending(hub);
                 byte[] cursor={0x0D,0x0A,0x3E,0x20}; // Send cursor '>'
-                Send(cursor);
+                SendRaw(cursor);
             }
         } catch (IOException ex) {
             Logger.getLogger(ComTool.class.getName()).log(Level.SEVERE, null, ex);
@@ -114,8 +114,12 @@ public class ComTool {
         }
     }
     
+    public void SendCRLF() throws IOException{
+        out.write(0x0D);
+        out.write(0x0A);
+    }
+    
     public void Send(byte[] b) throws IOException{
-                
         modelRX.addElement("<-- "+new String(b));
         out.write(0x0D);
         out.write(0x0A);
@@ -218,6 +222,16 @@ public class ComTool {
                     processed=true;
                 }
             }while(!processed);
+            
+            //Data were sent to CronoHub
+            if(ComTool.this.cipsend.dataSend){
+                ComTool.this.cipsend.dataSend=false;
+                try{
+                    Send("SEND OK".getBytes());
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }
+            }
         }
         
         @Override

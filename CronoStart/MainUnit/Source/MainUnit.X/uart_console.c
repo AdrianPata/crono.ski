@@ -5,6 +5,7 @@ void uart_console_GetUARTErrors();
 void uart_console_SendToBluetooth(struct Buffer* buff,char off);
 void uart_console_DisplaySystemTime();
 void uart_console_SendToGSM(struct Buffer* b,char p);
+void uart_console_testMessageToHub();
 
 void uart_console_processBuffer(struct Buffer* buf){
     char off;  
@@ -31,10 +32,8 @@ void uart_console_processBuffer(struct Buffer* buf){
         //Send pin and register to network
         if(bufferFindString(buf,"pin")==0) gsm_state_ChangeState(3);
         
-        //Send data to CronoHub
-        if(bufferFindString(buf,"data")==0) {
-            gsm_v_readyToSendData=1;        
-        }
+        //Send test data to CronoHub
+        if(bufferFindString(buf,"mes")==0) uart_console_testMessageToHub();
         
         //Close GSM connection
         if(bufferFindString(buf,"gsmc")==0) gsm_state_ChangeState(90);
@@ -91,4 +90,10 @@ void uart_console_SendToGSM(struct Buffer* b,char p){
 //Print current time
 void uart_console_DisplaySystemTime(){
     printf("System time: %lu\r\n",timer_alive);
+}
+
+//Send a test message to CronoHub
+void uart_console_testMessageToHub(){
+    gsm_prepare_sendData("Adrian culege flori",19);
+    gsm_state_ChangeState(20); //Send prepared data
 }
