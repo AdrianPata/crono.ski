@@ -86,7 +86,8 @@ public class CryptoTool {
             byte[] r=cipher.doFinal(b);
             
             //Validate decrypted block (CRC and counter)
-            if(r[15]!=getCrc8(r)){
+            byte crc=(byte)getCrc8(r);
+            if(r[15]!=crc){
                 System.out.println("CRC Failed");
                 return null;
             }
@@ -124,5 +125,6 @@ public class CryptoTool {
     public void setSecretSharedKey(String k){
         secretSharedKey=base64decode(k.getBytes());
         sessionKey=hmac(secretSharedKey,publicSharedKey);
+        System.out.println("Session key: "+javax.xml.bind.DatatypeConverter.printHexBinary(sessionKey));
     }
 }

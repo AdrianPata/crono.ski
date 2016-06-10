@@ -5,15 +5,16 @@
  */
 package ski.crono;
 
-import javax.xml.bind.DatatypeConverter;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
  * @author MPLAB
  */
 public class CommandProcess {
-    byte[] buffer=new byte[1000];
-    int bufferPos=0; //Buffer insert position. If it is 0, buffer is empty.
+    LinkedList<Byte> receivedBytes=new LinkedList<Byte>();
+    ArrayList<Byte> command=null;
     int id;
     CronoHubNetServer server;
     
@@ -23,43 +24,35 @@ public class CommandProcess {
         this.server=s;
     }
     
-    //Add received to buffer
-    public void addBytes(byte[] b,int length){
+    //Add received bytes to data buffer
+    public void addBytes(byte[] recB,int length){
         for (int i=0;i<length;i++){
-            buffer[bufferPos+i]=b[i];
-            System.out.print((char)b[i]);
+            receivedBytes.add(recB[i]);
         }
-        bufferPos+=length;
         
-        //Search for a command in buffer. Get command end position if found and process command.
-        int ce=identifyCommand();
-        if(ce>=0)processCommand(ce);
-    }
-    
-    //Search in buffer for a command terminator
-    private int identifyCommand(){
-        for (int i=0;i<bufferPos;i++){
-            if(buffer[i]==0x0D){ //CR found
-               return i; 
+        //Try to ansamble a command
+        while(!receivedBytes.isEmpty()){
+            Byte b=receivedBytes.removeFirst();
+            if(b!=0x0D){//It is not a command terminator.
+                if(command==null) command=new ArrayList<>(); //If the command is null, create it
+                command.add(b);
+            } else {//We have a command terminator. Send command to processing.
+                processCommand();
+                command=null;
             }
         }
-        
-        return -1;
     }
     
     //Process command in buffer
-    private void processCommand(int commandEndPos){
-        StringBuilder command=new StringBuilder();
-        for (int i=0;i<commandEndPos;i++){ //commandEndPos is the position of 0x0D
-            command.append((char)buffer[i]);
-        }
+    private void processCommand(){
+        StringBuilder com=new StringBuilder();
+        for(byte b:command) com.append((char)b);
         
-        Log.out(id+" received command: "+command.toString());
-        discardCommand(commandEndPos);
+        Log.out(id+" received command: "+com.toString());
         
         //CronoStart ID received. This will validate the connection.
-        if(command.toString().startsWith("ID:")){
-            String[] el=command.toString().split(":");
+        if(com.toString().startsWith("ID:")){
+            String[] el=com.toString().split(":");
             server.CronoStartID=el[1];
             String ssk=server.webInt.getSecretSharedKey(server.CronoStartID);
             server.crypto.setSecretSharedKey(ssk);
@@ -72,20 +65,12 @@ public class CommandProcess {
                 server.close();
             }
         }
-    }
-    
-    //Discard command from buffer
-    private void discardCommand(int commandEndPos){
-        int j=0;
-        commandEndPos++; //Step over CR (0x0D)
         
-        for(int i=commandEndPos;i<bufferPos;i++){
-            buffer[j]=buffer[i]; //copy bytes from buffer to first position
-            j++;
+        //Encrypted data received from CronoStart
+        if(com.toString().startsWith("DAT:")){
+            String[] el=com.toString().split(":");
+            byte[] r=server.crypto.AESdecode(server.crypto.base64decode(el[1].getBytes()));
+            System.out.println("Decoded data: "+new String(r));
         }
-        
-        bufferPos=j;
     }
-    
-    
 }
