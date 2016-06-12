@@ -49,14 +49,42 @@ public class CronoHubNetServer extends Thread {
     public void sendData(String com,byte[] b){
         try {
             OutputStream out=server.getOutputStream();
+            
+            System.out.println("HUB:"+com+":"+new String(b));
+            
             out.write("\r\n".getBytes());
             out.write("HUB:".getBytes());
             com+=":";            
             out.write(com.getBytes());
-            out.write(crypto.base64encode(b));
+            out.write(b);
             out.write("\r\n".getBytes());
         } catch (IOException ex) {
             Log.out(id+" send data error: "+ex.getMessage());
+        }
+    }
+    
+    public void sendOrder(byte[] b){
+        byte[] b64;
+        byte[] block;
+        byte[] ord=new byte[b.length+1]; //We need to add 0x0D to the end
+        int procBytes=0;
+        int blockBytes=0;
+        
+        //Copy input array and add CR at the end
+        for(int i=0;i<b.length;i++) ord[i]=b[i];
+        ord[b.length]=0x0D;
+        
+        while(procBytes<ord.length){
+            block=new byte[12];
+            while(procBytes<ord.length && blockBytes<12){
+                block[blockBytes]=ord[procBytes];
+                blockBytes++;
+                procBytes++;
+            }
+            
+            b64=crypto.encryptBlock(block,blockBytes);
+            sendData("DAT",b64);
+            blockBytes=0;
         }
     }
     
@@ -92,10 +120,11 @@ public class CronoHubNetServer extends Thread {
             }
         }
         Log.out(id+ " connection closed.");
+        webInt.updateWebStatus("CronoStartDisconnected");
     }
     
     //Share public key
     private void initConnection(){
-        sendData("KEY", crypto.randomKey());        
+        sendData("KEY", crypto.base64encode(crypto.randomKey()));
     }
 }

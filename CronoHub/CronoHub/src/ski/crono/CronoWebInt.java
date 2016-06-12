@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import ski.crono.servicePJO.BaseResponse;
@@ -50,13 +51,56 @@ public class CronoWebInt {
     //Get the secret shared key for a specific CronoStart ID
     public String getSecretSharedKey(String id){
         Gson gson = new Gson();
-        String r=getServiceData("com=getSSK&ID="+id);
+        String r="";
+        try{
+            r=getServiceData("com=getSSK&ID="+URLEncoder.encode(id,"UTF-8"));
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
         if(r.equals("Err")) return null; //Error on web request        
         BaseResponse resp=gson.fromJson(r, BaseResponse.class);
         if(resp.retCode==0){
             return resp.msg;
         }
         return "";
+    }
+    
+    //Validate RFID ID
+    public boolean validateRFID(String id){
+        Gson gson = new Gson();
+        String r="";
+        try{
+            r=getServiceData("com=validateRFID&ID="+URLEncoder.encode(id,"UTF-8"));
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        if(r.equals("Err")) return false; //Error on web request
+        BaseResponse resp=gson.fromJson(r, BaseResponse.class);
+        if(resp.retCode==0){
+            return true;
+        }
+        return false;
+    }
+    
+    //Reset Web Status
+    //Is executed on initialization
+    public void resetWebStatus(){
+        String r="";
+        try{
+            r=getServiceData("com=resetStatus");
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    //Update Web Status
+    public void updateWebStatus(String id){
+        String r="";
+        try{
+            r=getServiceData("com=updateStatus&ID="+URLEncoder.encode(id,"UTF-8"));
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
     
     public void doServ(){

@@ -46,6 +46,34 @@ if($com=="getSSK"){
     return;
 }
 
+//Validate RFID card ID
+if($com=="validateRFID"){
+    $id=filter_input(INPUT_POST, 'ID');
+    if(validateRFID($id)){
+        $retArr["retCode"]=0;
+        $retArr["msg"]="RFID card OK";
+    }else{
+        $retArr["retCode"]=1;
+        $retArr["msg"]="Invalid ID ".$id;
+    }
+}
+
+//Reset web status.
+//This is called on CronoHub initialization.
+if($com=="resetStatus"){
+    resetStatus();
+    $retArr["retCode"]=0;
+    $retArr["msg"]="Reset status OK.";
+}
+
+//Update web status.
+if($com=="updateStatus"){
+    $id=filter_input(INPUT_POST, 'ID');
+    updateStatus($id);
+    $retArr["retCode"]=0;
+    $retArr["msg"]="Update status OK.";
+}
+
 if($com=="serv"){
     $retArr["msg"]="Service query";
     $t=json_decode(filter_input(INPUT_POST, 'time'));

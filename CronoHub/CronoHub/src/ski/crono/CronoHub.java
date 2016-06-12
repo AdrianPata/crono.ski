@@ -20,6 +20,7 @@ public class CronoHub {
             System.out.println("Can not log in to web service.");
             return;
         }
+        cw.resetWebStatus();
         
         netmgr.setWebInterface(cw);
         netmgr.start();

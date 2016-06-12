@@ -15,6 +15,11 @@ import java.util.LinkedList;
 public class CommandProcess {
     LinkedList<Byte> receivedBytes=new LinkedList<Byte>();
     ArrayList<Byte> command=null;
+    
+    //If the command contains encrypted data, the data is decrypted and placed into orders
+    LinkedList<Byte> orderBytes=new LinkedList<Byte>();
+    ArrayList<Byte> order=null;
+    
     int id;
     CronoHubNetServer server;
     
@@ -60,6 +65,7 @@ public class CommandProcess {
             if(r!=null && new String(r).equals("HALLO")){
                 System.out.println(id+" valid connection.");
                 server.validConn=true;
+                server.webInt.updateWebStatus("CronoStartConnected");
             }else{
                 System.out.println(id+" invalid connection.");
                 server.close();
@@ -70,7 +76,59 @@ public class CommandProcess {
         if(com.toString().startsWith("DAT:")){
             String[] el=com.toString().split(":");
             byte[] r=server.crypto.AESdecode(server.crypto.base64decode(el[1].getBytes()));
-            System.out.println("Decoded data: "+new String(r));
+            if(r!=null){
+                System.out.println("Decoded data: "+new String(r));
+                //Add bytes to orders
+                for(byte b:r) orderBytes.add(b);
+                //Try to ansamble an order
+                while(!orderBytes.isEmpty()){
+                    byte b=orderBytes.removeFirst();
+                    if(b!=0x0D){
+                        if(order==null) order=new ArrayList<>();
+                        order.add(b);
+                    }else{
+                        processOrder();
+                        order=null;
+                    }
+                }
+            }
         }
+    }
+    
+    private void processOrder(){
+        //Card ID received
+        if(indexOfArray(order,"RFID:".getBytes())==0){
+            byte[] rfid=getByteArray(order,5); //Step over "RFID:"
+            String rfidB64=new String(server.crypto.base64encode(rfid));
+            System.out.println("RFID received: "+javax.xml.bind.DatatypeConverter.printHexBinary(rfid));
+            if(server.webInt.validateRFID(rfidB64)){
+                server.sendOrder("RFID OK".getBytes());
+            }else {
+                server.sendOrder("RFID ERR".getBytes());
+            }
+        }
+    }
+    
+    //Find the possition of srch in the ArrayList
+    private int indexOfArray(ArrayList<Byte> barr,byte[] srch){
+        byte[] a=new byte[barr.size()];
+        for(int i=0;i<barr.size();i++){
+            a[i]=barr.get(i);
+        }
+        
+        String s1=new String(a);
+        String s2=new String(srch);
+        
+        return s1.indexOf(s2);
+    }
+    
+    //Get byte array from ArrayList starting from position s
+    private byte[] getByteArray(ArrayList<Byte> barr,int s){
+        byte[] a=new byte[barr.size()-s];
+        for(int i=s;i<barr.size();i++){
+            a[i-s]=barr.get(i);
+        }
+        
+        return a;
     }
 }

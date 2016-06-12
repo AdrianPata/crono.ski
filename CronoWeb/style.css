@@ -7,31 +7,48 @@
 body {
     padding: 0px;
     margin: 0px;
+    font-family: "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .toppanel {
     position: absolute;
-    background: rgba(255,255,255,.5);
-    font-family: "Verdana";
-    font-size: 16px;
-    padding: 20px;
+    background: rgba(255,255,255,.7);
+    font-family: "Roboto", sans-serif;
+    font-size: 24px;
+    padding: 10px;
     border: 1px solid #FFFFFF;
     left: 40px;
     top: 40px;
     right: 40px;
     text-align: center;
     font-weight: bold;
-}            
+}
+
+.statuspanel {
+    position: absolute;
+    background: rgba(255,255,255,.7);
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #FFFFFF;
+    left: 40px;
+    top: 100px;
+    right: 40px;
+    text-align: center;
+    font-weight: bold;
+}
             
 .mainpanel {
     position:absolute;
-    background: rgba(255,255,255,.5);
-    font-family: "Verdana";
+    background: rgba(255,255,255,.7);
+    font-family: "Roboto", sans-serif;
     font-size: 11px;
     padding: 20px;
     border: 1px solid #FFFFFF;
     left: 40px;
-    top: 120px;
+    top: 160px;
     right: 40px;
     bottom: 40px;
     overflow-y: scroll;
@@ -42,7 +59,7 @@ body {
     left: 40px;
     right: 40px;
     bottom: 5px;
-    font-family: "Verdana";
+    font-family: "Roboto", sans-serif;
     font-size: 9px;
 }
 

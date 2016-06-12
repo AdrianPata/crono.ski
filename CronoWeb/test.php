@@ -30,6 +30,8 @@ try {
 }
  */
 
+echo sha1("rtyadrian");
+
 ?>
     </body>
 </html>

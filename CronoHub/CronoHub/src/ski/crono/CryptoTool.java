@@ -127,4 +127,36 @@ public class CryptoTool {
         sessionKey=hmac(secretSharedKey,publicSharedKey);
         System.out.println("Session key: "+javax.xml.bind.DatatypeConverter.printHexBinary(sessionKey));
     }
+    
+    public byte[] encryptBlock(byte[] b,int len){
+        byte[] block=new byte[16];
+        byte[] encBlock=new byte[16];
+        int l=len;
+        if(l>12) l=12; //Maximum 12 bytes
+        
+        counter++;
+        byte c1,c2;
+        int c=counter;
+        c1=(byte)(c & 0b11111111);
+        c=c>>8;
+        c2=(byte)(c & 0b11111111);
+        
+        block[0]=c2;
+        block[1]=c1;
+        block[2]=(byte)l;
+        for(int i=0;i<l;i++) block[i+3]=b[i];
+        byte crc=(byte)getCrc8(block);
+        block[15]=crc;
+        
+        try{
+            SecretKey secret = new SecretKeySpec(sessionKey, "AES");
+            Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
+            cipher.init(Cipher.ENCRYPT_MODE, secret);
+            encBlock=cipher.doFinal(block);
+        } catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
+            Logger.getLogger(CryptoTool.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return base64encode(encBlock);
+    }
 }
