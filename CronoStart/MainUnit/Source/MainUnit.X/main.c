@@ -30,7 +30,7 @@ void main(void) {
         gsm_doWork();
         timer_doWork();
         stopwatch_doWork();
-        //rfid_doWork();
+        rfid_doWork();
         
         //Blink LED on RA0        
         if(timer_CounterExpired(TIMER_COUNTER_LED_BLINK)==0){

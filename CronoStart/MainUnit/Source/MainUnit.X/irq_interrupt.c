@@ -27,6 +27,6 @@ void irq_int(){
     //RFID card in proximity interrupt
     if(INT2IE && INT2IF){
         INT2IF=0; //Clear flag.
-        rfid_getID();
+        rfid_cardPresent=1;
     }
 }

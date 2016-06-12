@@ -78,6 +78,7 @@ const char bluetooth_RxBufferMemorySize=50; //Buffer for Bluetooth reception
 const char gsm_TxBufferMemorySize=250; //Buffer for GSM transmission
 const char gsm_RxBufferMemorySize=250; //Buffer for GSM reception
 const char gsm_TxDataBufferMemorySize=200; //Data to send with AT+CIPSEND (GSM)
+const char gsm_RxDataBufferMemorySize=100; //Encrypted data received from GSM
 const char rfid_TxBufferMemorySize=50; //Buffer for RFID transmission
 const char rfid_RxBufferMemorySize=50; //Buffer for RFID reception
 

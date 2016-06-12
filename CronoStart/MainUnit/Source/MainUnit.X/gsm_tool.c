@@ -5,6 +5,7 @@ void gsm_printRxCommand(struct Buffer* b,char p);
 char gsm_isIP(struct Buffer* b,char p);
 void gsm_getParam(struct Buffer* b,char p,char n,char* param,char s);
 void gsm_cipsendCursor();
+void gsm_processEncryptedReceivedData();
 
 void gsm_doWork() {
     
@@ -15,6 +16,7 @@ void gsm_doWork() {
     
     gsm_processGSMBuffer();
     gsm_executeState(gsm_currentStateMachine); //Execute current state machine
+    gsm_processEncryptedReceivedData(); //Process data received from CronoHub (encrypted)
 }
 
 //Search for a cursor returned bi AT+CIPSEND
@@ -87,6 +89,24 @@ void gsm_processGSMBuffer(){
         }
         
         bufferDiscardCRLF(&gsm_RxBuf);
+    }
+}
+
+//Search for a command in the decrypted received data
+//The command ends with CR (0x0D)
+void gsm_processEncryptedReceivedData(){
+    char p;
+    p=bufferSearchByte(&gsm_RxDataBuf,0x0D);
+    if (p!=0xFF){ //CR found
+        if(bufferFindStringLim(&gsm_RxDataBuf,"RFID OK",p)==0) {
+            printf("\r\nRFID OK\r\n");
+            stopwatch_enableStartStop();
+        }
+        if(bufferFindStringLim(&gsm_RxDataBuf,"RFID ERR",p)==0) {
+            printf("\r\nRFID ERR\r\n");
+        }
+        
+        bufferAdvanceCRead(&gsm_RxDataBuf,p+1); //Discard processed data (including terminating 0x0D)
     }
 }
 

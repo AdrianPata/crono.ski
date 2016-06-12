@@ -16,6 +16,7 @@ char rfid_RxBufferMemory[rfid_RxBufferMemorySize];
 extern struct Buffer rfid_RxBuf; //Initialized in bluetooth_config.c
 
 char rfid_readID[8];
+char rfid_cardPresent=0; //RFID card in proximity
 
 void rfid_config();
 

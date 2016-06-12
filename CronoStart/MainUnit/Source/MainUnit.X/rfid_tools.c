@@ -1,9 +1,12 @@
 #include "main.h"
 
 void rfid_processResponse();
+void rfid_validateID();
 
 void rfid_doWork(){
     rfid_processResponse(); //if there is any response
+    
+    if(rfid_cardPresent==1) rfid_getID();
 }
 
 //Interrogate rfid card for ID
@@ -12,6 +15,7 @@ void rfid_getID(){
     bufferAdd(&rfid_TxBuf,0x02); //Length
     bufferAdd(&rfid_TxBuf,0x31); //Command (0x31 = Get tag information)
     bufferAdd(&rfid_TxBuf,0x89); //Checksum
+    rfid_cardPresent=0;
 }
 
 //Process response from rfid reader (if there is any)
@@ -62,4 +66,19 @@ void rfid_processResponse(){
     
     //Clear the processed response (response length + 2, preamble byte and length byte)
     bufferAdvanceCRead(&rfid_RxBuf,l+2);
+    
+    //Validate read ID
+    rfid_validateID();
+}
+
+//Send RFID card ID to CronoHub for validation.
+//The ID is stored in the global variable "rfid_readID".
+void rfid_validateID(){
+    char ord[14]="RFID:";
+    for(char i=0;i<8;i++){
+        ord[i+5]=rfid_readID[i];
+    }
+    ord[13]=0x0D;
+    gsm_prepare_sendData(ord,14);
+    gsm_state_ChangeState(20); //Send prepared data
 }

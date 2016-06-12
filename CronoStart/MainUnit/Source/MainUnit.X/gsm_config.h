@@ -17,6 +17,9 @@ extern struct Buffer gsm_RxBuf; //Initialized in gsm_config.c
 //Allocate memory for a buffer to send data through AT+CIPSNED. When Cipseend is ready to accept data, this buffer will be sent.
 char gsm_TxDataBufferMemory[gsm_TxDataBufferMemorySize];
 extern struct Buffer gsm_TxDataBuf; //Initialized in gsm_config.c
+//Allocate memory for a buffer for received encrypted data from CronoHub. "HUB:DAT:"
+char gsm_RxDataBufferMemory[gsm_RxDataBufferMemorySize];
+extern struct Buffer gsm_RxDataBuf; //Initialized in gsm_config.c
 
 
 void gsm_config();

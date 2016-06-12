@@ -1,6 +1,7 @@
 #include "main.h"
 
 void crypto_EncAES(char* b);
+void crypto_DecAES(char* b);
 
 //Generate session key
 void crypto_GenerateSessionKey(){
@@ -30,6 +31,24 @@ void crypto_EncBlock(const char* b,char len,char * dest){
     memcpy(dest,e,16);
 }
 
+//Decrypt provided data
+//Returns result length (rezLen)
+void crypto_DecBlock(const char* b,char len,char * dest,char* rezLen){
+    char e[16];
+    int c;
+    if(len>16) return; //Can decrypt up to 16 bytes inside a block
+    memcpy(e,b,len);
+    crypto_DecAES(e);
+    *rezLen=e[2];
+    memcpy(dest,e+3,12);
+    
+    //Update counter
+    c=e[0];
+    c=c<<8;
+    c=c+e[1];
+    crypto_counter=c;
+}
+
 //Encrypt a 16 bytes block with the session key
 void crypto_EncAES(char* b){
     aes256_context ctx; 
@@ -38,6 +57,16 @@ void crypto_EncAES(char* b){
     aes256_encrypt_ecb(&ctx, b);
     aes256_done(&ctx);
 }
+
+//Decrypt a 16 bytes block with the session key
+void crypto_DecAES(char* b){
+    aes256_context ctx; 
+    
+    aes256_init(&ctx, crypto_SessionKey);
+    aes256_decrypt_ecb(&ctx, b);
+    aes256_done(&ctx);
+}
+
 
 //SHA the buffer up to offset of the 0x0D
 void crypto_doSHA(struct Buffer* buff,char off){

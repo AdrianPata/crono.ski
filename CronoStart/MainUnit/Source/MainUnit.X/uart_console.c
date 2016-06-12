@@ -6,6 +6,7 @@ void uart_console_SendToBluetooth(struct Buffer* buff,char off);
 void uart_console_DisplaySystemTime();
 void uart_console_SendToGSM(struct Buffer* b,char p);
 void uart_console_testMessageToHub();
+void uart_console_testSendRFID();
 
 void uart_console_processBuffer(struct Buffer* buf){
     char off;  
@@ -49,6 +50,9 @@ void uart_console_processBuffer(struct Buffer* buf){
         
         //Interrogate rfid card for ID
         if(bufferFindString(buf,"rfid")==0) rfid_getID();
+        
+        //Send rfid card ID to CronoHub
+        if(bufferFindString(buf,"rfidsnd")==0) uart_console_testSendRFID();
         
         bufferDiscardCR(buf);
         printf("\r\n");
@@ -95,5 +99,14 @@ void uart_console_DisplaySystemTime(){
 //Send a test message to CronoHub
 void uart_console_testMessageToHub(){
     gsm_prepare_sendData("Adrian culege flori",19);
+    gsm_state_ChangeState(20); //Send prepared data
+}
+
+//Send rfid card RFID to CronoHub
+void uart_console_testSendRFID(){
+    char ord[14]="RFID:";
+    ord[5]=0x5d;ord[6]=0x5f;ord[7]=0x8a;ord[8]=0x4e;ord[9]=0x00;ord[10]=0x01;ord[11]=0x04;ord[12]=0xe0;
+    ord[13]=0x0D;
+    gsm_prepare_sendData(ord,14);
     gsm_state_ChangeState(20); //Send prepared data
 }
