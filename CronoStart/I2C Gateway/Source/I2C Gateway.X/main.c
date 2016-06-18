@@ -20,6 +20,8 @@ void main(void) {
     //uartAddByteToTxBuffer(0x0A);
     
     while(1){
+        uart_doWork();
+        i2c_doWork();
         uartTxByteFromBuffer();
     }
 }

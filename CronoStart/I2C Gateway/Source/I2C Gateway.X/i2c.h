@@ -12,6 +12,7 @@ char i2cStatus=0; //Current I2C status
                     //0: Idle
                     //1: Address received. Data will be sent by master. Status=1 means that the next received byte is a command.
                     //2: Command received. The slave now knows what data to send to master when asked. Also it knows where to put the data it receives from now on.
+                    //3: Sending data
 
 char i2cCommand=0x00; //Current I2C command (from master)
                     //0: Undefined
@@ -24,7 +25,15 @@ char i2cCommand=0x00; //Current I2C command (from master)
 
 char i2cRecvByteNo=0; //Received byte number. When receiving bytes, this will increment for each byte.
 
+char i2cInt=0; //When interrupt occurs, this will be set
+
 void i2c_int();
+void i2c_doWork();
+
+char RW;
+
+char rcvb=0;
+char i2cSendDataFlag=0;
 
 #endif	/* I2C_H */
 

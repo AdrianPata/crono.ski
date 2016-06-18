@@ -5,6 +5,11 @@ void putch(char d){
     char r;
     r=bufferAdd(&uart_TxBuf,d);
     if(r!=0) sbi(uartErrors,UART_ERR_TX_FULL); //Buffer is full. Set error bit.
+    
+    //If a bluetooth client is connected, also send data to the client
+    if(bluetooth_Connected==1){
+        bufferAdd(&bluetooth_TxBuf,d);
+    }
 }
 
 //Create a long delay

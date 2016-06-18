@@ -10,6 +10,7 @@
 
 void i2c_wfc();
 void i2c_doWork();
+char i2c_TESTgetReceivedBytes(char adr);
 
 #endif	/* I2C_TOOLS_H */
 

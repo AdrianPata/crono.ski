@@ -6,6 +6,7 @@ char gsm_isIP(struct Buffer* b,char p);
 void gsm_getParam(struct Buffer* b,char p,char n,char* param,char s);
 void gsm_cipsendCursor();
 void gsm_processEncryptedReceivedData();
+void gsm_sendencryptedData();
 
 void gsm_doWork() {
     
@@ -17,6 +18,7 @@ void gsm_doWork() {
     gsm_processGSMBuffer();
     gsm_executeState(gsm_currentStateMachine); //Execute current state machine
     gsm_processEncryptedReceivedData(); //Process data received from CronoHub (encrypted)
+    gsm_sendencryptedData(); //Send prepared encrypted data
 }
 
 //Search for a cursor returned bi AT+CIPSEND
@@ -83,6 +85,11 @@ void gsm_processGSMBuffer(){
             gsm_v_Power=0;
         }
         
+        //Data sent ok through CIPSENDc
+        if(bufferFindStringLim(&gsm_RxBuf,"SEND OK",p)==0){ 
+            gsm_state_ChangeState(21);
+        }
+        
         //Data received from CronoHub
         if(bufferFindStringLim(&gsm_RxBuf,"HUB:",p)==0){
             gsm_processReceivedData(&gsm_RxBuf,p);
@@ -101,6 +108,7 @@ void gsm_processEncryptedReceivedData(){
         if(bufferFindStringLim(&gsm_RxDataBuf,"RFID OK",p)==0) {
             printf("\r\nRFID OK\r\n");
             stopwatch_enableStartStop();
+            buzz_doBuzz(20); //We have a valid ID - make a sound for confirmation
         }
         if(bufferFindStringLim(&gsm_RxDataBuf,"RFID ERR",p)==0) {
             printf("\r\nRFID ERR\r\n");
@@ -166,5 +174,22 @@ void gsm_getParam(struct Buffer* b,char p,char n,char* param,char s){
     
     if(pp<sizeof param){ //Do not get out of the assigned memory
         param[pp]=0; //String terminator
+    }
+}
+
+//If there is data in the DataTxBuffer, initiate the sending process
+void gsm_sendencryptedData(){
+    char s;
+    
+    if(gsm_v_Connected!=1) return; //Not connected
+    
+    s=bufferGetSize(&gsm_TxDataBuf);
+    if(s>0 && gsm_currentStateMachine!=20){ //Prepare sending data
+        gsm_state_ChangeState(20);
+    }
+    
+    if(s>0 && gsm_sendEncData==1){
+        gsm_sendEncData=0;
+        gsm_sendData();
     }
 }

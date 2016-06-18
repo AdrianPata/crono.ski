@@ -15,6 +15,9 @@ extern struct Buffer bluetooth_TxBuf; //Initialized in bluetooth_config.c
 char bluetooth_RxBufferMemory[bluetooth_RxBufferMemorySize];
 extern struct Buffer bluetooth_RxBuf; //Initialized in bluetooth_config.c
 
+//Client connected
+char bluetooth_Connected=0;
+
 void bluetooth_config();
 
 #endif	/* BLUETOOTH_CONFIG_H */

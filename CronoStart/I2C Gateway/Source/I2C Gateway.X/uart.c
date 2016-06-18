@@ -10,31 +10,24 @@ void uartDoIRQ(){
 //Returns the next available byte in RX buffer
 //If there are no more bytes, returns 0
 char uartGetNextRxBufferByte(){
-    
+    char r;
     if(uartRxRead==uartRxLast) return 0; //buffer is empty
+    
+    r=uartRxBuffer[uartRxRead];    
     uartRxRead++;
     if(uartRxRead==uartRxBufferSize) uartRxRead=0;
     
-    if(OERR){ //FIFO Overrun - this should never happen since every byte is received on UART even that the buffer is full
-        sbi(uartErrors,5);
-        CREN=0; //Clear OERR by disabling the receiver
-        CREN=1; //Enable the receiver
-    }
-    
-    return uartRxBuffer[uartRxRead];
+    return r;
 }
 
 //Add byte to RX buffer (if the buffer is not full)
 void uartAddByteToRxBuffer(char c){
-    char newVal=0;
-    newVal=uartRxLast+1;
-    if(newVal==uartRxBufferSize) newVal=0;    
-    if(newVal==uartRxRead){ //This condition means the buffer is full and the adding is aborted
-        sbi(uartErrors,7); //Set error bit to highlight this situation
-        return;
-    }
-    uartRxLast=newVal;
+    char t; //temporary variable
     uartRxBuffer[uartRxLast]=c;
+    t=uartRxLast;
+    uartRxLast++;
+    if(uartRxLast==uartRxBufferSize) uartRxLast=0;
+    if(uartRxLast==uartRxRead) uartRxLast=t; //buffer full
 }
 
 //Bytes unread in RX buffer
@@ -81,15 +74,29 @@ void uartTxByteFromBuffer(){
     }
 }
 
-
+void uart_doWork(){
+    char byteAdded=0;
+    
+    while(uartRXDBcread!=uartRXDBclast){
+        uartAddByteToRxBuffer(uartRXDB[uartRXDBcread]);
+        uartRXDBcread++;
+        if(uartRXDBcread==uartRXDBsize) uartRXDBcread=0;
+        byteAdded=1;
+    }
+    
+    if(byteAdded==1) uartDoIRQ();
+}
 
 //Handles UART interrupts
 void uart_int(){
     char c;
-    while(RCIF){//There are bytes in the receive FIFO buffer
+    if(RCIF){//There are bytes in the receive FIFO buffer
         c=RCREG; //Read byte from UART receiver
-        uartAddByteToRxBuffer(c);
-        uartDoIRQ();
+        uartRXDB[uartRXDBclast]=c;
+        uartRXDBclast++;
+        if(uartRXDBclast==uartRXDBsize) uartRXDBclast=0;
+        //uartAddByteToRxBuffer(c);
+        //uartDoIRQ();
     }
 }
 

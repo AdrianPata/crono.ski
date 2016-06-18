@@ -7,5 +7,5 @@ void interrupt high_priority int_high(){
 }
 
 void interrupt low_priority int_low(){
-    
+    timer_int_low();
 }

@@ -6,7 +6,9 @@ void rfid_validateID();
 void rfid_doWork(){
     rfid_processResponse(); //if there is any response
     
-    if(rfid_cardPresent==1) rfid_getID();
+    if(rfid_cardPresent==1) {
+        rfid_getID();
+    }
 }
 
 //Interrogate rfid card for ID
@@ -48,27 +50,31 @@ void rfid_processResponse(){
     
     s=bufferGetSize(&rfid_RxBuf);
     if(s<2) return; //We need at least a preamble and a length if we want to precess the next line
-    l=bufferGetAtPos(&rfid_RxBuf,1);//Imediately after the preamble is the response length
+    l=bufferGetAtPos(&rfid_RxBuf,1);//Immediately after the preamble is the response length
     if(l+2>s) return; //Not enough bytes in buffer for the reported command length
     
-    //Command: 0x31(Get tag information) Status: 0x00(Operation success) Type: 0x32(I.CODE SLI)
+    //Command: 0x31(Get tag information) Status: 0x00(Operation success) 
     //Used to get the ID
     //If command is 0x31 and status is 0x00, we should have a type byte on position 14.
     //Response example: 0xbd 0x0e 0x31 0x00 0x5d 0x5f 0x8a 0x4e 0x00 0x01 0x04 0xe0 0x00 0x00 0x32 0x93
-    if(bufferGetAtPos(&rfid_RxBuf,2)==0x31 && bufferGetAtPos(&rfid_RxBuf,3)==0x00 && bufferGetAtPos(&rfid_RxBuf,14)==0x32){
+    if(bufferGetAtPos(&rfid_RxBuf,2)==0x31 && bufferGetAtPos(&rfid_RxBuf,3)==0x00 ){
         printf("\r\nRFID:");
         for(char i=0;i<8;i++){
             rfid_readID[i]=bufferGetAtPos(&rfid_RxBuf,i+4); //Card ID starts from position 4
             printf("%x ",rfid_readID[i]);
         }
         printf("\r\n");
+
+        //Validate read ID
+        rfid_validateID();
+        
+        //Make o sound because we got a valid ID from the card
+        buzz_doBuzz(10);
     }
     
     //Clear the processed response (response length + 2, preamble byte and length byte)
     bufferAdvanceCRead(&rfid_RxBuf,l+2);
     
-    //Validate read ID
-    rfid_validateID();
 }
 
 //Send RFID card ID to CronoHub for validation.
@@ -80,5 +86,4 @@ void rfid_validateID(){
     }
     ord[13]=0x0D;
     gsm_prepare_sendData(ord,14);
-    gsm_state_ChangeState(20); //Send prepared data
 }

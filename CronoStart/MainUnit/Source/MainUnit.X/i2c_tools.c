@@ -75,6 +75,33 @@ char i2c_getAvailableBytes(char adr){
     return r;
 }
 
+//For debugging
+char i2c_TESTgetReceivedBytes(char adr){
+    char r;
+    SEN1=1;i2c_wfc(); //Send start bit
+    cbi(adr,0); //Set address for write
+    SSP1BUF=adr;i2c_wfc(); //Send slave address
+    if(ACKSTAT1==0){ //Slave responded to address
+        SSP1BUF=0x06;i2c_wfc(); //Send command 0x01 (Get available number of bytes)
+    } else {
+        PEN1=1;i2c_wfc(); //Stop bit
+        return 0; //No slave with specified address
+    }
+    RSEN1=1;i2c_wfc(); //Repeated start
+    sbi(adr,0); //Set address for read
+    SSP1BUF=adr;i2c_wfc(); //Send slave address
+    if(ACKSTAT1==0){ //Slave responded to address
+        RCEN1=1;i2c_wfc(); //Get byte from slave
+        r=SSP1BUF;
+        ACKDT1=1; //NACK - no more data needed
+        ACKEN1=1;i2c_wfc(); //Send ACK bit
+    } else {
+        return 0; //No slave with specified address
+    }
+    PEN1=1;i2c_wfc(); //Stop bit
+    return r;
+}
+
 //Get bytes from slave
 void i2c_GetBytes(char adr,char n,struct Buffer* buf){
     char r;

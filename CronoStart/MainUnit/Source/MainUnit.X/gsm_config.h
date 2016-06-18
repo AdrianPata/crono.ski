@@ -22,6 +22,9 @@ char gsm_RxDataBufferMemory[gsm_RxDataBufferMemorySize];
 extern struct Buffer gsm_RxDataBuf; //Initialized in gsm_config.c
 
 
+//Clear to send encrypted
+char gsm_sendEncData=0;
+
 void gsm_config();
 
 #endif	/* GSM_CONFIG_H */

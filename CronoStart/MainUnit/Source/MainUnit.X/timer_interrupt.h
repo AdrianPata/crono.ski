@@ -9,6 +9,7 @@
 #define	TIMER_INTERRUPT_H
 
 void timer_int();
+void timer_int_low();
 
 #endif	/* TIMER_INTERRUPT_H */
 

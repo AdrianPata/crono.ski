@@ -13,15 +13,7 @@
 void main(void) {
     startupConfig();
     
-    /*
-    char f;
-    bufferAddStr(&bluetooth_TxBuf,"COCO");
-    bufferAdd(&bluetooth_TxBuf,0x0D);
-    bufferAddStr(&bluetooth_TxBuf,"JAM");
-    f=bufferGetSize(&bluetooth_TxBuf); PORTB=f;
-    bufferDiscardCR(&bluetooth_TxBuf);
-    f=bufferGetSize(&bluetooth_TxBuf); PORTB=f;
-     */
+    buzz_doBuzz(10);
     
     while(1){
         uart_doWork();
@@ -31,6 +23,7 @@ void main(void) {
         timer_doWork();
         stopwatch_doWork();
         rfid_doWork();
+        buzz_doWork();
         
         //Blink LED on RA0        
         if(timer_CounterExpired(TIMER_COUNTER_LED_BLINK)==0){

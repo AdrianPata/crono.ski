@@ -7,6 +7,7 @@ void uart_console_DisplaySystemTime();
 void uart_console_SendToGSM(struct Buffer* b,char p);
 void uart_console_testMessageToHub();
 void uart_console_testSendRFID();
+void uart_console_getReceivedBytes();
 
 void uart_console_processBuffer(struct Buffer* buf){
     char off;  
@@ -54,9 +55,20 @@ void uart_console_processBuffer(struct Buffer* buf){
         //Send rfid card ID to CronoHub
         if(bufferFindString(buf,"rfidsnd")==0) uart_console_testSendRFID();
         
+        //Get received bytes from GSM module
+        if(bufferFindString(buf,"rcvb")==0) uart_console_getReceivedBytes();
+        
+        if(bufferFindString(buf,"hallo")==0) printf(deviceMessage);
+        
         bufferDiscardCR(buf);
         printf("\r\n");
     }
+}
+
+//Get received bytes from GSM module (used for testing)
+void uart_console_getReceivedBytes(){
+    char c=i2c_TESTgetReceivedBytes(I2C_ADR_GSM);
+    printf("\r\n%x\r\n",c);
 }
 
 //Display UART error byte
@@ -69,15 +81,16 @@ void uart_console_GetUARTErrors(){
     printf("UART err: %s\r\n",out);
 }
 
-//Send bytes to bluetooth. off is the offset in array of the end of the command
-void uart_console_SendToBluetooth(struct Buffer* buff,char off){
+//Send bytes to bluetooth. Send bytes up to P including it (it's 0x0D, command terminator)
+void uart_console_SendToBluetooth(struct Buffer* buff,char p){
     char c;
+    if(p<3) return;
     bufferAdvanceCRead(buff,3); //Step over the "bt:"
-    while(buff->cRead!=off){ //Go through the buffer until read cursor gets to the end of the command
-        c=bufferGet(buff); //Get byte from buffer
-        bufferAdd(&bluetooth_TxBuf,c); //Put byte into bluetooth TX buffer
+    for(char i=0;i<=p-3;i++){
+        c=bufferGet(buff);
+        bufferAdd(&bluetooth_TxBuf,c);
     }
-    bufferAdd(&bluetooth_TxBuf,0x0D); //Add a CR at the end of the command
+    //bufferAdd(&bluetooth_TxBuf,0x0D); //Add a CR at the end of the command
 }
 
 //Send bytes to GSM module. Send bytes up to P including it (it's 0x0D, command terminator)
@@ -99,7 +112,6 @@ void uart_console_DisplaySystemTime(){
 //Send a test message to CronoHub
 void uart_console_testMessageToHub(){
     gsm_prepare_sendData("Adrian culege flori",19);
-    gsm_state_ChangeState(20); //Send prepared data
 }
 
 //Send rfid card RFID to CronoHub
@@ -108,5 +120,4 @@ void uart_console_testSendRFID(){
     ord[5]=0x5d;ord[6]=0x5f;ord[7]=0x8a;ord[8]=0x4e;ord[9]=0x00;ord[10]=0x01;ord[11]=0x04;ord[12]=0xe0;
     ord[13]=0x0D;
     gsm_prepare_sendData(ord,14);
-    gsm_state_ChangeState(20); //Send prepared data
 }

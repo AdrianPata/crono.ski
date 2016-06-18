@@ -21,6 +21,11 @@ void timer_CounterSet(char counter,int sec){
     timer_counter[counter]=sec*_TIMER_SEC;
 }
 
+//Set the counter to a number of overflows
+void timer_CounterSet2(char counter,int ovf){
+    timer_counter[counter]=ovf;
+}
+
 char timer_CounterExpired(char counter){
     if(timer_counter[counter]>0){
         return 1;

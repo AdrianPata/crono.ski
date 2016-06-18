@@ -141,7 +141,13 @@ public class SIM800H extends javax.swing.JFrame {
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         try {
             String c=(String) modelTX.getElementAt(lstTX.getSelectedIndex());
-            comTool.Send(c.getBytes());
+            if(c.equals("Start")){
+                comTool.Send("RDY".getBytes());
+                comTool.Send("+CFUN: 1".getBytes());
+                comTool.Send("+CREG: 0".getBytes());
+            }else{
+                comTool.Send(c.getBytes());
+            }
         } catch (IOException ex) {
             Logger.getLogger(SIM800H.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -155,6 +161,7 @@ public class SIM800H extends javax.swing.JFrame {
         modelRX=new DefaultListModel();
         modelTX=new DefaultListModel();
         
+        modelTX.addElement("Start");
         modelTX.addElement("OK");
         modelTX.addElement("+CPIN: SIM PIN");
         modelTX.addElement("+CPIN: READY");

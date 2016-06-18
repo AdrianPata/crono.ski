@@ -25,6 +25,13 @@ char uartErrors=0; //Each bit set signals that an error occurred.
                     //bit 5: FIFO Receive Overrun Error
                     //bit 4: Send buffer overrun (Tx buffer is full but master wants to push data)
 
+//RX double buffer
+const char uartRXDBsize=20;
+char uartRXDB[uartRXDBsize];
+char uartRXDBcread;
+char uartRXDBclast;
+
+
 void uart_int();
 char uartGetRxBufferSize();
 char uartGetNextRxBufferByte();
@@ -33,6 +40,7 @@ void uartAddByteToRxBuffer(char c);
 void uartTxByteFromBuffer();
 char uartGetTxBufferFree();
 void uartDoIRQ();
+void uart_doWork();
 
 #endif	/* UART_H */
 

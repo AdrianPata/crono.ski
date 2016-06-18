@@ -11,6 +11,7 @@
 void timer_doWork();
 void timer_CounterSet(char counter,int sec);
 char timer_CounterExpired(char counter);
+void timer_CounterSet2(char counter,int ovf);
 
 #endif	/* TIMER_TOOL_H */
 

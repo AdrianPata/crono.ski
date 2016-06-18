@@ -16,6 +16,8 @@ void irq_int(){
             stopwatch_time0_O=timer_alive;
             stopwatch_time0_T=TMR1;
             stopwatch_running=1;
+            INT0IE=0; //Disable interrupt. 
+            timer3_stopwatch=120; //After aprox 2 sec the interrupt will be reenabled allowing detecting the FINISH
         }else{
             INT0IE=0; //Disable interrupt. 
             stopwatch_time1_O=timer_alive;

@@ -59,5 +59,8 @@
 #include "rfid_config.h"
 #include "rfid_tools.h"
 
+#include "buzz_config.h"
+#include "buzz_tools.h"
+
 #endif	/* MAIN_H */
 

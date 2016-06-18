@@ -25,8 +25,6 @@ void gsm_processReceivedData(struct Buffer* b,char p){
         
         //Prepare a response for the hub. It will be sent after the module is ready to send data.
         gsm_prepare_sendID();
-        //Ask module to prepare to send data (data is sent immediately after the module is ready to send)
-        gsm_state_ChangeState(20);
     }
     
     //Received encrypted data

@@ -8,6 +8,10 @@
         <itemPath>bluetooth_config.h</itemPath>
         <itemPath>bluetooth_tools.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f12" displayName="buzz" projectFiles="true">
+        <itemPath>buzz_config.h</itemPath>
+        <itemPath>buzz_tools.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <itemPath>config.h</itemPath>
       </logicalFolder>
@@ -71,6 +75,10 @@
       <logicalFolder name="f6" displayName="bluetooth" projectFiles="true">
         <itemPath>bluetooth_config.c</itemPath>
         <itemPath>bluetooth_tools.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f12" displayName="buzz" projectFiles="true">
+        <itemPath>buzz_config.c</itemPath>
+        <itemPath>buzz_tools.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <itemPath>config.c</itemPath>
@@ -141,7 +149,7 @@
         <targetDevice>PIC18F46K22</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>VSMViewerPlatformTool</platformTool>
+        <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC8</languageToolchain>
         <languageToolchainVersion>1.37</languageToolchainVersion>
         <platform>3</platform>
