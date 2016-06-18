@@ -18,6 +18,8 @@ function validateRFID($id){
     $sql = "SELECT id FROM Users where card='".$id."'";
     $result = mysqli_query($conn,$sql);
     if (mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_assoc($result);
+        mysqli_query($conn,"update WebStatus set ActiveUsr=".$row["id"].",UsrStatus=1 where id=1");
         return true;
     }else {
         return false;
@@ -38,13 +40,13 @@ function loginUser($usr,$pass){
 
 function resetStatus(){
     global $conn;
-    $sql="update WebStatus set ActiveUsr=0,UsrStatus=0,CronoStartStatus=0 where id=1";
+    $sql="update WebStatus set ActiveUsr=0,UsrStatus=0,CronoStartStatus=0,version=version+1 where id=1";
     mysqli_query($conn,$sql);
 }
 
 function getStatus(){
     global $conn;
-    $sql = "SELECT u.id,u.name,ws.UsrStatus,ws.CronoStartStatus FROM cronoweb.WebStatus ws
+    $sql = "SELECT u.id,u.name,ws.UsrStatus,ws.CronoStartStatus,ws.Result,ws.version FROM cronoweb.WebStatus ws
                 left outer join Users u on (u.id=ws.ActiveUsr)";
     $result = mysqli_query($conn,$sql);
     if (mysqli_num_rows($result) > 0){
@@ -54,6 +56,8 @@ function getStatus(){
         $status->ActiveUsrName=$row["name"];
         $status->ActiveUsrStatus=$row["UsrStatus"];
         $status->CronoStartStatus=$row["CronoStartStatus"];
+        $status->ResultStatus=$row["Result"];
+        $status->Version=$row["version"];
         return $status;
     }else{
         return new Status();
@@ -63,10 +67,70 @@ function getStatus(){
 function updateStatus($com){
     global $conn;
     if($com==="CronoStartConnected") {
-        $sql="update WebStatus set CronoStartStatus=1,ActiveUsr=0 where id=1";
+        $sql="update WebStatus set CronoStartStatus=1,ActiveUsr=0,version=version+1 where id=1";
     }
     if($com==="CronoStartDisconnected") {
-        $sql="update WebStatus set CronoStartStatus=0,ActiveUsr=0 where id=1";
+        $sql="update WebStatus set CronoStartStatus=0,ActiveUsr=0,version=version+1 where id=1";
+    }
+    if($com==="CronoStartSTART") {
+        $sql="update WebStatus set UsrStatus=2,version=version+1 where id=1";
+    }
+    if($com==="CronoStartFINISH") {
+        $sql="update WebStatus set UsrStatus=3,version=version+1 where id=1";
     }
     mysqli_query($conn,$sql);
+}
+
+function getCurrentSportsman(){
+    global $conn;
+    $sql = "SELECT ws.ActiveUsr FROM cronoweb.WebStatus ws";
+    $result = mysqli_query($conn,$sql);
+    if (mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_assoc($result);
+        $r=$row["ActiveUsr"];
+    }
+    return $r;
+}
+
+function updateResult($time){
+    global $conn;
+    $sql="update WebStatus set Result=".$time.",version=version+1 where id=1";
+    mysqli_query($conn,$sql);
+    $sql="insert into Results (usrid,result,rtime) values (".getCurrentSportsman().",".$time.",NOW())";
+    mysqli_query($conn,$sql);
+}
+
+function getResults(){
+    global $conn;
+    $list=array();
+
+    $sql="select r.id as rid,r.usrid,u.name,r.result,r.rtime from Results r "
+            . "inner join Users u on (u.id=r.usrid)"
+            . "order by result asc";
+    $result = mysqli_query($conn,$sql);
+    $t=mysqli_num_rows($result);
+    for($i=0;$i<$t;$i++){
+        $row = mysqli_fetch_assoc($result);
+        $rowa=array();
+        $rowa["rid"]=$row["rid"];
+        $rowa["usrid"]=$row["usrid"];
+        $rowa["name"]=$row["name"];
+        $rowa["result"]=$row["result"];
+        $rowa["rtime"]=$row["rtime"];
+        $list[$i]=$rowa;
+    }
+    
+    $sql="select max(r.id) as mrid from Results r";
+    $result = mysqli_query($conn,$sql);
+    if(mysqli_num_rows($result)>0){
+        $row = mysqli_fetch_assoc($result);
+        $max=$row["mrid"];
+    }
+    
+    $resp=array();
+    $resp["total"]=$t;
+    $resp["max"]=$max;
+    $resp["list"]=$list;
+    
+    return $resp;
 }

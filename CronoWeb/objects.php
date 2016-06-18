@@ -5,4 +5,6 @@ class Status {
     public $ActiveUsrName;
     public $ActiveUsrStatus;
     public $CronoStartStatus;
+    public $ResultStatus;
+    public $Version;
 }

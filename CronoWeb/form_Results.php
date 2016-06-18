@@ -40,6 +40,6 @@
             <td>Bogdan</td>
             <td>15.36</td>
             <td><?=date('H:i:s', time())?></td>
-        </tr>                
+        </tr>   
     </table>
 </div>

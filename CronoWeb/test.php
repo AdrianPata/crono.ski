@@ -5,6 +5,7 @@
             Usr:<input type="text" name="usr"/><br>
             Pass:<input type="text" name="pass"/><br>
             ID:<input type="text" name="ID"/><br>
+            time:<input type="text" name="time"/><br>
             <input type="submit" value="Login">
         </form>
 <?php

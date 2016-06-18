@@ -103,6 +103,16 @@ public class CronoWebInt {
         }
     }
     
+    //Update result
+    public void updateResult(long time){
+        String r="";
+        try{
+            r=getServiceData("com=updateResult&time="+URLEncoder.encode(String.valueOf(time),"UTF-8"));
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    
     public void doServ(){
         Gson gson = new Gson();
         
