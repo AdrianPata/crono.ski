@@ -74,6 +74,14 @@ if($com=="updateStatus"){
     $retArr["msg"]="Update status OK.";
 }
 
+//Update result.
+if($com=="updateResult"){
+    $time=filter_input(INPUT_POST, 'time');
+    updateResult($time);
+    $retArr["retCode"]=0;
+    $retArr["msg"]="Update result OK.";
+}
+
 if($com=="serv"){
     $retArr["msg"]="Service query";
     $t=json_decode(filter_input(INPUT_POST, 'time'));

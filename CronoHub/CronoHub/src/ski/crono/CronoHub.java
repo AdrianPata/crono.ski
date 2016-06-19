@@ -8,7 +8,7 @@ public class CronoHub {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String input;        
+        String input;   
         
         //Start web service
         CronoHubWebService ws=new CronoHubWebService();

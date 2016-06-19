@@ -125,7 +125,7 @@ public class CryptoTool {
     public void setSecretSharedKey(String k){
         secretSharedKey=base64decode(k.getBytes());
         sessionKey=hmac(secretSharedKey,publicSharedKey);
-        System.out.println("Session key: "+javax.xml.bind.DatatypeConverter.printHexBinary(sessionKey));
+        //System.out.println("Session key: "+javax.xml.bind.DatatypeConverter.printHexBinary(sessionKey));
     }
     
     public byte[] encryptBlock(byte[] b,int len){
