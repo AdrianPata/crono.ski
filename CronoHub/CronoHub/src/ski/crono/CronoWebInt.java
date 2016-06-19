@@ -23,7 +23,8 @@ import ski.crono.servicePJO.BaseResponse;
  */
 public class CronoWebInt {
     String cookie="";
-    String targetURL="http://crono:81/service.php"; 
+    //String targetURL="http://crono:81/service.php"; 
+    String targetURL="https://crono.ski/service.php"; 
     boolean login=false;
     
     //Login to webservice

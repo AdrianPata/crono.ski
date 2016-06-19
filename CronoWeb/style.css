@@ -50,7 +50,7 @@ body {
     left: 40px;
     top: 160px;
     right: 40px;
-    bottom: 40px;
+    bottom: 60px;
     overflow-y: scroll;
 }
 
@@ -61,6 +61,19 @@ body {
     bottom: 5px;
     font-family: "Roboto", sans-serif;
     font-size: 9px;
+}
+
+.buttonpannel {
+    position:absolute;
+    left: 40px;
+    right: 40px;
+    bottom: 20px;
+    padding: 4px;
+    font-family: "Roboto", sans-serif;
+    font-size: 11px;
+    border: 1px solid #FFFFFF;
+    background: rgba(255,255,255,.7);
+    text-align: right;
 }
 
 .maintable {

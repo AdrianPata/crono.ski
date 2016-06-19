@@ -27,10 +27,15 @@ import javax.net.ssl.SSLSocket;
 public class CronoHubWebService extends Thread {
     SSLServerSocket s;
     boolean listen=true;
+    CronoHubNetServerManager netmgr;
+    
+    public CronoHubWebService(CronoHubNetServerManager n){
+        netmgr=n;
+    }
     
     @Override
     public void run(){
-        String ksName = "/raid/Proiecte/Disertatie/crono.ski.prod/keystore.ks";
+        String ksName = "keystore.ks";
         char ksPass[] = "salam".toCharArray();
         char ctPass[] = "salam".toCharArray();
         try{
@@ -45,31 +50,16 @@ public class CronoHubWebService extends Thread {
             s=(SSLServerSocket)ssf.createServerSocket(3898);
             System.out.println("WebService started.");
             SSLSocket c=null;
-            BufferedWriter w=null;
-            BufferedReader r=null;
             do{
                 try{
-                    System.out.println("Webservice listening...");
+                    System.out.println("Webservice listening on 3898...");
                     c=(SSLSocket)s.accept();
-                    w=new BufferedWriter(new OutputStreamWriter(c.getOutputStream()));
-                    r=new BufferedReader(new InputStreamReader(c.getInputStream()));
-                    String m=r.readLine();
-                    w.write("HTTP/1.0 200 OK");
-                    w.newLine();
-                    w.write("Content-Type: text/html");
-                    w.newLine();
-                    w.newLine();
-                    w.write("Hello World!");
-                    w.newLine();
-                    w.flush();
+                    CronoHubWebServiceClient cl=new CronoHubWebServiceClient(c,netmgr);
+                    cl.start();
+                    
                 }catch(Exception ex){
                     System.out.println("WebService err: "+ex.getMessage());
-                }finally{
-                    if(w!=null) w.close();
-                    if(r!=null) r.close();
-                    if(c!=null) c.close();
-                }
-                
+                }                
             }while(listen);
         }catch(Exception ex){
             //ex.printStackTrace();

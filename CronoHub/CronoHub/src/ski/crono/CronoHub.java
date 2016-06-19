@@ -10,11 +10,7 @@ public class CronoHub {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input;   
         
-        //Start web service
-        CronoHubWebService ws=new CronoHubWebService();
-        ws.start();
-        
-        //Log in to the web service
+        //Log in to the CronoWeb web service
         CronoWebInt cw=new CronoWebInt();
         if(!cw.doLogin()){ //Invalid login
             System.out.println("Can not log in to web service.");
@@ -24,6 +20,10 @@ public class CronoHub {
         
         netmgr.setWebInterface(cw);
         netmgr.start();
+
+        //Start local web service
+        CronoHubWebService ws=new CronoHubWebService(netmgr);
+        ws.start();
         
         do{
             input = br.readLine();

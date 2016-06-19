@@ -127,4 +127,8 @@ public class CronoHubNetServer extends Thread {
     private void initConnection(){
         sendData("KEY", crypto.base64encode(crypto.randomKey()));
     }
+    
+    public void shutDownGSM(){
+        sendOrder("SHUT".getBytes());
+    }
 }

@@ -74,4 +74,12 @@ public class CronoHubNetServerManager extends Thread {
             Log.out("Error creating server: "+ex.getMessage());
         }
     }   
+    
+    public void shutDownCronoStart(){
+        for(int i=0;i<servers.size();i++){
+            if(servers.get(i).isAlive()) {
+                servers.get(i).shutDownGSM();
+            }
+        }
+    }
 }

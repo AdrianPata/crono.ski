@@ -46,7 +46,7 @@ function resetStatus(){
 
 function getStatus(){
     global $conn;
-    $sql = "SELECT u.id,u.name,ws.UsrStatus,ws.CronoStartStatus,ws.Result,ws.version FROM cronoweb.WebStatus ws
+    $sql = "SELECT u.id,u.name,ws.UsrStatus,ws.CronoStartStatus,ws.Result,ws.version FROM WebStatus ws
                 left outer join Users u on (u.id=ws.ActiveUsr)";
     $result = mysqli_query($conn,$sql);
     if (mysqli_num_rows($result) > 0){
@@ -83,7 +83,7 @@ function updateStatus($com){
 
 function getCurrentSportsman(){
     global $conn;
-    $sql = "SELECT ws.ActiveUsr FROM cronoweb.WebStatus ws";
+    $sql = "SELECT ws.ActiveUsr FROM WebStatus ws";
     $result = mysqli_query($conn,$sql);
     if (mysqli_num_rows($result) > 0){
         $row = mysqli_fetch_assoc($result);
@@ -92,11 +92,25 @@ function getCurrentSportsman(){
     return $r;
 }
 
+function getCurrentRecordNo(){
+    global $conn;
+    $sql = "SELECT RecordNo FROM WebStatus";
+    $result = mysqli_query($conn,$sql);
+    if (mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_assoc($result);
+        $r=$row["RecordNo"];
+        
+        $sql="update WebStatus set RecordNo=".($r+1);
+        mysqli_query($conn,$sql);
+    }
+    return $r;
+}
+
 function updateResult($time){
     global $conn;
     $sql="update WebStatus set Result=".$time.",version=version+1 where id=1";
     mysqli_query($conn,$sql);
-    $sql="insert into Results (usrid,result,rtime) values (".getCurrentSportsman().",".$time.",NOW())";
+    $sql="insert into Results (usrid,result,rtime,record) values (".getCurrentSportsman().",".$time.",NOW(),".getCurrentRecordNo().")";
     mysqli_query($conn,$sql);
 }
 
@@ -104,7 +118,7 @@ function getResults(){
     global $conn;
     $list=array();
 
-    $sql="select r.id as rid,r.usrid,u.name,r.result,r.rtime from Results r "
+    $sql="select r.record as rid,r.usrid,u.name,r.result,r.rtime from Results r "
             . "inner join Users u on (u.id=r.usrid)"
             . "order by result asc";
     $result = mysqli_query($conn,$sql);
@@ -120,7 +134,7 @@ function getResults(){
         $list[$i]=$rowa;
     }
     
-    $sql="select max(r.id) as mrid from Results r";
+    $sql="select max(r.record) as mrid from Results r";
     $result = mysqli_query($conn,$sql);
     if(mysqli_num_rows($result)>0){
         $row = mysqli_fetch_assoc($result);

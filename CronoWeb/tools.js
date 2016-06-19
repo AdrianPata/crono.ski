@@ -1,8 +1,29 @@
 $(document).ready(function(){
     interval();
+    
+    $( "#btnShutDown" ).click(function() {
+        var r = confirm("Shut down GSM module?");
+        if (r === true) {
+            $.ajax("act_shutdown.php")
+            .done(function(data) {
+                //console.log(data);
+                //var obj = jQuery.parseJSON(data);
+                //processStatus(obj);
+                alert("Shut down: "+data);
+            })
+            .fail(function(data) {
+                console.log( "error",data );
+            })
+            .always(function() {
+                //console.log( "complete" );
+            });
+        }
+    });
 });
 
 var statusVersion=0;
+
+
 
 var interval = function() {
 
@@ -34,17 +55,18 @@ var processStatus =function(stat){
         if(stat.ActiveUsrStatus==="3") {
             var t=parseInt(stat.ResultStatus);
             t=t/(16000000/4/8);
+            t=t.toFixed(3);
             s=t+" seconds";
         }
         $( "#topStatusPanel" ).html(stat.ActiveUsrName+" : "+s);
-        
-        //Load table data if it is necessary
-        if(statusVersion!==parseInt(stat.Version)){
-            statusVersion=parseInt(stat.Version);
-            loadTableData();
-        }
     } else {
         $( "#topStatusPanel" ).html("Wait for sportsman...");
+    }
+    
+    //Load table data if it is necessary
+    if(stat.Version!==null && statusVersion!==parseInt(stat.Version)){
+        statusVersion=parseInt(stat.Version);
+        loadTableData();
     }
     
     if(stat.CronoStartStatus==="0"){
@@ -88,9 +110,12 @@ var displayTableData=function(table){
             }
             if(res.rid===table.max) rowClass="tblRow tblRowColSel";
 
+            var t=parseInt(res.result);
+            t=t/(16000000/4/8);
+            t=t.toFixed(3);
+            s=t+" sec";
             
-            
-            $('.maintable').append('<tr class="'+rowClass+'"><td>'+(i+1)+'</td><td>'+res.rid+'</td><td>'+res.name+'</td><td>'+res.result+'</td><td>'+res.rtime+'</td></tr>');
+            $('.maintable').append('<tr class="'+rowClass+'"><td>'+(i+1)+'</td><td>'+res.rid+'</td><td>'+res.name+'</td><td>'+s+'</td><td>'+res.rtime+'</td></tr>');
         }
     }
 };
