@@ -58,7 +58,14 @@ void uart_console_processBuffer(struct Buffer* buf){
         //Get received bytes from GSM module
         if(bufferFindString(buf,"rcvb")==0) uart_console_getReceivedBytes();
         
+        //Respond to hello
         if(bufferFindString(buf,"hallo")==0) printf(deviceMessage);
+        
+        //Display crypto counter
+        if(bufferFindString(buf,"getcc")==0) printf("\r\nCC: %u\r\n",crypto_counter);
+
+        //Reset crypto counter
+        if(bufferFindString(buf,"resetcc")==0) crypto_counter=0;
         
         bufferDiscardCR(buf);
         printf("\r\n");

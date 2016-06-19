@@ -12,15 +12,17 @@ void stopwatch_doWork(){
         if(stopwatch_running==1){
             printf("\r\nGO!!!\r\n");
             stopwatch_hubStart();
+            buzz_doBuzz(10);
         }
         if(stopwatch_running==0){
             stopwatch_getTime();
+            buzz_doBuzz(10);
         }
     }
     
-    //If the stopwatch is startted and the defined time after start has passed, enable interrupt
+    //If the stopwatch is started and the defined time after start has passed, enable interrupt
     if(stopwatch_running==1 && timer3_stopwatch==0 && INT0IE==0){
-        INT0IE=1;
+        stopwatch_enableStartStop();
     }
 }
 
