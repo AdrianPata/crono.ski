@@ -107,11 +107,16 @@ void gsm_processEncryptedReceivedData(){
     if (p!=0xFF){ //CR found
         if(bufferFindStringLim(&gsm_RxDataBuf,"RFID OK",p)==0) {
             printf("\r\nRFID OK\r\n");
+            stopwatch_running=0; //If it was running, stop it.
             stopwatch_enableStartStop();
-            buzz_doBuzz(20); //We have a valid ID - make a sound for confirmation
+            buzz_doBuzz(10); //We have a valid ID - make a sound for confirmation
         }
         if(bufferFindStringLim(&gsm_RxDataBuf,"RFID ERR",p)==0) {
             printf("\r\nRFID ERR\r\n");
+        }
+        if(bufferFindStringLim(&gsm_RxDataBuf,"SHUT",p)==0) {
+            printf("\r\nSHUT\r\n");
+            gsm_state_ChangeState(90);
         }
         
         bufferAdvanceCRead(&gsm_RxDataBuf,p+1); //Discard processed data (including terminating 0x0D)

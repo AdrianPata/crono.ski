@@ -84,7 +84,7 @@ const char rfid_RxBufferMemorySize=50; //Buffer for RFID reception
 
 
 const char deviceID[8]={0x33,0x33,0x33,0x33,0x33,0x33,0x33,0x33};
-const char deviceMessage[]="CronoStart Console 1.7\r\n";
+const char deviceMessage[]="CronoStart Console 1.8\r\n";
 
 void startupConfig();
 
