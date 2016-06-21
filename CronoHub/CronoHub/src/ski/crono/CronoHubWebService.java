@@ -36,8 +36,8 @@ public class CronoHubWebService extends Thread {
     @Override
     public void run(){
         String ksName = "keystore.ks";
-        char ksPass[] = "salam".toCharArray();
-        char ctPass[] = "salam".toCharArray();
+        char ksPass[] = CryptoTool.globalKeystorePassword;
+        char ctPass[] = CryptoTool.globalKeystorePassword;
         try{
             KeyStore ks=KeyStore.getInstance("JKS");
             ks.load(new FileInputStream(ksName),ksPass);

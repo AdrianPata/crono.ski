@@ -2,6 +2,24 @@ package ski.crono;
 
 import java.io.*; 
 import java.net.*;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 public class CronoHub {
     static CronoHubNetServerManager netmgr=new CronoHubNetServerManager();
@@ -9,6 +27,17 @@ public class CronoHub {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input;   
+        
+        System.out.println("CronoHub v.1.2");
+        
+        Console console = System.console();
+        if (console == null) {
+            System.out.println("Couldn't get Console instance");
+            System.exit(0);
+        }
+
+        CryptoTool.globalKeystorePassword= console.readPassword("Enter keystore password: ");        
+        CryptoTool.loadRSAKeys();
         
         //Log in to the CronoWeb web service
         CronoWebInt cw=new CronoWebInt();
@@ -36,9 +65,20 @@ public class CronoHub {
     }
     
     public static void test(){
-        CryptoTool c=new CryptoTool();
-        byte[] b={(byte)0x00,(byte)0x01,(byte)0x06,(byte)0x41,(byte)0x64,(byte)0x72,(byte)0x69,(byte)0x61,(byte)0x6e,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0xb6};
-        int r=c.getCrc8(b);
-        System.out.println(r);
+        
+        byte[] k=new byte[32];
+        for(int i=0;i<32;i++){
+            k[i]=(byte)0xAA;
+        }
+        
+        byte[] e=CryptoTool.RSAencrypt(k);
+        byte[] b=Base64.getEncoder().encode(e);        
+        
+        System.out.println(new String(b));
+        
+        //byte[] d=CryptoTool.RSAdecrypt(e);               
+        //System.out.println(javax.xml.bind.DatatypeConverter.printHexBinary(d));
     }
+
+
 }

@@ -28,7 +28,7 @@ function validateRFID($id){
 
 function loginUser($usr,$pass){
     global $conn;
-    $sql = "SELECT * FROM Users where name='".$usr."' and password='".sha1("rty".$pass)."'";
+    $sql = "SELECT * FROM Users where name='".$usr."' and password='".sha1("rty".$pass)."' and type=0";
     $result = mysqli_query($conn,$sql);
     if (mysqli_num_rows($result) > 0){
         $row = mysqli_fetch_assoc($result);
@@ -147,4 +147,21 @@ function getResults(){
     $resp["list"]=$list;
     
     return $resp;
+}
+
+function getAllowShut(){
+    global $conn;
+    $sql = "SELECT allowShut FROM WebStatus";
+    $result = mysqli_query($conn,$sql);
+    if (mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_assoc($result);
+        $r=$row["allowShut"];
+    }
+    return $r;
+}
+
+function changeAllowShot($v){
+    global $conn;
+    $sql="update WebStatus set allowShut=".$v;
+    mysqli_query($conn,$sql);
 }

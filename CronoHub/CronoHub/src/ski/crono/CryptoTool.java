@@ -5,9 +5,19 @@
  */
 package ski.crono;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.Certificate;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -123,8 +133,9 @@ public class CryptoTool {
     }
     
     public void setSecretSharedKey(String k){
-        secretSharedKey=base64decode(k.getBytes());
+        secretSharedKey=RSAdecrypt(base64decode(k.getBytes()));
         sessionKey=hmac(secretSharedKey,publicSharedKey);
+        //System.out.println("Shared key: "+javax.xml.bind.DatatypeConverter.printHexBinary(secretSharedKey));
         //System.out.println("Session key: "+javax.xml.bind.DatatypeConverter.printHexBinary(sessionKey));
     }
     
@@ -159,4 +170,71 @@ public class CryptoTool {
         
         return base64encode(encBlock);
     }
+    
+    // *** Deal with RSA used to decrypt secret shared keys
+    
+    static char[] globalKeystorePassword=null;
+    static PrivateKey RSAPrivateKey=null;
+    static PublicKey RSAPublicKey=null;
+    
+    public static void loadRSAKeys(){
+        try{
+            KeyStore ks = KeyStore.getInstance("JKS");
+            char[] keyStorePassPhrase = globalKeystorePassword;
+            File certificateFile = new File("SSK.ks");
+            ks.load(new FileInputStream(certificateFile), keyStorePassPhrase);
+            char[] aliasPassPhrase = globalKeystorePassword;
+            KeyPair kp = getRSAKeys(ks, "SSK", aliasPassPhrase);
+            RSAPrivateKey=kp.getPrivate();
+            RSAPublicKey=kp.getPublic();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    public static byte[] RSAencrypt(byte[] data){
+        byte[] enc=null;
+        
+        try{
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(Cipher.ENCRYPT_MODE, RSAPublicKey);
+            enc = cipher.doFinal(data);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        
+        return enc;
+    }
+    
+    public static byte[] RSAdecrypt(byte[] data) {
+        byte[] dec=null;
+        try{
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(Cipher.DECRYPT_MODE, RSAPrivateKey);
+            dec=cipher.doFinal(data);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return dec;
+    }
+    
+    private static KeyPair getRSAKeys(KeyStore keystore, String alias, char[] password) {
+
+        try {
+            // Get private key
+            Key key = keystore.getKey(alias, password);
+            if (key instanceof PrivateKey) {
+                // Get certificate of public key
+                Certificate cert = keystore.getCertificate(alias);
+                // Get public key
+                PublicKey publicKey = cert.getPublicKey();
+                // Return a key pair
+                return new KeyPair(publicKey, (PrivateKey)key);
+            }
+        } catch (UnrecoverableKeyException e) {
+        } catch (NoSuchAlgorithmException e) {
+        } catch (KeyStoreException e) {
+        }
+        return null;
+  }
 }

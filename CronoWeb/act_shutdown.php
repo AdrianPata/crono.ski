@@ -1,7 +1,11 @@
 <?php
 session_start();
+require("./connect.php");
+require("./db.php");
 
-if(isset($_SESSION["usrID"])){
+
+
+if(isset($_SESSION["usrID"]) && getAllowShut()==1){
 
     $data = array("usr" => "adi", "pass" => "salam","com"=>"shut");
     $data_string = json_encode($data);
