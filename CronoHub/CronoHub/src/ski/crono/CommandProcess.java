@@ -121,16 +121,15 @@ public class CommandProcess {
             double tRez=0;
             
             //Decode time. There are 6 bytes of time.
-            t+=time[0]; t=t<<8;
-            t+=time[1]; t=t<<8;
-            t+=time[2]; t=t<<8;
-            t+=time[3]; t=t<<8;
-            t+=time[4]; t=t<<8;
-            t+=time[5];
+            for (int i = 0; i < 6; i++)
+            {
+                t +=((long) time[i] & 0xffL); //<< (8 * i);
+                if(i<5) t=t<<8;
+            }
             
             tRez=(double)t/(16000000/4/8); //FOSC=16Mhz.; one increment every 4 cycles; prescaler is 1:8
             
-            System.out.println("Time received ["+tRez+" seconds]: "+javax.xml.bind.DatatypeConverter.printHexBinary(time));
+            System.out.println("Time received ["+tRez+" seconds]["+t+"]: "+javax.xml.bind.DatatypeConverter.printHexBinary(time));
             System.out.println("Stopwatch stopped");
             server.webInt.updateResult(t);
             server.webInt.updateWebStatus("CronoStartFINISH");
